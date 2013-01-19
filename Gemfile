@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.3'
 
-gem 'sqlite3'
+gem 'pg'
 
 gem 'haml-rails', '>= 0.3.4', :group => :development
 

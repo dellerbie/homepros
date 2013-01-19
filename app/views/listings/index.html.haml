@@ -1,0 +1,39 @@
+%h1 Listing listings
+
+%table
+  %tr
+    %th Company name
+    %th Company logo
+    %th Budget min
+    %th Budget max
+    %th City
+    %th State
+    %th Contact email
+    %th Website
+    %th Phone
+    %th Portfolio photo
+    %th Portfolio photo description
+    %th
+    %th
+    %th
+
+  - @listings.each do |listing|
+    %tr
+      %td= listing.company_name
+      %td= listing.company_logo
+      %td= listing.budget_min
+      %td= listing.budget_max
+      %td= listing.city
+      %td= listing.state
+      %td= listing.contact_email
+      %td= listing.website
+      %td= listing.phone
+      %td= listing.portfolio_photo
+      %td= listing.portfolio_photo_description
+      %td= link_to 'Show', listing
+      %td= link_to 'Edit', edit_listing_path(listing)
+      %td= link_to 'Destroy', listing, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Listing', new_listing_path

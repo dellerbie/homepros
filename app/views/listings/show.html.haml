@@ -1,0 +1,39 @@
+%p#notice= notice
+
+%p
+  %b Company name:
+  = @listing.company_name
+%p
+  %b Company logo:
+  = @listing.company_logo
+%p
+  %b Budget min:
+  = @listing.budget_min
+%p
+  %b Budget max:
+  = @listing.budget_max
+%p
+  %b City:
+  = @listing.city
+%p
+  %b State:
+  = @listing.state
+%p
+  %b Contact email:
+  = @listing.contact_email
+%p
+  %b Website:
+  = @listing.website
+%p
+  %b Phone:
+  = @listing.phone
+%p
+  %b Portfolio photo:
+  = @listing.portfolio_photo
+%p
+  %b Portfolio photo description:
+  = @listing.portfolio_photo_description
+
+= link_to 'Edit', edit_listing_path(@listing)
+\|
+= link_to 'Back', listings_path
