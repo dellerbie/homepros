@@ -1,5 +1,21 @@
-%h1 New listing
-
-= render 'form'
-
-= link_to 'Back', listings_path
+.container.new-listing
+  .row
+    .span4
+      .preview
+        %span.header
+          Your free listing will look like this...
+        .listing-container
+          %span.company-name
+            Your company name
+          %p
+            %span.budget.text
+              Typical project budge range
+            %br
+            %span.location.text
+              Company location
+          = image_tag('small-listing.jpg')
+          %p
+            %span.description.text
+              Your image description
+    .span6.offset1
+      = render 'form'

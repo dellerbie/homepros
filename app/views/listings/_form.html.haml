@@ -5,10 +5,33 @@
       %ul
         - @listing.errors.full_messages.each do |msg|
           %li= msg
-
-  .field
-    = f.label :company_name
+  
+  %fieldset.sample
+    %p.title
+      First, add a picture of your best work
+    = image_tag('sample-listing-size.png', class: 'sample-listing-size')
+    %p
+      Upload an image of your work that best represents your primary style. You can always change this image after your card has been created.
+    %p
+      %strong
+        For best results upload a 900 x 630 JPG or PNG.
+      %em
+        Don’t have that size? We’ll resize what you have to make sure it fits.
+    
+    = f.label :portfolio_photo_description, 'Describe the image you just added'   
+    %span.help-block
+      Example: This is a screenshot from our latest homepage redesign of starbucks.com
+    = f.text_area :portfolio_photo_description
+    
+  %fieldset.company-info
+    %p.title
+      Now, tell us about your business
+      
+    = f.label :company_name, "What's your company name?"
+    %span.help-block
+      You can use your own name if you're a freelancer and don't have a company name.
     = f.text_field :company_name
+    
   .field
     = f.label :company_logo
     = f.text_field :company_logo
@@ -37,7 +60,6 @@
     = f.label :portfolio_photo
     = f.text_field :portfolio_photo
   .field
-    = f.label :portfolio_photo_description
-    = f.text_field :portfolio_photo_description
+
   .actions
     = f.submit 'Save'
