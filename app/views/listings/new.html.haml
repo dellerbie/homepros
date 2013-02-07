@@ -1,6 +1,6 @@
 .container.new-listing
   .row
-    .span4
+    .span4.offset1
       .preview
         %span.header
           Your free listing will look like this...
@@ -13,9 +13,9 @@
             %br
             %span.location.text
               Company location
-          = image_tag('small-listing.jpg')
+          = image_tag('small-listing.png')
           %p
             %span.description.text
               Your image description
-    .span6.offset1
+    .span6
       = render 'form'

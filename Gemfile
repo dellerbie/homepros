@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.3'
-
 gem 'pg'
-
 gem 'haml-rails', '>= 0.3.4', :group => :development
+gem 'devise'
 
 
 # Gems used only for assets and not required

@@ -12,4 +12,8 @@
         .pull-right
           = link_to 'Get Listed Today', new_listing_path, class: "btn btn-success"
     .container 
+      %p
+        = notice
+      %p
+        = alert
       = yield

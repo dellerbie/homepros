@@ -25,6 +25,7 @@ class ListingsController < ApplicationController
   # GET /listings/new.json
   def new
     @listing = Listing.new
+    @user = User.new
 
     respond_to do |format|
       format.html # new.html.erb
