@@ -1,8 +1,9 @@
-class RegistrationsController < Devise::RegistrationsController
+class RegistrationsController < Devise::RegistrationsController 
   
   def new
-    @listing = Listing.new
-    super
+    resource = build_resource({})
+    resource.build_listing 
+    respond_with resource
   end
   
 end

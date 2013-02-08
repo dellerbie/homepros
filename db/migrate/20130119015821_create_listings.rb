@@ -1,6 +1,7 @@
 class CreateListings < ActiveRecord::Migration
   def change
     create_table :listings do |t|
+      t.integer :user_id
       t.string :company_name
       t.string :company_logo
       t.integer :budget_min

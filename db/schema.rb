@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(:version => 20130207013618) do
 
   create_table "listings", :force => true do |t|
+    t.integer  "user_id"
     t.string   "company_name"
     t.string   "company_logo"
     t.integer  "budget_min"

@@ -1,0 +1,114 @@
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+  = devise_error_messages!
+  
+  = f.fields_for :listing do |listing_form|
+    %fieldset.sample
+      %p.title
+        First, add a picture of your best work
+      = image_tag('sample-listing-size.png', class: 'sample-listing-size')
+      %p
+        Upload an image of your work that best represents your primary style. You can always change this image after your card has been created.
+      %p
+        %strong
+          For best results upload a 900 x 630 JPG or PNG.
+        %em
+          Don’t have that size? We’ll resize what you have to make sure it fits.
+    
+      = listing_form.label :portfolio_photo_description, 'Describe the image you just added'   
+      %span.help-block
+        Example: This is a screenshot from our latest homepage redesign of starbucks.com
+      = listing_form.text_area :portfolio_photo_description
+    
+    %fieldset.company-info
+      %p.title
+        Now, tell us about your business
+      
+      = listing_form.label :company_name, "What's your company name?"
+      %span.help-block
+        You can use your own name if you're a freelancer and don't have a company name.
+      = listing_form.text_field :company_name
+    
+      = listing_form.label :company_name, "Upload your company logo (optional)"
+      %span.help-block
+        GIF, JPG, or PNG. We’ll resize what you have.
+        %br
+        This is shown on your listing page for clients to see.
+      = listing_form.file_field :company_name
+    
+      = listing_form.label :budget_min, 'What type of budgets do you normally work with?'
+      = listing_form.label :budget_min, class: 'radio' do
+        = listing_form.radio_button :budget_min, ''
+        $3,000 and under
+      = listing_form.label :budget_min, class: 'radio' do
+        = listing_form.radio_button :budget_min, ''
+        $3,000-$10,000
+      = listing_form.label :budget_min, class: 'radio' do
+        = listing_form.radio_button :budget_min, ''
+        $10,000-$25,000
+      = listing_form.label :budget_min, class: 'radio' do
+        = listing_form.radio_button :budget_min, ''
+        $25,000-$50,000
+      = listing_form.label :budget_min, class: 'radio' do
+        = listing_form.radio_button :budget_min, ''
+        Over $50,000
+
+      = listing_form.label :city, "Which city or metro area is closest to your company headquarters?"
+      %span.help-block
+        %ul
+          %li
+            If your company has multiple locations, choose the main location. 
+          %li 
+            If your city is not listed, choose "My city is not listed".
+      = listing_form.select :city, ['Orange', 'Irvine', 'Tustin'], include_blank: true
+  
+    %fieldset.contact-info
+      %p.title
+        How can clients get in touch?
+      
+      = listing_form.label :contact_email, 'Sales contact email (optional)'
+      %span.help-block
+        This is how clients will contact you (example: sales@mydomain.com)
+      = listing_form.text_field :contact_email
+
+      = listing_form.label :website, 'Website URL'
+      = listing_form.text_field :website
+    
+      = listing_form.label :phone, 'Phone Number'
+      .controls
+        (
+        = listing_form.text_field :phone_area_code, class: 'span1'
+        )
+        = listing_form.text_field :phone_pre, class: 'span1'
+        &#45;
+        = listing_form.text_field :phone_post, class: 'span2'
+      
+  
+  %fieldset.account-info
+    %p.title
+      Finally, create an account
+  
+    = f.label :first_name, 'First name'
+    = f.text_field :first_name
+    
+    = f.label :last_name, 'Last name'
+    = f.text_field :last_name
+    
+    = f.label :email, 'Your email address'
+    %span.help-block
+      This is how we'll stay in touch (clients don’t see this address).
+    = f.text_field :email
+    
+    = f.label :password, 'Password'
+    %span.help-block
+      Must be at least 6 characters.
+    = f.password_field :password
+      
+    = f.label :password_confirmation, 'Password again'
+    %span.help-block
+      Confirm your password by entering it again.
+    = f.password_field :password_confirmation
+
+  .form-actions
+    = f.submit 'Save', class: 'btn btn-primary'
+    %button{type: 'button', class: 'btn'}
+      Cancel
