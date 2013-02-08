@@ -5,6 +5,7 @@ gem 'pg'
 gem 'haml-rails', '>= 0.3.4', :group => :development
 gem 'devise'
 gem 'jquery-rails'
+gem 'simple_form'
 
 # Gems used only for assets and not required
 # in production environments by default.

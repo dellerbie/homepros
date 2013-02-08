@@ -12,8 +12,5 @@
         .pull-right
           = link_to 'Get Listed Today', new_user_registration_path, class: "btn btn-success"
     .container 
-      %p
-        = notice
-      %p
-        = alert
+      = render 'shared/flash_messages', flash: flash
       = yield
