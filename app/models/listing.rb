@@ -6,4 +6,6 @@ class Listing < ActiveRecord::Base
     
   attr_accessor :phone_area_code, :phone_pre, :phone_post
   
+  validates_presence_of :company_name
+  
 end
