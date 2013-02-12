@@ -1,1 +1,29 @@
-Index
+.filters
+  Showing all contractors in
+  .dropdown
+    = link_to 'Orange', '#', class: 'city filter dropdown-toggle', 'data-toggle' => 'dropdown'
+    %ul.dropdown-menu{role: 'menu', 'aria-labelledby' => 'dropdownMenu'}
+      %li
+        = link_to 'Irvine', '#'
+      %li
+        = link_to 'Anaheim', '#'
+      %li
+        = link_to 'Costa Mesa', '#'
+      %li
+        = link_to 'Huntington Beach', '#'
+  who work on projects for 
+  .dropdown
+    = link_to 'any budget', '#', class: 'budget filter dropdown-toggle', 'data-toggle' => 'dropdown'
+    %ul.dropdown-menu{role: 'menu', 'aria-labelledby' => 'dropdownMenu'}
+      %li
+        = link_to 'any budget', '#'
+      %li
+        = link_to '$3,000 and under', '#'
+      %li
+        = link_to '$3,000-$10,000', '#'
+      %li
+        = link_to '$10,000-$25,000', '#'
+        
+%ul.thumbnails 
+  - 20.times do
+    = render 'listing'
