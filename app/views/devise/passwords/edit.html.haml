@@ -1,0 +1,18 @@
+.passwords
+  %p
+    Change your password
+
+  = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
+    = f.error_notification
+    = display_base_errors resource
+    
+    = f.hidden :reset_password_token
+    = f.input :password, label: 'New password', input_html: { autofocus: true }
+    = f.password :password_confirmation, label: 'New password'
+    = f.submit 'Change my password', class: 'btn btn-primary'
+    %button{type: 'button', class: 'btn'}
+      Cancel
+    %br
+    %br
+  
+    = render 'devise/shared/links'
