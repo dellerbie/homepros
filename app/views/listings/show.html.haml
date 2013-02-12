@@ -1,39 +1,62 @@
-%p#notice= notice
-
-%p
-  %b Company name:
-  = @listing.company_name
-%p
-  %b Company logo:
-  = @listing.company_logo
-%p
-  %b Budget min:
-  = @listing.budget_min
-%p
-  %b Budget max:
-  = @listing.budget_max
-%p
-  %b City:
-  = @listing.city
-%p
-  %b State:
-  = @listing.state
-%p
-  %b Contact email:
-  = @listing.contact_email
-%p
-  %b Website:
-  = @listing.website
-%p
-  %b Phone:
-  = @listing.phone
-%p
-  %b Portfolio photo:
-  = @listing.portfolio_photo
-%p
-  %b Portfolio photo description:
-  = @listing.portfolio_photo_description
-
-= link_to 'Edit', edit_listing_path(@listing)
-\|
-= link_to 'Back', listings_path
+%p.span2.offset1
+  %i.icon-arrow-left
+  = link_to 'Back to Listings', listings_path
+  
+.listing-container-xlarge.span9.offset1
+  .pull-right
+    = link_to '#' do
+      = image_tag('company-logo.gif')
+  %p.company-name
+    Valiant Media, Inc.
+  %p.budget
+    %span.label.label-info
+      Typical budget
+    %span.value 
+      %strong
+        $10,000-$25,000
+  %p.location 
+    %span.label.label-info
+      Headquarted in
+    %span.value
+      %strong
+        Orange
+        
+  .description 
+    %p
+      There is no longer any reason to turn to a traditional ad agency for your website creative and development.
+    %p
+      Valiant Media is a professional design services company, efficiently streamlined, flexible, and decades deep in skill and experience. We deploy an accomplished veteran team to ensure that your project is done right the first time.
+    %p 
+      Check out our site for dozens of portfolio samples and an endless stream of client testimonials.
+    
+  %p.website
+    %strong
+      Website
+    %br
+    = link_to 'http://valiantmedia.com'
+  
+  %p.contact-us
+    %strong
+      Contact Us
+    %br
+    = link_to 'newsbiz@valiantmedia.com'
+  
+  .portfolio-image.img-polaroid
+    = image_tag('large-listing.jpg')
+    %p
+      This site for Landry's Seafood is just one of hundreds of successful website designs we've created.
+  
+  .contact-container
+    %p
+      Like what you see? Get in touch with Valiant Media, Inc.
+      
+    %ul.links
+      %li
+        = link_to 'newsbiz@valiantmedia.com'
+      %li
+        = link_to 'www.valiantmedia.com'
+    
+    %p.plug
+      Be sure to let 'em know OC Homepros sent you.
+    
+  

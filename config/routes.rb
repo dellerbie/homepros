@@ -4,6 +4,8 @@ Homepros::Application.routes.draw do
     registrations: 'registrations'
   }
   
-  root :to => 'index#index'
+  resource :listings, only: [:index, :show]
+  
+  root :to => 'listings#index'
   
 end

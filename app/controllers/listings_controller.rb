@@ -13,11 +13,13 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.json
   def show
-    @listing = Listing.find(params[:id])
+    # @listing = Listing.find(params[:id])
+    
+    # @listing = Listing.new
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @listing }
+      # format.json { render json: @listing }
     end
   end
 
