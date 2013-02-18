@@ -17,15 +17,17 @@ ActiveRecord::Schema.define(:version => 20130207013618) do
     t.integer  "user_id"
     t.string   "company_name"
     t.string   "company_logo"
-    t.integer  "budget_min"
-    t.integer  "budget_max"
+    t.integer  "budget"
     t.string   "city"
     t.string   "state"
     t.string   "contact_email"
     t.string   "website"
-    t.string   "phone"
+    t.integer  "phone_area_code"
+    t.integer  "phone_exchange"
+    t.integer  "phone_suffix"
     t.string   "portfolio_photo"
     t.string   "portfolio_photo_description"
+    t.string   "specialty"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
   end
