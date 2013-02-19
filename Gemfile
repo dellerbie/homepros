@@ -16,3 +16,11 @@ group :assets do
   gem 'less-rails'
   gem 'twitter-bootstrap-rails'
 end
+
+group :development, :test do
+  gem 'factory_girl_rails'
+end
+
+group :test do 
+  gem 'shoulda'
+end
