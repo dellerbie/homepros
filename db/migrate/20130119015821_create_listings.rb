@@ -4,8 +4,7 @@ class CreateListings < ActiveRecord::Migration
       t.integer   :user_id
       t.string    :company_name
       t.string    :company_logo
-      t.integer   :budget
-      t.string    :city
+      t.integer   :budget_id
       t.string    :state
       t.string    :contact_email
       t.string    :website

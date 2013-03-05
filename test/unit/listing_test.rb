@@ -1,16 +1,16 @@
 require 'test_helper'
 
 class ListingTest < ActiveSupport::TestCase
-  should validate_presence_of :city
   should validate_presence_of :portfolio_photo
   should validate_presence_of :portfolio_photo_description
   should validate_presence_of :company_name
-  should validate_presence_of :budget
-  should validate_presence_of :city
+  should validate_presence_of :budget_id
   should validate_presence_of :contact_email
   should validate_presence_of :phone_area_code
   should validate_presence_of :phone_exchange
   should validate_presence_of :phone_suffix
+  should validate_presence_of :city
+  
   should_not validate_presence_of :company_logo
   should_not validate_presence_of :website
   
@@ -18,6 +18,7 @@ class ListingTest < ActiveSupport::TestCase
   should ensure_length_of(:company_name).is_at_most(255)
   
   should have_and_belong_to_many :specialties
+  should belong_to :city
   
   should ensure_length_of(:contact_email).is_at_most(255)
   should allow_value("d@d.com").for(:contact_email)
@@ -28,13 +29,15 @@ class ListingTest < ActiveSupport::TestCase
   should allow_value("https://test.test.com").for(:website)
   should_not allow_value('d.com').for(:website)
   
-  [:budget, :city, :company_logo, :company_name, :contact_email,
+  [:budget_id, :company_logo, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_description, :website, 
     :phone_area_code, :phone_exchange, :phone_suffix].each do |attr|
       should allow_mass_assignment_of(attr)
   end
   
   should_not allow_mass_assignment_of(:state)
+  
+  should ensure_inclusion_of(:budget_id).in_array(Listing::BUDGETS.keys)
   
   test 'should not accept alpha characters for the phone number' do
     listing = Listing.new
@@ -85,11 +88,6 @@ class ListingTest < ActiveSupport::TestCase
     listing = FactoryGirl.build(:listing, state: '')
     listing.save
     assert_equal 'CA', listing.state
-  end
-  
-  test 'mass assignment' do
-    
-
   end
 
 end

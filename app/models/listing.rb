@@ -3,18 +3,28 @@ class Listing < ActiveRecord::Base
   
   belongs_to :user
   has_and_belongs_to_many :specialties
+  belongs_to :city
   
   MAX_SPECIALTIES = 2
+  BUDGETS = {
+    1 => '$3,000 and under',
+    2 => '$3,000-$10,000',
+    3 => '$10,000-$25,000',
+    4 => '$25,000-$50,000',
+    5 => 'Over $50,000'
+  }
   
-  attr_accessible :budget, :city, :company_logo, :company_name, :contact_email,
+  attr_accessible :budget_id, :company_logo, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_description, :website, :phone_area_code, :phone_exchange, :phone_suffix
   
   validates_presence_of :portfolio_photo
   validates_presence_of :portfolio_photo_description
   validates_presence_of :company_name
-  validates_presence_of :budget
   validates_presence_of :city
   validates_presence_of :contact_email
+  
+  validates_presence_of :budget_id
+  validates_inclusion_of :budget_id, :in => BUDGETS.keys
   
   validates_presence_of :phone_area_code
   validates_numericality_of :phone_area_code, integer_only: true, message: 'is not a number'
@@ -32,7 +42,7 @@ class Listing < ActiveRecord::Base
   validates_length_of :company_name, maximum: 255
   
   validates_length_of :contact_email, maximum: 255
-  validates_format_of :contact_email, :with => EmailAddress::VALID_PATTERN, :message => "Oops! The email format is incorrect. Please try again.", :allow_blank => true
+  validates_format_of :contact_email, :with => EmailAddress::VALID_PATTERN, :message => "Please enter a valid email address", :allow_blank => true
   
   validates_length_of :website, maximum: 255
   validates_format_of :website, :with => URI::regexp(%w(http https)), :allow_blank => true
