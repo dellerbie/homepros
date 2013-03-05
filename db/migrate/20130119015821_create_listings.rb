@@ -14,7 +14,6 @@ class CreateListings < ActiveRecord::Migration
       t.integer   :phone_suffix
       t.string    :portfolio_photo
       t.string    :portfolio_photo_description
-      t.string    :specialty
 
       t.timestamps
     end

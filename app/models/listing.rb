@@ -1,16 +1,56 @@
 class Listing < ActiveRecord::Base
+  include EmailAddress
+  
   belongs_to :user
+  has_and_belongs_to_many :specialties
+  
+  MAX_SPECIALTIES = 2
   
   attr_accessible :budget, :city, :company_logo, :company_name, :contact_email,
-    :portfolio_photo, :portfolio_photo_description, :state, :website, :phone_area_code, :phone_exchange, :phone_suffix,
-    :specialty
+    :portfolio_photo, :portfolio_photo_description, :website, :phone_area_code, :phone_exchange, :phone_suffix
   
-  validates_presence_of :portfolio_photo, :portfolio_photo_description, :company_name, :specialty, :budget, :city, :contact_email, 
-    :phone_area_code, :phone_exchange, :phone_suffix
+  validates_presence_of :portfolio_photo
+  validates_presence_of :portfolio_photo_description
+  validates_presence_of :company_name
+  validates_presence_of :budget
+  validates_presence_of :city
+  validates_presence_of :contact_email
+  
+  validates_presence_of :phone_area_code
+  validates_numericality_of :phone_area_code, integer_only: true, message: 'is not a number'
+  validates_length_of :phone_area_code, is: 3, message: 'must be 3 numbers'
+  
+  validates_presence_of :phone_exchange
+  validates_numericality_of :phone_exchange, integer_only: true, message: 'is not a number'
+  validates_length_of :phone_exchange, is: 3, message: 'must be 3 numbers'
+  
+  validates_presence_of :phone_suffix
+  validates_numericality_of :phone_suffix, integer_only: true, message: 'is not a number'
+  validates_length_of :phone_suffix, is: 4, message: 'must be 4 numbers'
     
   validates_length_of :portfolio_photo_description, maximum: 255
   validates_length_of :company_name, maximum: 255
+  
   validates_length_of :contact_email, maximum: 255
+  validates_format_of :contact_email, :with => EmailAddress::VALID_PATTERN, :message => "Oops! The email format is incorrect. Please try again.", :allow_blank => true
+  
   validates_length_of :website, maximum: 255
+  validates_format_of :website, :with => URI::regexp(%w(http https)), :allow_blank => true
+  
+  validate :ensure_max_specialties
+  
+  before_create :default_state
+  
+  protected
+  
+  def ensure_max_specialties
+    if self.specialties.count > MAX_SPECIALTIES
+      errors.add(:specialties, "You cannot have more than #{MAX_SPECIALTIES} specialties")
+    end
+  end
+  
+  def default_state
+    self.state = 'CA'
+  end
   
 end

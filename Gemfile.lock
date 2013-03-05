@@ -54,6 +54,8 @@ GEM
     factory_girl_rails (3.3.0)
       factory_girl (~> 3.3.0)
       railties (>= 3.0.0)
+    faker (1.0.1)
+      i18n (~> 0.4)
     haml (3.1.6)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
@@ -110,6 +112,9 @@ GEM
     rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
+    seed-fu (2.2.0)
+      activerecord (~> 3.1)
+      activesupport (~> 3.1)
     shoulda (3.3.2)
       shoulda-context (~> 1.0.1)
       shoulda-matchers (~> 1.4.1)
@@ -149,11 +154,13 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   factory_girl_rails
+  faker
   haml-rails (>= 0.3.4)
   jquery-rails
   less-rails
   pg
   rails (= 3.2.3)
+  seed-fu
   shoulda
   simple_form
   therubyracer
