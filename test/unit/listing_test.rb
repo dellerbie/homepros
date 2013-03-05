@@ -10,6 +10,7 @@ class ListingTest < ActiveSupport::TestCase
   should validate_presence_of :phone_exchange
   should validate_presence_of :phone_suffix
   should validate_presence_of :city
+  should validate_presence_of :specialties
   
   should_not validate_presence_of :company_logo
   should_not validate_presence_of :website
@@ -29,7 +30,7 @@ class ListingTest < ActiveSupport::TestCase
   should allow_value("https://test.test.com").for(:website)
   should_not allow_value('d.com').for(:website)
   
-  [:budget_id, :company_logo, :company_name, :contact_email,
+  [:budget_id, :specialty_ids, :city_id, :company_logo, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_description, :website, 
     :phone_area_code, :phone_exchange, :phone_suffix].each do |attr|
       should allow_mass_assignment_of(attr)

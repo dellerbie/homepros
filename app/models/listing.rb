@@ -14,7 +14,7 @@ class Listing < ActiveRecord::Base
     5 => 'Over $50,000'
   }
   
-  attr_accessible :budget_id, :company_logo, :company_name, :contact_email,
+  attr_accessible :budget_id, :specialty_ids, :city_id, :company_logo, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_description, :website, :phone_area_code, :phone_exchange, :phone_suffix
   
   validates_presence_of :portfolio_photo
@@ -22,6 +22,7 @@ class Listing < ActiveRecord::Base
   validates_presence_of :company_name
   validates_presence_of :city
   validates_presence_of :contact_email
+  validates_presence_of :specialties
   
   validates_presence_of :budget_id
   validates_inclusion_of :budget_id, :in => BUDGETS.keys
