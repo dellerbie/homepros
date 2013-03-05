@@ -19,9 +19,9 @@
       
       = listing_form.input :company_name, label: "What's your company name?", hint: "You can use your own name if you're a freelancer and don't have a company name.", input_html: {class: 'input-xlarge'}
       = listing_form.input :company_logo, label: 'Upload your company logo (optional)', hint: 'GIF, JPG, or PNG. We’ll resize what you have.<br/>This is shown on your listing page for clients to see.', as: :file
-      = listing_form.input :specialty, label: 'What do you specialize in?', collection: ['Kitchens', 'General Contractor', 'Plumbing', 'Electrical'], prompt: 'Pick your specialty'
-      = listing_form.input :budget, label: 'What type of budgets do you normally work with?', collection: ['$3,000 and under', '$3,000-$10,000', '$10,000-$25,000', '$25,000-$50,000', 'Over $50,000'], as: :radio_buttons
-      = listing_form.input :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose "My city is not listed"', collection: ['Orange', 'Irvine', 'Tustin'], prompt: 'Please select a city'
+      = listing_form.association :specialties, label: 'What do you specialize in?', hint: 'You can select up to 2 specialties'
+      = listing_form.input :budget_id, label: 'What type of budgets do you normally work with?', collection: Listing::BUDGETS.map {|k,v| [v,k]}, as: :radio_buttons
+      = listing_form.association :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose "My city is not listed"', collection: City.all(order: 'name'), prompt: 'Please select a city'
   
     %fieldset.contact-info
       %p.title
