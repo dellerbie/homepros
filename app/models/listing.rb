@@ -55,7 +55,7 @@ class Listing < ActiveRecord::Base
   protected
   
   def ensure_max_specialties
-    if self.specialties.count > MAX_SPECIALTIES
+    if self.specialties.length > MAX_SPECIALTIES
       errors.add(:specialties, "You cannot have more than #{MAX_SPECIALTIES} specialties")
     end
   end

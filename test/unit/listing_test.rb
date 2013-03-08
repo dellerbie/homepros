@@ -75,13 +75,9 @@ class ListingTest < ActiveSupport::TestCase
   end
   
   test 'should allow a max of 2 specialties' do
-    listing = FactoryGirl.create(:listing)
+    listing = FactoryGirl.build(:listing)
     listing.specialties << FactoryGirl.create(:specialty)
-    listing.specialties << FactoryGirl.create(:specialty)
-    assert listing.valid?
-    
-    listing.specialties << FactoryGirl.create(:specialty)
-    listing.valid?
+    assert !listing.valid?
     assert listing.errors.messages[:specialties].include?('You cannot have more than 2 specialties')
   end
   
