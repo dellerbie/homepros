@@ -12,5 +12,15 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.iframe-post-form
+//= require jquery.imagefit-0.2
 //= require twitter/bootstrap
 //= require_tree .
+
+$(function() {
+  $("body").bind("ajaxSend", function(elm, xhr, s){
+    if(s.type == "POST") {
+      xhr.setRequestHeader('X-CSRF-Token', jQuery("meta[name=csrf-token]").attr("content"));
+    }
+  });
+});
