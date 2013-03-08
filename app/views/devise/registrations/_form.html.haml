@@ -19,7 +19,7 @@
       
       = listing_form.input :company_name, label: "What's your company name?", hint: "You can use your own name if you're a freelancer and don't have a company name.", input_html: {class: 'input-xlarge'}
       = listing_form.input :company_logo, label: 'Upload your company logo (optional)', hint: 'GIF, JPG, or PNG. We’ll resize what you have.<br/>This is shown on your listing page for clients to see.', as: :file
-      = listing_form.association :specialties, label: 'What do you specialize in?', hint: 'You can select up to 2 specialties'
+      = listing_form.association :specialties, collection: Specialty.order("name ASC"), label: 'What do you specialize in?', hint: 'You can select up to 2 specialties'
       = listing_form.input :budget_id, label: 'What type of budgets do you normally work with?', collection: Listing::BUDGETS.map {|k,v| [v,k]}, as: :radio_buttons
       = listing_form.association :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose "My city is not listed"', collection: City.all(order: 'name'), prompt: 'Please select a city'
   

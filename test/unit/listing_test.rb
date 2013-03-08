@@ -1,16 +1,16 @@
 require 'test_helper'
 
 class ListingTest < ActiveSupport::TestCase
-  should validate_presence_of :portfolio_photo
+  should validate_presence_of(:portfolio_photo).with_message(/Please upload a sample photo of your work/)
   should validate_presence_of :portfolio_photo_description
   should validate_presence_of :company_name
-  should validate_presence_of :budget_id
+  should validate_presence_of(:budget_id).with_message(/Please choose a typical budget/)
   should validate_presence_of :contact_email
   should validate_presence_of :phone_area_code
   should validate_presence_of :phone_exchange
   should validate_presence_of :phone_suffix
   should validate_presence_of :city
-  should validate_presence_of :specialties
+  should validate_presence_of(:specialties).with_message(/Please select at least one specialty/)
   
   should_not validate_presence_of :company_logo
   should_not validate_presence_of :website

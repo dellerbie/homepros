@@ -17,14 +17,14 @@ class Listing < ActiveRecord::Base
   attr_accessible :budget_id, :specialty_ids, :city_id, :company_logo, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_description, :website, :phone_area_code, :phone_exchange, :phone_suffix
   
-  validates_presence_of :portfolio_photo
+  validates_presence_of :portfolio_photo, message: 'Please upload a sample photo of your work'
   validates_presence_of :portfolio_photo_description
   validates_presence_of :company_name
   validates_presence_of :city
   validates_presence_of :contact_email
-  validates_presence_of :specialties
+  validates_presence_of :specialties, message: 'Please select at least one specialty'
   
-  validates_presence_of :budget_id
+  validates_presence_of :budget_id, message: 'Please choose a typical budget'
   validates_inclusion_of :budget_id, :in => BUDGETS.keys
   
   validates_presence_of :phone_area_code
