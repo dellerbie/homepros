@@ -6,6 +6,8 @@ Homepros::Application.routes.draw do
   
   resource :listings, only: [:index, :show]
   
+  resources :preview_photos, only: :create
+  
   root :to => 'listings#index'
   
 end

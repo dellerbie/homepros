@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.remotipart
 //= require jquery.iframe-post-form
 //= require jquery.imagefit-0.2
 //= require twitter/bootstrap

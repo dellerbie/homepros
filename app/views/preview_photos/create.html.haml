@@ -1,0 +1,5 @@
+%textarea{'data-type' => 'application/json'}
+  - if @preview_photo.errors.empty?
+    = @preview_photo.to_json
+  - else 
+    = { errors: @preview_photo.errors.full_messages.to_json }.to_json

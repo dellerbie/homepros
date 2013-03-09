@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class PortfolioPhotoUploader < CarrierWave::Uploader::Base
+class PreviewPhotoUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:

@@ -27,6 +27,7 @@ class ListingsController < ApplicationController
   # GET /listings/new.json
   def new
     @listing = Listing.new
+    @preview_photo = PreviewPhoto.new
     @user = User.new
 
     respond_to do |format|
