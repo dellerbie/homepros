@@ -23,38 +23,9 @@ class ListingsController < ApplicationController
     end
   end
 
-  # GET /listings/new
-  # GET /listings/new.json
-  def new
-    @listing = Listing.new
-    @preview_photo = PreviewPhoto.new
-    @user = User.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @listing }
-    end
-  end
-
   # GET /listings/1/edit
   def edit
     @listing = Listing.find(params[:id])
-  end
-
-  # POST /listings
-  # POST /listings.json
-  def create
-    @listing = Listing.new(params[:listing])
-
-    respond_to do |format|
-      if @listing.save
-        format.html { redirect_to @listing, notice: 'Listing was successfully created.' }
-        format.json { render json: @listing, status: :created, location: @listing }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @listing.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PUT /listings/1

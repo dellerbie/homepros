@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130309004309) do
+ActiveRecord::Schema.define(:version => 20130320003556) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -30,11 +30,14 @@ ActiveRecord::Schema.define(:version => 20130309004309) do
     t.integer  "phone_area_code"
     t.integer  "phone_exchange"
     t.integer  "phone_suffix"
-    t.string   "portfolio_photo"
     t.string   "portfolio_photo_description"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
     t.integer  "city_id"
+    t.string   "portfolio_photo"
+    t.string   "portfolio_photo_token"
+    t.string   "company_logo_photo"
+    t.string   "company_logo_photo_token"
   end
 
   create_table "listings_specialties", :force => true do |t|

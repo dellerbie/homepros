@@ -10,4 +10,14 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  
+  class ActionController::TestCase
+    include Devise::TestHelpers
+  end
+  
+  class ActionView::TestCase
+    include ::Sprockets::Helpers::RailsHelper # so image_tag returns /assets/... instead of /images/...
+                                              # it's included in ActionView::Base on app load but not the test case for some reason
+                                              # see actionpack/lib/sprockets/helpers/rails_helper.rb
+  end
 end

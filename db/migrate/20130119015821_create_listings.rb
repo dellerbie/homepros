@@ -11,7 +11,6 @@ class CreateListings < ActiveRecord::Migration
       t.integer   :phone_area_code
       t.integer   :phone_exchange
       t.integer   :phone_suffix
-      t.string    :portfolio_photo
       t.string    :portfolio_photo_description
 
       t.timestamps

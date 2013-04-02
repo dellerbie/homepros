@@ -14,8 +14,14 @@ class Listing < ActiveRecord::Base
     5 => 'Over $50,000'
   }
   
-  attr_accessible :budget_id, :specialty_ids, :city_id, :company_logo, :company_name, :contact_email,
+  attr_accessible :budget_id, :specialty_ids, :city_id, :company_logo_photo, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_description, :website, :phone_area_code, :phone_exchange, :phone_suffix
+    
+  mount_uploader :portfolio_photo, PortfolioPhotoUploader
+  mount_uploader :company_logo_photo, CompanyLogoUploader
+  
+  validates :portfolio_photo, :file_size => { :maximum => 10.megabytes }
+  validates :company_logo_photo, :file_size => { :maximum => 10.megabytes }
   
   validates_presence_of :portfolio_photo, message: 'Please upload a sample photo of your work'
   validates_presence_of :portfolio_photo_description
