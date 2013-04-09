@@ -38,7 +38,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     user = valid_user
     
     assert_difference('User.count') do 
-      post :create, user: valid_user
+      post :create, user: user
     end
     
     saved_user = User.find_by_email(user[:email])
@@ -57,5 +57,14 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_no_difference('User.count') do 
       post :create, user: invalid_user_valid_listing
     end
+  end
+  
+  test 'should get a welcome email upon registration' do
+    post :create, user: valid_user
+    
+    assert ActionMailer::Base.deliveries.present?, 'no email delivered'
+    email = ActionMailer::Base.deliveries.last
+    assert email.body.include?("Welcome to Homepros derrick!")
+    assert_equal ["no-reply@homepros.com"], email.from
   end
 end
