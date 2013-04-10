@@ -58,6 +58,8 @@ class Listing < ActiveRecord::Base
   
   before_create :default_state
   
+  before_validation :add_default_website_protocol
+  
   protected
   
   def ensure_max_specialties
@@ -70,4 +72,9 @@ class Listing < ActiveRecord::Base
     self.state = 'CA'
   end
   
+  def add_default_website_protocol
+    if website.present? && !website.start_with?('http://', 'https://')
+      self.website = "http://#{website}"
+    end
+  end
 end

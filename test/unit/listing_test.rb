@@ -25,10 +25,8 @@ class ListingTest < ActiveSupport::TestCase
   should allow_value("d@d.com").for(:contact_email)
   should_not allow_value('d.com').for(:contact_email)
 
-  should ensure_length_of(:website).is_at_most(255)
   should allow_value("http://d.com").for(:website)
   should allow_value("https://test.test.com").for(:website)
-  should_not allow_value('d.com').for(:website)
   
   [:budget_id, :specialty_ids, :city_id, :company_logo_photo, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_description, :website, 
@@ -85,6 +83,22 @@ class ListingTest < ActiveSupport::TestCase
     listing = FactoryGirl.build(:listing, state: '')
     listing.save
     assert_equal 'CA', listing.state
+  end
+  
+  test 'should append http to website' do 
+    listing = FactoryGirl.build(:listing, website: 'mysite.com')
+    assert listing.valid?
+    assert_equal 'http://mysite.com', listing.website
+  end
+  
+  test 'should not append http or https to website if it already has it' do
+    listing = FactoryGirl.build(:listing, website: 'http://mysite.com')
+    assert listing.valid?
+    assert_equal 'http://mysite.com', listing.website
+    
+    listing.website = 'https://www.mysite.com'
+    assert listing.valid?
+    assert_equal 'https://www.mysite.com', listing.website
   end
 
 end
