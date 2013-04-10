@@ -14,7 +14,7 @@
 
 @import "mixins";
 
-.signin, .passwords {
+.signin, .passwords, .edit-account {
   width: 500px;
   margin: 0 auto;
   padding: 20px;
@@ -24,7 +24,17 @@
   p {
     font-weight: bold;
     font-size: 18px;
+    
+    &.help-block {
+      font-size: 14px;
+      font-weight: normal;
+      font-style: italic;
+    }
   }
+}
+
+.navbar form.button_to {
+  display: inline-block;
 }
 
 

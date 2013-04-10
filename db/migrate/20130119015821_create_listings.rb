@@ -8,9 +8,9 @@ class CreateListings < ActiveRecord::Migration
       t.string    :state
       t.string    :contact_email
       t.string    :website
-      t.integer   :phone_area_code
-      t.integer   :phone_exchange
-      t.integer   :phone_suffix
+      t.string    :phone_area_code
+      t.string    :phone_exchange
+      t.string    :phone_suffix
       t.string    :portfolio_photo_description
 
       t.timestamps

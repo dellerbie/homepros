@@ -7,6 +7,7 @@ class PreviewPhotosController < ApplicationController
     @preview_photo = PreviewPhoto.new
     @preview_photo.photo = params[:user][:listing_attributes][:portfolio_photo]
     if @preview_photo.save
+      session[:preview_photo_url] = @preview_photo.photo_url
       render 'create', status: :ok
     else 
       render 'create', status: :unprocessable_entity

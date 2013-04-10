@@ -2,12 +2,11 @@
 %html
   %head
     %title="Welcome to OC Homepros"
-    = csrf_meta_tags
   %body
-  %h1
-    = "Welcome to OC Homepros #{@user.first_name}"
   %p
-    You can log in to your account with your email address here:
+    = "Welcome to OC Homepros #{@user.first_name.capitalize}!"
+  %p
+    You can manage your listing by logging in to your account here:
     = new_user_session_url
   %p
     Sincerely,

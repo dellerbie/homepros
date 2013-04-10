@@ -11,14 +11,16 @@
         Upload an image of your work that best represents your primary style. You can always change this image after your card has been created.
       
       = listing_form.input :portfolio_photo, label: 'For best results upload a 900 x 630 JPG or PNG.', hint: 'Don’t have that size? We’ll resize what you have to make sure it fits.', as: :file
-      = listing_form.input :portfolio_photo_description, as: :text, hint: 'Example: This is a screenshot from our latest homepage redesign of starbucks.com'
+      = listing_form.input :portfolio_photo_cache, as: :hidden
+      = listing_form.input :portfolio_photo_description, as: :text, hint: 'Example: This is a screenshot from our latest homepage redesign of starbucks.com', input_html: { maxlength: 255 }, placeholder: 'Describe your portfolio photo'
     
     %fieldset.company-info
       %p.title
         Now, tell us about your business
       
-      = listing_form.input :company_name, label: "What's your company name?", hint: "You can use your own name if you're a freelancer and don't have a company name.", input_html: {class: 'input-xlarge'}
-      = listing_form.input :company_logo, label: 'Upload your company logo (optional)', hint: 'GIF, JPG, or PNG. We’ll resize what you have.<br/>This is shown on your listing page for clients to see.', as: :file
+      = listing_form.input :company_name, label: "What's your company name?", hint: "You can use your own name if you're a freelancer and don't have a company name.", input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'Your Company Inc.'
+      = listing_form.input :company_logo_photo, label: 'Upload your company logo (optional)', hint: 'GIF, JPG, or PNG. We’ll resize what you have.<br/>This is shown on your listing page for clients to see.', as: :file
+      = listing_form.input :company_logo_photo_cache, as: :hidden
       = listing_form.association :specialties, collection: Specialty.order("name ASC"), label: 'What do you specialize in?', hint: 'You can select up to 2 specialties'
       = listing_form.input :budget_id, label: 'What type of budgets do you normally work with?', collection: Listing::BUDGETS.map {|k,v| [v,k]}, as: :radio_buttons
       = listing_form.association :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose the closest city', collection: City.all(order: 'name'), prompt: 'Please select a city'
@@ -27,25 +29,26 @@
       %p.title
         How can clients get in touch?
         
-      = listing_form.input :contact_email, label: 'Sales contact email', hint: 'This is how clients will contact you (example: sales@mydomain.com)', input_html: {class: 'input-xlarge'}
-      = listing_form.input :website, label: 'Website URL (optional)', hint: '(example: mydomain.com)', input_html: {class: 'input-xlarge'}
+      = listing_form.input :contact_email, label: 'Sales contact email', hint: 'This is how clients will contact you (example: sales@mydomain.com)', input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'sales@email.com'
+      = listing_form.input :website, label: 'Website URL (optional)', hint: '(example: mydomain.com)', input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'http://www.yourwebsite.com'
       = listing_form.label :phone_number
       = listing_form.hint '(example: 555-555-5555)'
-      = listing_form.input_field :phone_area_code, class: 'span1'
-      = listing_form.input_field :phone_exchange, class: 'span1'
-      = listing_form.input_field :phone_suffix, class: 'span2'
+      = listing_form.input_field :phone_area_code, class: 'span1', input_html: {maxlength: 3}, placeholder: '555'
+      = listing_form.input_field :phone_exchange, class: 'span1', input_html: {maxlength: 3}, placeholder: '555'
+      = listing_form.input_field :phone_suffix, class: 'span1', input_html: {maxlength: 4}, placeholder: '5555'
   
   %fieldset.account-info
     %p.title
       Finally, create an account
     
-    = f.input :first_name, label: 'First name', input_html: {class: 'input-xlarge'}
-    = f.input :last_name, label: 'Last name', input_html: {class: 'input-xlarge'}
-    = f.input :email, label: 'Your email address', hint: "This is how we'll stay in touch (clients don’t see this address).", input_html: {class: 'input-xlarge'}
+    = f.input :first_name, label: 'First name', input_html: {class: 'input-xlarge'}, placeholder: 'First name'
+    = f.input :last_name, label: 'Last name', input_html: {class: 'input-xlarge'}, placeholder: 'Last name'
+    = f.input :email, label: 'Your email address', hint: "This is how we'll stay in touch (clients don’t see this address).", input_html: {class: 'input-xlarge'}, placeholder: 'example@email.com'
     = f.input :password, hint: "Must be at least 6 characters.", input_html: {class: 'input-xlarge'}
     = f.input :password_confirmation, label: 'Password again', hint: 'Confirm your password by entering it again.', input_html: {class: 'input-xlarge'}
 
   .form-actions
-    = f.submit 'Save', class: 'btn btn-primary'
+    %button.btn.btn-primary
+      Save
     %button{type: 'button', class: 'btn'}
       Cancel

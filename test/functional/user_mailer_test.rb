@@ -8,7 +8,7 @@ class UserMailerTest < ActionMailer::TestCase
     
     email = ActionMailer::Base.deliveries.last
     assert email.body.include?("Welcome to Homepros derrick!")
-    assert_equal ["no-reply@homepros.com"], email.from 
+    assert_equal ["slowblues@gmail.com"], email.from 
     assert_equal "Welcome to OC Homepros", email.subject
   end
 end

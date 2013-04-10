@@ -32,7 +32,7 @@ class ListingTest < ActiveSupport::TestCase
   
   [:budget_id, :specialty_ids, :city_id, :company_logo_photo, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_description, :website, 
-    :phone_area_code, :phone_exchange, :phone_suffix].each do |attr|
+    :phone_area_code, :phone_exchange, :phone_suffix, :company_logo_photo_cache, :portfolio_photo_cache].each do |attr|
       should allow_mass_assignment_of(attr)
   end
   

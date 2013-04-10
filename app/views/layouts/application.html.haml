@@ -11,10 +11,12 @@
         = link_to 'OC Homepros', root_path, class: "brand"
         .pull-right
           - if user_signed_in?
-            = link_to 'Logout', destroy_user_session_path, class: 'btn btn-danger', method: :delete
+            = link_to 'My Listing', listing_path(current_user.listing), class: "btn btn-primary"
+            = link_to 'My Account', edit_user_registration_path, class: "btn btn-info"
+            = button_to 'Logout', destroy_user_session_path, class: 'btn btn-danger', method: :delete
           - else 
             = link_to 'Login', new_user_session_path, class: 'btn btn-primary'
-          = link_to 'Get Listed Today', new_user_registration_path, class: "btn btn-success"
+            = link_to 'Get Listed Today', new_user_registration_path, class: "btn btn-success"
     .container 
       = render 'shared/flash_messages', flash: flash
       = yield

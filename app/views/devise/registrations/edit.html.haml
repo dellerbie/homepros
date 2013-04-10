@@ -1,0 +1,24 @@
+.edit-account
+  %p
+    Your Account
+
+  = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+    = f.error_notification
+    = display_base_errors resource
+  
+    = f.input :email, input_html: { autofocus: true }
+    = f.input :password, hint: "(leave blank if you don't want to change it)"
+    = f.input :password_confirmation
+    = f.input :current_password, as: :password
+    = f.submit 'Update', class: 'btn btn-primary'
+    
+    %br
+    %br
+  
+  %h3
+    Cancel my account
+  %p
+    Unhappy?
+    = button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, class: 'btn btn-danger'
+    
+  = link_to "Back", :back
