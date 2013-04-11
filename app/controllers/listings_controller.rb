@@ -1,4 +1,7 @@
 class ListingsController < ApplicationController
+  
+  before_filter :authenticate_user!, only: [:edit, :update, :destroy]
+  
   # GET /listings
   # GET /listings.json
   def index
@@ -13,19 +16,17 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.json
   def show
-    # @listing = Listing.find(params[:id])
+    @listing = Listing.find(params[:id])
     
-    # @listing = Listing.new
-
     respond_to do |format|
       format.html # show.html.erb
-      # format.json { render json: @listing }
+      format.json { render json: @listing }
     end
   end
 
   # GET /listings/1/edit
   def edit
-    @listing = Listing.find(params[:id])
+    @listing = current_user.listing
   end
 
   # PUT /listings/1

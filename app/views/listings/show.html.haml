@@ -1,62 +1,74 @@
-%p.span2.offset1
-  %i.icon-arrow-left
-  = link_to 'Back to Listings', root_path
-  
-.listing-container-xlarge.span9.offset1
-  .pull-right
-    = link_to '#' do
-      = image_tag('company-logo.gif')
-  %p.company-name
-    Valiant Media, Inc.
-  %p.budget
-    %span.label.label-info
-      Typical budget
-    %span.value 
-      %strong
-        $10,000-$25,000
-  %p.location 
-    %span.label.label-info
-      Headquarted in
-    %span.value
-      %strong
-        Orange
+- if current_user && current_user.listing == @listing
+  .row.edit-listing-btn
+    .span9.offset1
+      = link_to 'Edit', edit_listing_path(current_user.listing), class: 'btn btn-large btn-success pull-right'
+- else
+  .row
+    %p.span2.offset1
+      %i.icon-arrow-left
+      = link_to 'Back to Listings', root_path
+
+.row 
+  .listing-container-xlarge.span9.offset1
+    .pull-right
+      - if @listing.company_logo_photo.present?
+        - if @listing.website.present?
+          = link_to @listing.website do
+            = image_tag(@listing.company_logo_photo)
+        - else
+          = image_tag(@listing.company_logo_photo)
+    %p.company-name
+      = @listing.company_name
+    %p.budget
+      %span.label.label-info
+        Typical budget
+      %span.value 
+        %strong
+          = Listing::BUDGETS[@listing.budget_id]
+    %p.location 
+      %span.label.label-info
+        Headquarted in
+      %span.value
+        %strong
+          = @listing.city.name
         
-  .description 
-    %p
-      There is no longer any reason to turn to a traditional ad agency for your website creative and development.
-    %p
-      Valiant Media is a professional design services company, efficiently streamlined, flexible, and decades deep in skill and experience. We deploy an accomplished veteran team to ensure that your project is done right the first time.
-    %p 
-      Check out our site for dozens of portfolio samples and an endless stream of client testimonials.
+    .description 
+      %p
+        There is no longer any reason to turn to a traditional ad agency for your website creative and development.
+      %p
+        Valiant Media is a professional design services company, efficiently streamlined, flexible, and decades deep in skill and experience. We deploy an accomplished veteran team to ensure that your project is done right the first time.
+      %p 
+        Check out our site for dozens of portfolio samples and an endless stream of client testimonials.
     
-  %p.website
-    %strong
-      Website
-    %br
-    = link_to 'http://valiantmedia.com'
+    %p.website
+      %strong
+        Website
+      %br
+      = link_to @listing.website
   
-  %p.contact-us
-    %strong
-      Contact Us
-    %br
-    = link_to 'newsbiz@valiantmedia.com'
+    %p.contact-us
+      %strong
+        Contact Us
+      %br
+      = mail_to @listing.contact_email, nil, subject: 'Question from OC Homepros'
   
-  .portfolio-image.img-polaroid
-    = image_tag('large-listing.jpg')
-    %p
-      This site for Landry's Seafood is just one of hundreds of successful website designs we've created.
+    .portfolio-image.img-polaroid
+      = image_tag(@listing.portfolio_photo)
+      %p
+        = @listing.portfolio_photo_description
   
-  .contact-container
-    %p
-      Like what you see? Get in touch with Valiant Media, Inc.
+    .contact-container
+      %p
+        Like what you see? Get in touch with
+        = @listing.company_name
       
-    %ul.links
-      %li
-        = link_to 'newsbiz@valiantmedia.com'
-      %li
-        = link_to 'www.valiantmedia.com'
+      %ul.links
+        %li
+          = mail_to @listing.contact_email, nil, subject: 'Question from OC Homepros'
+        %li
+          = link_to @listing.website
     
-    %p.plug
-      Be sure to let 'em know OC Homepros sent you.
+      %p.plug
+        Be sure to let 'em know OC Homepros sent you.
     
   

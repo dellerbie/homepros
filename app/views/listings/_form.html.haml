@@ -1,0 +1,42 @@
+= simple_form_for(@listing, :url => listing_path(@listing)) do |f|
+  = f.error_notification
+  = display_base_errors @listing
+  
+  %fieldset.sample
+    %p.title
+      First, add a picture of your best work
+    = image_tag('sample-listing-size.png', class: 'sample-listing-size')
+    %p
+      Upload an image of your work that best represents your primary style. You can always change this image after your card has been created.
+    
+    = f.input :portfolio_photo, label: 'For best results upload a 900 x 630 JPG or PNG.', hint: 'Don’t have that size? We’ll resize what you have to make sure it fits.', as: :file
+    = f.input :portfolio_photo_cache, as: :hidden
+    = f.input :portfolio_photo_description, as: :text, hint: 'Example: This is a screenshot from our latest homepage redesign of starbucks.com', input_html: { maxlength: 255 }, placeholder: 'Describe your portfolio photo'
+  
+  %fieldset.company-info
+    %p.title
+      Now, tell us about your business
+    
+    = f.input :company_name, label: "What's your company name?", hint: "You can use your own name if you're a freelancer and don't have a company name.", input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'Your Company Inc.'
+    = f.input :company_logo_photo, label: 'Upload your company logo (optional)', hint: 'GIF, JPG, or PNG. We’ll resize what you have.<br/>This is shown on your listing page for clients to see.', as: :file
+    = f.input :company_logo_photo_cache, as: :hidden
+    = f.association :specialties, collection: Specialty.order("name ASC"), label: 'What do you specialize in?', hint: 'You can select up to 2 specialties'
+    = f.input :budget_id, label: 'What type of budgets do you normally work with?', collection: Listing::BUDGETS.map {|k,v| [v,k]}, as: :radio_buttons
+    = f.association :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose the closest city', collection: City.all(order: 'name'), prompt: 'Please select a city'
+
+  %fieldset.contact-info
+    %p.title
+      How can clients get in touch?
+      
+    = f.input :contact_email, label: 'Sales contact email', hint: 'This is how clients will contact you (example: sales@mydomain.com)', input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'sales@email.com'
+    = f.input :website, label: 'Website URL (optional)', hint: '(example: mydomain.com)', input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'http://www.yourwebsite.com'
+    = f.label :phone_number
+    = f.hint '(example: 555-555-5555)'
+    = f.input_field :phone_area_code, class: 'span1', input_html: {maxlength: 3}, placeholder: '555'
+    = f.input_field :phone_exchange, class: 'span1', input_html: {maxlength: 3}, placeholder: '555'
+    = f.input_field :phone_suffix, class: 'span1', input_html: {maxlength: 4}, placeholder: '5555'
+
+  .form-actions
+    %button.btn.btn-primary
+      Save
+    = link_to 'Cancel', :back, class: 'btn'
