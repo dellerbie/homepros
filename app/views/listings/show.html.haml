@@ -13,7 +13,7 @@
     .pull-right
       - if @listing.company_logo_photo.present?
         - if @listing.website.present?
-          = link_to @listing.website do
+          = link_to @listing.website, target: '_blank' do
             = image_tag(@listing.company_logo_photo)
         - else
           = image_tag(@listing.company_logo_photo)
@@ -31,14 +31,16 @@
       %span.value
         %strong
           = @listing.city.name
+    %p.specialties
+      %span.label.label-info
+        Specialties
+      %span.value
+        %strong
+          = @listing.specialties.collect { |s| s.name }.join(', ')
         
     .description 
       %p
-        There is no longer any reason to turn to a traditional ad agency for your website creative and development.
-      %p
-        Valiant Media is a professional design services company, efficiently streamlined, flexible, and decades deep in skill and experience. We deploy an accomplished veteran team to ensure that your project is done right the first time.
-      %p 
-        Check out our site for dozens of portfolio samples and an endless stream of client testimonials.
+        = simple_format(@listing.company_description)
     
     %p.website
       %strong

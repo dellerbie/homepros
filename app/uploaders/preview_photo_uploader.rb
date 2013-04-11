@@ -14,6 +14,10 @@ class PreviewPhotoUploader < CarrierWave::Uploader::Base
   end
 
   process :resize_to_fit => [195, 136]
+  
+  version :logo do
+    process :resize_to_fill => [150, 50]
+  end
 
   def extension_white_list
     %w(jpg jpeg gif png)

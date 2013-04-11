@@ -9,7 +9,7 @@ class ListingTest < ActiveSupport::TestCase
   should validate_presence_of :phone_area_code
   should validate_presence_of :phone_exchange
   should validate_presence_of :phone_suffix
-  should validate_presence_of :city
+  should validate_presence_of(:city).with_message(/Please select a city closest to your business/)
   should validate_presence_of(:specialties).with_message(/Please select at least one specialty/)
   
   should_not validate_presence_of :company_logo_photo
@@ -28,9 +28,12 @@ class ListingTest < ActiveSupport::TestCase
   should allow_value("http://d.com").for(:website)
   should allow_value("https://test.test.com").for(:website)
   
+  should ensure_length_of(:company_description).is_at_most(1000)
+  
   [:budget_id, :specialty_ids, :city_id, :company_logo_photo, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_description, :website, 
-    :phone_area_code, :phone_exchange, :phone_suffix, :company_logo_photo_cache, :portfolio_photo_cache].each do |attr|
+    :phone_area_code, :phone_exchange, :phone_suffix, :company_logo_photo_cache, :portfolio_photo_cache,
+    :company_description].each do |attr|
       should allow_mass_assignment_of(attr)
   end
   

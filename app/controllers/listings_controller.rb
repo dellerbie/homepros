@@ -32,7 +32,7 @@ class ListingsController < ApplicationController
   # PUT /listings/1
   # PUT /listings/1.json
   def update
-    @listing = Listing.find(params[:id])
+    @listing = current_user.listing
 
     respond_to do |format|
       if @listing.update_attributes(params[:listing])

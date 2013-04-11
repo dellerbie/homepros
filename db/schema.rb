@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130320003556) do
+ActiveRecord::Schema.define(:version => 20130411212151) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20130320003556) do
     t.string   "portfolio_photo_token"
     t.string   "company_logo_photo"
     t.string   "company_logo_photo_token"
+    t.text     "company_description"
   end
 
   create_table "listings_specialties", :force => true do |t|

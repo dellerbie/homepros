@@ -5,9 +5,25 @@ class PreviewPhotosController < ApplicationController
   
   def create
     @preview_photo = PreviewPhoto.new
-    @preview_photo.photo = params[:user][:listing_attributes][:portfolio_photo]
+    photo = nil
+    company_logo = false
+    
+    if params[:listing] && params[:listing][:portfolio_photo]
+      photo = params[:listing][:portfolio_photo]
+    elsif params[:listing] && params[:listing][:company_logo_photo]
+      photo = params[:listing][:company_logo_photo]
+      company_logo = true
+    else
+      photo = params[:user][:listing_attributes][:portfolio_photo]
+    end
+    
+    @preview_photo.photo = photo
     if @preview_photo.save
-      session[:preview_photo_url] = @preview_photo.photo_url
+      if company_logo
+        session[:logo_photo_url] = @preview_photo.photo_url(:logo)
+      else
+        session[:preview_photo_url] = @preview_photo.photo_url
+      end
       render 'create', status: :ok
     else 
       render 'create', status: :unprocessable_entity

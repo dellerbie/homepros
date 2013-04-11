@@ -15,7 +15,8 @@ class Listing < ActiveRecord::Base
   }
   
   attr_accessible :budget_id, :specialty_ids, :city_id, :company_logo_photo, :company_logo_photo_cache, :company_name, :contact_email,
-    :portfolio_photo, :portfolio_photo_cache, :portfolio_photo_description, :website, :phone_area_code, :phone_exchange, :phone_suffix
+    :portfolio_photo, :portfolio_photo_cache, :portfolio_photo_description, :website, :phone_area_code, :phone_exchange, :phone_suffix,
+    :company_description
     
   mount_uploader :portfolio_photo, PortfolioPhotoUploader
   mount_uploader :company_logo_photo, CompanyLogoUploader
@@ -47,6 +48,7 @@ class Listing < ActiveRecord::Base
     
   validates_length_of :portfolio_photo_description, maximum: 255
   validates_length_of :company_name, maximum: 255
+  validates_length_of :company_description, maximum: 1000
   
   validates_length_of :contact_email, maximum: 255
   validates_format_of :contact_email, :with => EmailAddress::VALID_PATTERN, :message => "Please enter a valid email address", :allow_blank => true
