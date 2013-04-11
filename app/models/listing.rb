@@ -26,7 +26,7 @@ class Listing < ActiveRecord::Base
   validates_presence_of :portfolio_photo, message: 'Please upload a sample photo of your work'
   validates_presence_of :portfolio_photo_description
   validates_presence_of :company_name
-  validates_presence_of :city
+  validates_presence_of :city, message: 'Please select a city closest to your business'
   validates_presence_of :contact_email
   validates_presence_of :specialties, message: 'Please select at least one specialty'
   

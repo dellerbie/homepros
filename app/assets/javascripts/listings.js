@@ -27,12 +27,12 @@ $(function() {
     $('#img_prev').attr('src', '/assets/small-listing.png');
   }
   
-  $('#user_listing_attributes_portfolio_photo_description').keyup(function() {
+  $('#user_listing_attributes_portfolio_photo_description').on('blur keyup', function() {
     var text = $(this).val() || 'Your image description';
     $('.preview .description').text(text);
   });
   
-  $('#user_listing_attributes_company_name').keyup(function() {
+  $('#user_listing_attributes_company_name').on('blur keyup', function() {
     var text = $(this).val() || 'Your company name';
     $('.preview .company-name').text(text);
   });
