@@ -8,10 +8,10 @@ class PortfolioPhotoUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::RailsHelper
   include Sprockets::Helpers::IsolatedHelper
 
-  storage :file
+  storage :fog
 
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "portfolios"
   end
 
   process :resize_to_fit => [900, 630]

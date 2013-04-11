@@ -7,10 +7,10 @@ class PreviewPhotoUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::RailsHelper
   include Sprockets::Helpers::IsolatedHelper
 
-  storage :file
+  storage :fog
 
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "previews"
   end
 
   process :resize_to_fit => [195, 136]

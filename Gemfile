@@ -8,9 +8,11 @@ gem 'jquery-rails'
 gem 'simple_form'
 gem 'seed-fu'
 gem 'carrierwave'
+gem "fog", "~> 1.3.1"
 gem 'mini_magick'
 gem 'remotipart', '~> 1.0'
 gem "aws-ses", :require => 'aws/ses'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
