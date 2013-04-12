@@ -12,6 +12,7 @@ gem "fog", "~> 1.3.1"
 gem 'mini_magick'
 gem 'remotipart', '~> 1.0'
 gem "aws-ses", :require => 'aws/ses'
+gem 'will_paginate'
 
 
 # Gems used only for assets and not required

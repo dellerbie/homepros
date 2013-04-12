@@ -1,7 +1,7 @@
 City.seed(
-  {name: 'Orange'},
-  {name: 'Irvine'},
-  {name: 'Fullerton'},
-  {name: 'Anaheim'},
-  {name: 'Mission Viejo'}
+  {name: 'Orange', slug: 'orange'},
+  {name: 'Irvine', slug: 'irvine'},
+  {name: 'Fullerton', slug: 'fullerton'},
+  {name: 'Anaheim', slug: 'anaheim'},
+  {name: 'Mission Viejo', slug: 'mission-viejo'}
 )

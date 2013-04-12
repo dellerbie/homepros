@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   has_one :listing, :dependent => :destroy
   accepts_nested_attributes_for :listing
   
+  default_scope :include => [:listing => [:city, :specialties]]
+  
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :listing_attributes
   
   validates_presence_of :first_name

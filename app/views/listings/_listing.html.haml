@@ -1,13 +1,13 @@
 %li.listing-container.thumbnail
-  = link_to 'Your company name', listings_path(Listing.first), class: 'company-name'
+  = link_to listing.company_name, listing_path(listing), class: 'company-name'
   %p
     %span.budget.text
-      Typical project budge range
+      = Listing::BUDGETS[listing.budget_id]
     %br
     %span.location.text
-      Company location
-  = link_to '#' do
-    = image_tag('small-listing.png')
+      = listing.city.name
+  = link_to listing_path(listing) do
+    = image_tag(listing.portfolio_photo)
   %p
     %span.description.text
-      Your image description
+      = listing.portfolio_photo_description

@@ -14,6 +14,18 @@ class Listing < ActiveRecord::Base
     5 => 'Over $50,000'
   }
   
+  BUDGET_SLUGS = {
+    '3000-below' => 1,
+    '3000-to-10000' => 2,
+    '10000-to-25000' => 3,
+    '25000-to-50000' => 4,
+    '50000-above' => 5
+  }
+  
+  ALL_CITIES_FILTER_KEY = 'all-cities'
+  ALL_BUDGETS_FILTER_KEY = 'all-budgets'
+  ALL_SPECIALTIES_FILTER_KEY = 'all-specialties'
+  
   attr_accessible :budget_id, :specialty_ids, :city_id, :company_logo_photo, :company_logo_photo_cache, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_cache, :portfolio_photo_description, :website, :phone_area_code, :phone_exchange, :phone_suffix,
     :company_description

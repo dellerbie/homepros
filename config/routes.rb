@@ -8,6 +8,8 @@ Homepros::Application.routes.draw do
   
   resources :preview_photos, only: :create
   
+  get '/(:city_slug/(:specialty_slug)/(:budget_slug))' => 'listings#index'
+  
   root :to => 'listings#index'
   
 end

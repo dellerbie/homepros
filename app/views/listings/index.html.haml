@@ -1,7 +1,7 @@
 .filters
   Showing all contractors in
   .dropdown
-    = link_to 'Orange', '#', class: 'city filter dropdown-toggle', 'data-toggle' => 'dropdown'
+    = link_to 'Orange', '#', class: 'city filter dropdown-toggle', 'data-toggle' => 'dropdown', 'data-trigger' => 'hover'
     %ul.dropdown-menu{role: 'menu', 'aria-labelledby' => 'dropdownMenu'}
       %li
         = link_to 'Irvine', '#'
@@ -11,9 +11,21 @@
         = link_to 'Costa Mesa', '#'
       %li
         = link_to 'Huntington Beach', '#'
+  specializing in 
+  .dropdown
+    = link_to 'Kitchens', '#', class: 'specialty filter dropdown-toggle', 'data-toggle' => 'dropdown', 'data-trigger' => 'hover'
+    %ul.dropdown-menu{role: 'menu', 'aria-labelledby' => 'dropdownMenu'}
+      %li
+        = link_to 'General', '#'
+      %li
+        = link_to 'Kitchens', '#'
+      %li
+        = link_to 'Bathrooms', '#'
+      %li
+        = link_to 'Landscaping', '#'
   who work on projects for 
   .dropdown
-    = link_to 'any budget', '#', class: 'budget filter dropdown-toggle', 'data-toggle' => 'dropdown'
+    = link_to 'any budget', '#', class: 'budget filter dropdown-toggle', 'data-toggle' => 'dropdown', 'data-trigger' => 'hover'
     %ul.dropdown-menu{role: 'menu', 'aria-labelledby' => 'dropdownMenu'}
       %li
         = link_to 'any budget', '#'
@@ -24,6 +36,7 @@
       %li
         = link_to '$10,000-$25,000', '#'
         
-%ul.thumbnails 
-  - 20.times do
-    = render 'listing'
+%ul.thumbnails.listings
+  = render partial: 'listing', collection: @listings
+  
+= will_paginate @listings

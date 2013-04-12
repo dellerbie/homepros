@@ -15,13 +15,32 @@
 //= require jquery.remotipart
 //= require jquery.iframe-post-form
 //= require jquery.imagefit-0.2
+//= require jquery.infinitescroll.min
 //= require twitter/bootstrap
 //= require_tree .
 
 $(function() {
+  
+  function setupInfiniteScroll() {
+    $('#listings').infinitescroll({
+      navSelector  : "div.pagination",    
+      nextSelector : "div.pagination a:first",
+      itemSelector : "#listings li.listing-container",
+      loading: {
+        msgText: "<em>Loading the next set of listings...</em>",
+        finishedMsg: 'No more listings to load.',
+        img: '/images/loader.gif'
+      }
+    });
+  }
+  
   $("body").bind("ajaxSend", function(elm, xhr, s){
     if(s.type == "POST") {
       xhr.setRequestHeader('X-CSRF-Token', jQuery("meta[name=csrf-token]").attr("content"));
     }
   });
+  
+  setupInfiniteScroll();
 });
+
+
