@@ -8,6 +8,10 @@ class ListingsController < ApplicationController
     @page = (params[:page] || 1).to_i
     
     @listings = parse_filter.paginate(paging_options)
+    
+    @current_city_slug = params[:city_slug] || Listing::ALL_CITIES_FILTER_KEY
+    @current_specialty_slug = params[:specialty_slug] || Listing::ALL_SPECIALTIES_FILTER_KEY
+    @current_budget_slug = params[:budget_slug] || Listing::ALL_BUDGETS_FILTER_KEY
 
     respond_to do |format|
       format.html # index.html.erb
@@ -19,7 +23,7 @@ class ListingsController < ApplicationController
     @listing = Listing.find(params[:id])
     
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @listing }
     end
   end
@@ -66,8 +70,6 @@ class ListingsController < ApplicationController
     city_slug = params[:city_slug] == Listing::ALL_CITIES_FILTER_KEY ? '' : params[:city_slug]
     specialty_slug = params[:specialty_slug] == Listing::ALL_SPECIALTIES_FILTER_KEY ? '' : params[:specialty_slug]
     budget_id = params[:budget_slug] == Listing::ALL_BUDGETS_FILTER_KEY ? '' : Listing::BUDGET_SLUGS[params[:budget_slug]]
-    
-    puts "city_slug: #{city_slug}, specialty_slug: #{specialty_slug}, budget_slug: #{params[:budget_slug]}"
     
     scope = scope.where("cities.slug" => city_slug) if city_slug.present?
     scope = scope.where("specialties.slug" => specialty_slug) if specialty_slug.present?

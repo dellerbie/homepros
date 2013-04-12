@@ -1,40 +1,25 @@
 .filters
-  Showing all contractors in
-  .dropdown
-    = link_to 'Orange', '#', class: 'city filter dropdown-toggle', 'data-toggle' => 'dropdown', 'data-trigger' => 'hover'
+  Showing contractors in
+  .dropdown.cities
+    = link_to @current_city_slug.humanize.titleize, '#', class: 'city filter dropdown-toggle', 'data-toggle' => 'dropdown', 'data-slug' => @current_city_slug
     %ul.dropdown-menu{role: 'menu', 'aria-labelledby' => 'dropdownMenu'}
-      %li
-        = link_to 'Irvine', '#'
-      %li
-        = link_to 'Anaheim', '#'
-      %li
-        = link_to 'Costa Mesa', '#'
-      %li
-        = link_to 'Huntington Beach', '#'
+      - City.order(:name).each do |city|
+        %li
+          = link_to city.name, '#', 'data-slug' => city.slug
   specializing in 
-  .dropdown
-    = link_to 'Kitchens', '#', class: 'specialty filter dropdown-toggle', 'data-toggle' => 'dropdown', 'data-trigger' => 'hover'
+  .dropdown.specialties
+    = link_to  @current_specialty_slug.humanize.titleize, '#', class: 'specialty filter dropdown-toggle', 'data-toggle' => 'dropdown', 'data-slug' => @current_specialty_slug
     %ul.dropdown-menu{role: 'menu', 'aria-labelledby' => 'dropdownMenu'}
-      %li
-        = link_to 'General', '#'
-      %li
-        = link_to 'Kitchens', '#'
-      %li
-        = link_to 'Bathrooms', '#'
-      %li
-        = link_to 'Landscaping', '#'
+      - Specialty.order(:name).each do |specialty|
+        %li
+          = link_to specialty.name, '#', 'data-slug' => specialty.slug
   who work on projects for 
-  .dropdown
-    = link_to 'any budget', '#', class: 'budget filter dropdown-toggle', 'data-toggle' => 'dropdown', 'data-trigger' => 'hover'
+  .dropdown.budgets
+    = link_to Listing::BUDGETS[Listing::BUDGET_SLUGS[@current_budget_slug]], '#', class: 'budget filter dropdown-toggle', 'data-toggle' => 'dropdown', 'data-slug' => @current_budget_slug
     %ul.dropdown-menu{role: 'menu', 'aria-labelledby' => 'dropdownMenu'}
-      %li
-        = link_to 'any budget', '#'
-      %li
-        = link_to '$3,000 and under', '#'
-      %li
-        = link_to '$3,000-$10,000', '#'
-      %li
-        = link_to '$10,000-$25,000', '#'
+      - Listing::BUDGETS.each do |key, value|
+        %li
+          = link_to value, '#', 'data-slug' => Listing::BUDGET_IDS_TO_SLUGS[key]
         
 %ul.thumbnails.listings
   = render partial: 'listing', collection: @listings

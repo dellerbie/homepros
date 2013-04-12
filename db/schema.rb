@@ -11,16 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130411231936) do
+ActiveRecord::Schema.define(:version => 20130412202453) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "slug"
+    t.string   "slug",       :null => false
   end
 
-  add_index "cities", ["slug"], :name => "index_cities_on_slug"
+  add_index "cities", ["slug"], :name => "index_cities_on_slug", :unique => true
+
+  create_table "friendly_id_slugs", :force => true do |t|
+    t.string   "slug",                         :null => false
+    t.integer  "sluggable_id",                 :null => false
+    t.string   "sluggable_type", :limit => 40
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], :name => "index_friendly_id_slugs_on_slug_and_sluggable_type", :unique => true
+  add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
+  add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "listings", :force => true do |t|
     t.integer  "user_id"
@@ -42,7 +53,10 @@ ActiveRecord::Schema.define(:version => 20130411231936) do
     t.string   "company_logo_photo"
     t.string   "company_logo_photo_token"
     t.text     "company_description"
+    t.string   "slug",                        :null => false
   end
+
+  add_index "listings", ["slug"], :name => "index_listings_on_slug", :unique => true
 
   create_table "listings_specialties", :force => true do |t|
     t.integer "listing_id"
@@ -58,10 +72,10 @@ ActiveRecord::Schema.define(:version => 20130411231936) do
 
   create_table "specialties", :force => true do |t|
     t.string "name"
-    t.string "slug"
+    t.string "slug", :null => false
   end
 
-  add_index "specialties", ["slug"], :name => "index_specialties_on_slug"
+  add_index "specialties", ["slug"], :name => "index_specialties_on_slug", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "first_name",             :default => "", :null => false

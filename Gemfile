@@ -13,6 +13,7 @@ gem 'mini_magick'
 gem 'remotipart', '~> 1.0'
 gem "aws-ses", :require => 'aws/ses'
 gem 'will_paginate'
+gem 'friendly_id'
 
 
 # Gems used only for assets and not required

@@ -1,5 +1,8 @@
 class Listing < ActiveRecord::Base
   include EmailAddress
+  extend FriendlyId
+  
+  friendly_id :company_name_and_location, use: [:slugged]
   
   belongs_to :user
   has_and_belongs_to_many :specialties
@@ -21,6 +24,8 @@ class Listing < ActiveRecord::Base
     '25000-to-50000' => 4,
     '50000-above' => 5
   }
+  
+  BUDGET_IDS_TO_SLUGS = BUDGET_SLUGS.invert
   
   ALL_CITIES_FILTER_KEY = 'all-cities'
   ALL_BUDGETS_FILTER_KEY = 'all-budgets'
@@ -73,6 +78,10 @@ class Listing < ActiveRecord::Base
   before_create :default_state
   
   before_validation :add_default_website_protocol
+  
+  def company_name_and_location
+    "#{company_name} #{city.name}"
+  end
   
   protected
   
