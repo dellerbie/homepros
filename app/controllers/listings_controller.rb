@@ -12,6 +12,8 @@ class ListingsController < ApplicationController
     @current_city_slug = params[:city_slug] || Listing::ALL_CITIES_FILTER_KEY
     @current_specialty_slug = params[:specialty_slug] || Listing::ALL_SPECIALTIES_FILTER_KEY
     @current_budget_slug = params[:budget_slug] || Listing::ALL_BUDGETS_FILTER_KEY
+    
+    @base_css = 'listings-index'
 
     respond_to do |format|
       format.html # index.html.erb
@@ -21,11 +23,16 @@ class ListingsController < ApplicationController
 
   def show
     @listing = Listing.find(params[:id])
+    @base_css = 'show-listing'
     
     respond_to do |format|
       format.html
       format.json { render json: @listing }
     end
+  end
+  
+  def edit
+    @base_css = 'edit-listing'
   end
 
   def update
