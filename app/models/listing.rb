@@ -8,6 +8,8 @@ class Listing < ActiveRecord::Base
   has_and_belongs_to_many :specialties
   belongs_to :city
   
+  default_scope :include => [:city, :specialties]
+  
   MAX_SPECIALTIES = 2
   BUDGETS = {
     1 => '$3,000 and under',
@@ -80,7 +82,7 @@ class Listing < ActiveRecord::Base
   before_validation :add_default_website_protocol
   
   def company_name_and_location
-    "#{company_name} #{city.name}"
+    "#{company_name} #{city.try(:name)}"
   end
   
   protected

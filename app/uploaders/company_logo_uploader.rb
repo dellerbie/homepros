@@ -8,7 +8,11 @@ class CompanyLogoUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::RailsHelper
   include Sprockets::Helpers::IsolatedHelper
 
-  storage :fog
+  if Rails.env.test?
+    storage :file
+  else 
+    storage :fog
+  end
 
   def store_dir
     "logos"

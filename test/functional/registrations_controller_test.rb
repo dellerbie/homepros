@@ -64,7 +64,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     
     assert ActionMailer::Base.deliveries.present?, 'no email delivered'
     email = ActionMailer::Base.deliveries.last
-    assert email.body.include?("Welcome to Homepros derrick!")
+    assert email.body.include?("Welcome to OC Homepros Derrick!")
     assert_equal ["slowblues@gmail.com"], email.from
   end
 end
