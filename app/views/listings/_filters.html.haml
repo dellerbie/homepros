@@ -17,12 +17,3 @@
       - Specialty.order(:name).each do |specialty|
         %li
           = link_to specialty.name, '#', 'data-slug' => specialty.slug
-  who work on projects for 
-  .dropdown.budgets
-    = link_to Listing::BUDGETS[Listing::BUDGET_SLUGS[@current_budget_slug]] || 'All Budgets', '#', class: 'budget filter dropdown-toggle', 'data-toggle' => 'dropdown', 'data-slug' => @current_budget_slug
-    %ul.dropdown-menu{role: 'menu', 'aria-labelledby' => 'dropdownMenu'}
-      %li
-        = link_to 'All Budgets', '#', 'data-slug' => 'all-budgets'
-      - Listing::BUDGETS.each do |key, value|
-        %li
-          = link_to value, '#', 'data-slug' => Listing::BUDGET_IDS_TO_SLUGS[key]

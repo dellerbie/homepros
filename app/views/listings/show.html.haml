@@ -19,12 +19,12 @@
           = image_tag(@listing.company_logo_photo)
     %p.company-name
       = @listing.company_name
-    %p.budget
+    %p.specialties
       %span.label.label-info
-        Typical budget
+        Specialties
       %span.value 
         %strong
-          = Listing::BUDGETS[@listing.budget_id]
+          = specialties(@listing)
     %p.location 
       %span.label.label-info
         Headquarted in

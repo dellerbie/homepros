@@ -47,8 +47,18 @@ $(function() {
     $('.preview .location').text(text);
   });
 
-  $('input[name="user[listing_attributes][budget_id]"], input[name="listing[budget_id]"]').change(function() {
-    var text = $(this).parent().text() || 'Typical project budget range';
-    $('.preview .budget').text(text);
+  $('#user_listing_attributes_specialty_ids, #listing_specialty_ids').change(function(e) {    
+    var text = 'Specialties',
+        specialties = [];
+
+    $('option:selected', $(this)).each(function() {
+      specialties.push($(this).text());
+    });
+    
+    if(specialties.length > 0) {
+      text = specialties.join(', ');
+    }
+    
+    $('.preview .specialties').text(text);
   });
 });

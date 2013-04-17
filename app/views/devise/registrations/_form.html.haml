@@ -22,7 +22,6 @@
       = listing_form.input :company_logo_photo, label: 'Upload your company logo (optional)', hint: 'GIF, JPG, or PNG. We’ll resize what you have.<br/>This is shown on your listing page for clients to see.', as: :file
       = listing_form.input :company_logo_photo_cache, as: :hidden
       = listing_form.association :specialties, collection: Specialty.order("name ASC"), label: 'What do you specialize in?', hint: 'You can select up to 2 specialties'
-      = listing_form.input :budget_id, label: 'What type of budgets do you normally work with?', collection: Listing::BUDGETS.map {|k,v| [v,k]}, as: :radio_buttons
       = listing_form.association :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose the closest city', collection: City.all(order: 'name'), prompt: 'Please select a city'
   
     %fieldset.contact-info
@@ -31,11 +30,7 @@
         
       = listing_form.input :contact_email, label: 'Sales contact email', hint: 'This is how clients will contact you (example: sales@mydomain.com)', input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'sales@email.com'
       = listing_form.input :website, label: 'Website URL (optional)', hint: '(example: mydomain.com)', input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'http://www.yourwebsite.com'
-      = listing_form.label :phone_number
-      = listing_form.hint '(example: 555-555-5555)'
-      = listing_form.input_field :phone_area_code, class: 'span1', input_html: {maxlength: 3}, placeholder: '555'
-      = listing_form.input_field :phone_exchange, class: 'span1', input_html: {maxlength: 3}, placeholder: '555'
-      = listing_form.input_field :phone_suffix, class: 'span1', input_html: {maxlength: 4}, placeholder: '5555'
+      = listing_form.input :phone, label: 'Phone Number', placeholder: '555-555-5555', hint: '(example: 555-555-5555)', input_html: {maxlength: 20}
   
   %fieldset.account-info
     %p.title

@@ -1,8 +1,8 @@
 %li.listing-container.thumbnail
   = link_to listing.company_name, listing_path(listing), class: 'company-name'
   %p
-    %span.budget.text
-      = Listing::BUDGETS[listing.budget_id]
+    %span.specialties.text
+      = specialties(listing)
     %br
     %span.location.text
       = listing.city.name

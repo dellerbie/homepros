@@ -3,15 +3,16 @@ class ListingsController < ApplicationController
   before_filter :find_listing, only: [:edit, :update, :destroy]
   
   PER_PAGE = 32
+
+  CITIES = City.all.map(&:slug)
+  SPECIALTIES = Specialty.all.map(&:slug)
   
   def index
     @page = (params[:page] || 1).to_i
     
-    @listings = parse_filter.paginate(paging_options)
+    slugs
     
-    @current_city_slug = params[:city_slug] || Listing::ALL_CITIES_FILTER_KEY
-    @current_specialty_slug = params[:specialty_slug] || Listing::ALL_SPECIALTIES_FILTER_KEY
-    @current_budget_slug = params[:budget_slug] || Listing::ALL_BUDGETS_FILTER_KEY
+    @listings = parse_filter.paginate(paging_options)
     
     @base_css = 'listings-index'
 
@@ -69,18 +70,34 @@ class ListingsController < ApplicationController
     }
   end
   
+  def slugs
+    city_slug, specialty_slug = params[:city_slug], params[:specialty_slug]
+    
+    @current_city_slug = Listing::ALL_CITIES_FILTER_KEY
+    @current_specialty_slug = Listing::ALL_SPECIALTIES_FILTER_KEY
+
+    if city_slug.present? && specialty_slug.blank?
+      if CITIES.include?(city_slug) 
+        @current_city_slug = city_slug
+      elsif SPECIALTIES.include?(city_slug)
+        @current_specialty_slug = city_slug
+      end
+    elsif city_slug.present? && specialty_slug.present?
+      @current_city_slug = city_slug
+      @current_specialty_slug = specialty_slug
+    end
+  end
+  
   def parse_filter
-    return Listing unless params[:city_slug].present? || params[:specialty_slug].present? || params[:budget_slug].present?
+    return Listing unless @current_city_slug.present? || @current_specialty_slug.present?
     
-    scope = Listing.includes(:city, :specialties)
+    scope = Listing
     
-    city_slug = params[:city_slug] == Listing::ALL_CITIES_FILTER_KEY ? '' : params[:city_slug]
-    specialty_slug = params[:specialty_slug] == Listing::ALL_SPECIALTIES_FILTER_KEY ? '' : params[:specialty_slug]
-    budget_id = params[:budget_slug] == Listing::ALL_BUDGETS_FILTER_KEY ? '' : Listing::BUDGET_SLUGS[params[:budget_slug]]
+    city_slug = @current_city_slug == Listing::ALL_CITIES_FILTER_KEY ? '' : @current_city_slug
+    specialty_slug = @current_specialty_slug == Listing::ALL_SPECIALTIES_FILTER_KEY ? '' : @current_specialty_slug
     
     scope = scope.where("cities.slug" => city_slug) if city_slug.present?
     scope = scope.where("specialties.slug" => specialty_slug) if specialty_slug.present?
-    scope = scope.where("budget_id" => budget_id) if budget_id.present?
     
     scope
   end

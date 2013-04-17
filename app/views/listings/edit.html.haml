@@ -8,8 +8,8 @@
           %span.company-name
             = @listing.company_name
           %p
-            %span.budget.text
-              = Listing::BUDGETS[@listing.budget_id]
+            %span.specialties.text
+              = specialties(@listing)
             %br
             %span.location.text
               = @listing.city.name

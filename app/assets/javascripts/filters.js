@@ -5,19 +5,34 @@ $(function() {
     var dropdown = $(this).parents('.dropdown'),
         city = $('.filters .cities .dropdown-toggle').data('slug'),
         specialty = $('.filters .specialties .dropdown-toggle').data('slug'),
-        budget = $('.filters .budgets .dropdown-toggle').data('slug'),
-        selection = $(this).data('slug');
+        selection = $(this).data('slug'),
+        url = '';
     
     if(dropdown.is('.cities')) {
-      url = '/' + selection + '/' + specialty + '/' + budget;
+      if(specialty = 'all-specialties') {
+        specialty = '';
+      } else {
+        specialty = '/' + specialty;
+      }
+      
+      if(selection == 'all-cities') {
+        selection = '';
+      }
+      
+      url = '/' + selection + specialty;
     } else if(dropdown.is('.specialties')) {
-      url = '/' + city + '/' + selection + '/' + budget;
-    } else {
-      url = '/' + city + '/' + specialty + '/' + selection;
-    }
-    
-    if(url == '/all-cities/all-specialties/all-budgets') {
-      url = '/';
+      console.log(city);
+      if(city == 'all-cities') {
+        city = '';
+      } else {
+        city = '/' + city;
+      }
+      
+      if(selection == 'all-specialties') {
+        selection = '';
+      }
+      
+      url = city + '/' + selection;
     }
     
     window.location = url;
