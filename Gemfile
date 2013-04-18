@@ -31,6 +31,10 @@ group :development, :test do
   gem 'faker'
 end
 
+group :development do
+  gem 'nokogiri'
+end
+
 group :test do 
   gem 'shoulda'
   gem 'database_cleaner'

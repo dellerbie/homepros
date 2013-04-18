@@ -201,6 +201,7 @@ DEPENDENCIES
   jquery-rails
   less-rails
   mini_magick
+  nokogiri
   pg
   rails (= 3.2.13)
   remotipart (~> 1.0)
