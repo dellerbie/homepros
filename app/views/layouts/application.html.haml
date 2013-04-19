@@ -3,6 +3,7 @@
   %head
     %title="OC Homepros Beta"
     = stylesheet_link_tag "application", :media => "all"
+    = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Lobster+Two:700', rel: 'stylesheet', type: 'text/css'
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body{class: @base_css || ''}
@@ -17,6 +18,6 @@
           - else 
             = link_to 'Login', new_user_session_path, class: 'btn btn-primary'
             = link_to 'Get Listed Today', new_user_registration_path, class: "btn btn-success"
-    .container
+    .hp-container
       = render 'shared/flash_messages', flash: flash
       = yield

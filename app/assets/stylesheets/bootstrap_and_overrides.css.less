@@ -16,8 +16,20 @@
 
 // Font Awesome
 @import "fontawesome";
+@import "mixins";
 
 body {
   color: #333;
   font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
+  background: #F5F6F7;
+}
+
+.navbar-inner {
+  background: image-url('dark_dotted.png') repeat;
+  
+  .brand {
+    font-family: 'Lobster Two', cursive;
+    font-size: 38px;
+    color: #0099CC;
+  }
 }

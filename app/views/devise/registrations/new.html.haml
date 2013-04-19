@@ -1,21 +1,18 @@
-.container.new-listing
-  .row
-    .span4.offset1
-      .preview
-        %span.header
-          Your free listing will look like this...
-        .listing-container
-          %span.company-name
-            Your company name
-          %p
-            %span.specialties.text
-              Specialties
-            %br
-            %span.location.text
-              Company location
-          = image_tag(session[:preview_photo_url] || 'small-listing.png', id: 'img_prev')
-          %p
-            %span.description.text
-              Your image description
-    .span6
-      = render 'form'
+.preview
+  %span.header
+    Your free listing will look like this...
+  .listing-container
+    %span.company-name
+      Your company name
+    %p
+      %span.specialties.text
+        Specialties
+      %br
+      %span.location.text
+        Company location
+    = image_tag(session[:preview_photo_url] || 'small-listing.png', id: 'img_prev')
+    %p
+      %span.description.text
+        Your image description
+
+= render 'form'

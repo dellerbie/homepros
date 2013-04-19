@@ -16,7 +16,12 @@ module YellowPagesPopulator
         
         categories = YAML::load_file(CATEGORIES_YML)
         cities = YAML::load_file(CITIES_YML)
-        last_city_category = ''
+        last_city_category = File.open(File.join(Rails.root, 'lib', 'yellow_pages', 'last_city_category.txt')).try(:gets).try(:chop) || ""
+        
+        if last_city_category.present?
+          city, cat = last_city_category.split('/')
+          cities.slice!(cities.index(city)..cities.length)
+        end
         
         begin
           cities.each do |city|
@@ -52,7 +57,7 @@ module YellowPagesPopulator
         doc
       end
       
-      def save_last_city_category
+      def save_last_city_category(last_city_category)
         File.open(LAST_CITY_CATEGORY, 'w') { |out| out.write(last_city_category) }
       end
     end
