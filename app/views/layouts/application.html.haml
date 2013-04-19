@@ -16,8 +16,11 @@
             = link_to 'My Account', edit_user_registration_path, class: "btn btn-info"
             = button_to 'Logout', destroy_user_session_path, class: 'btn btn-danger', method: :delete
           - else 
-            = link_to 'Login', new_user_session_path, class: 'btn btn-primary'
-            = link_to 'Get Listed Today', new_user_registration_path, class: "btn btn-success"
+            - unless @hide_login_btn
+              = link_to 'Login', new_user_session_path, class: 'btn btn-primary'
+            - unless @hide_get_listed_btn
+              = link_to 'Get Listed Today', new_user_registration_path, class: "btn btn-success"
     .hp-container
       = render 'shared/flash_messages', flash: flash
       = yield
+      = render 'shared/footer'

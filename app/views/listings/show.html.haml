@@ -1,76 +1,74 @@
-- if current_user && current_user.listing == @listing
-  .row.edit-listing-btn
-    .span9.offset1
-      = link_to 'Edit', edit_listing_path(current_user.listing), class: 'btn btn-large btn-success pull-right'
-- else
-  .row
-    %p.span2.offset1
-      %i.icon-arrow-left
-      = link_to 'Back to Listings', root_path
+- unless current_user && current_user.listing == @listing
+  %p
+    %i.icon-arrow-left
+    = link_to 'Back to Listings', root_path
 
-.row 
-  .listing-container-xlarge.span9.offset1
-    .pull-right
-      - if @listing.company_logo_photo.present?
-        - if @listing.website.present?
-          = link_to @listing.website, target: '_blank' do
-            = image_tag(@listing.company_logo_photo)
-        - else
-          = image_tag(@listing.company_logo_photo)
-    %p.company-name
-      = @listing.company_name
-    %p.specialties
-      %span.label.label-info
-        Specialties
-      %span.value 
-        %strong
-          = specialties(@listing)
-    %p.location 
-      %span.label.label-info
-        Headquarted in
-      %span.value
-        %strong
-          = @listing.city.name
-    %p.specialties
-      %span.label.label-info
-        Specialties
-      %span.value
-        %strong
-          = @listing.specialties.collect { |s| s.name }.join(', ')
-        
-    .description 
-      %p
-        = simple_format(@listing.company_description)
-    
-    %p.website
-      %strong
-        Website
-      %br
-      = link_to @listing.website
-  
-    %p.contact-us
-      %strong
-        Contact Us
-      %br
-      = mail_to @listing.contact_email, nil, subject: 'Question from OC Homepros'
-  
-    .portfolio-image.img-polaroid
-      = image_tag(@listing.portfolio_photo)
-      %p
-        = @listing.portfolio_photo_description
-  
-    .contact-container
-      %p
-        Like what you see? Get in touch with
-        = @listing.company_name
+.listing-container-xlarge  
+  .actions.clearfix
+    - if current_user && current_user.listing == @listing
+      .edit-listing-btn
+        = link_to 'Edit', edit_listing_path(current_user.listing), class: 'btn btn-success pull-right'
       
-      %ul.links
-        %li
-          = mail_to @listing.contact_email, nil, subject: 'Question from OC Homepros'
-        %li
-          = link_to @listing.website
+      %span.action.ask-question
+        %i.icon-question-sign
+        Ask this business a question
+  
+  .pull-right
+    - if @listing.company_logo_photo.present?
+      - if @listing.website.present?
+        = link_to @listing.website, target: '_blank' do
+          = image_tag(@listing.company_logo_photo)
+      - else
+        = image_tag(@listing.company_logo_photo)
     
-      %p.plug
-        Be sure to let 'em know OC Homepros sent you.
+  %p.company-name
+    = @listing.company_name
+  %p.specialties
+    %span.label-info
+      Specialties:
+    %span.value 
+      %strong
+        = specialties(@listing)
+  %p.location 
+    %span.label-info
+      Headquarted in:
+    %span.value
+      %strong
+        = @listing.city.name
+      
+  .description 
+    %p
+      = simple_format(@listing.company_description)
+  
+  %p.website
+    %strong
+      Website
+    %br
+    = link_to @listing.website
+
+  %p.contact-us
+    %strong
+      Contact Us
+    %br
+    = mail_to @listing.contact_email, nil, subject: 'Question from OC Homepros'
+
+  .portfolio-image.img-polaroid
+    = image_tag(@listing.portfolio_photo)
+    %p
+      = @listing.portfolio_photo_description
+
+  .contact-container
+    %p
+      Like what you see? Get in touch with
+      = @listing.company_name
+    
+    %ul.links
+      %li
+        = mail_to @listing.contact_email, nil, subject: 'Question from OC Homepros'
+      %li
+        = link_to @listing.website
+  
+    %p.plug
+      Be sure to let 'em know OC Homepros sent you.
     
   

@@ -45,6 +45,10 @@
   margin-bottom: 20px;
   font-size: 13px;
   
+  .label-info {
+    background: none;
+  }
+  
   .description {
     margin: 15px 0;
   }
@@ -52,19 +56,46 @@
   .company-name {
     font-weight: bold;
     font-size: 26px;
+    margin-bottom: 20px;
   }
   
   p {
     color: #333;
+    
+    &.specialties {
+      margin-bottom: 0;
+    }
+  }
+  
+  .actions {
+    border-bottom: 1px solid #dfdfdf;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    
+    span.action {
+      color: #888;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-block;
+      line-height: 30px;
+      
+      &:hover {
+        color: #222;
+      }
+    }
+    
   }
   
   .portfolio-image {
-    padding: 10px;
+    padding-top: 25px;
     margin: 20px 0;
     background: #f1f1f1;
+    text-align: center;
     
     p {
       margin-top: 10px;
+      padding: 0 20px;
+      text-align: left;
     }
   }
   
@@ -128,7 +159,7 @@
       position: relative;
       
       p {
-        font-size: .85em;
+        font-size: 14px;
         
         strong {
           color: #000;
@@ -138,7 +169,6 @@
       label {
         font-weight: bold;
         color: #333;
-        font-size: .85em;
         
         &.radio {
           font-weight: normal
@@ -146,7 +176,7 @@
       }
       
       .help-block {
-        font-size: .8em;
+        font-size: 12px;
         margin: -5px 0 3px 0;
       }
       
@@ -183,6 +213,14 @@
       font-weight: bold;
       font-size: 1.2em;
       color: #000;
+    }
+    
+    .form-actions {
+      .btn {
+        padding: 8px 18px;
+        line-height: 20px;
+        margin-right: 15px;
+      }
     }
   }
 }

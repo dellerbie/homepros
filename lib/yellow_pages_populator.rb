@@ -20,7 +20,8 @@ module YellowPagesPopulator
         
         if last_city_category.present?
           city, cat = last_city_category.split('/')
-          cities.slice!(cities.index(city)..cities.length)
+          puts "Starting from #{city}/#{cat}"
+          cities = cities.slice(cities.index(city)..cities.length)
         end
         
         begin
@@ -42,8 +43,9 @@ module YellowPagesPopulator
               sleep (1..6).to_a.sample # random sleep
             end
           end
-        rescue
+        rescue Exception => e
           save_last_city_category(last_city_category)
+          raise e
         end
       end
       
