@@ -9,7 +9,7 @@ $(function() {
         url = '';
     
     if(dropdown.is('.cities')) {
-      if(specialty = 'all-specialties') {
+      if(specialty == 'all-specialties') {
         specialty = '';
       } else {
         specialty = '/' + specialty;
@@ -17,9 +17,11 @@ $(function() {
       
       if(selection == 'all-cities') {
         selection = '';
+      } else {
+        selection = '/' + selection;
       }
       
-      url = '/' + selection + specialty;
+      url = selection + specialty;
     } else if(dropdown.is('.specialties')) {
       console.log(city);
       if(city == 'all-cities') {
@@ -30,11 +32,13 @@ $(function() {
       
       if(selection == 'all-specialties') {
         selection = '';
+      } else {
+        selection = '/' + selection;
       }
       
-      url = city + '/' + selection;
+      url = city + selection;
     }
     
-    window.location = url;
+    window.location = url == '' ? '/' : url;
   });
 });

@@ -1,18 +1,23 @@
+- listing = resource.listing
+
 .preview
   %span.header
     Your free listing will look like this...
   .listing-container
     %span.company-name
-      Your company name
+      = listing.try(:company_name) || "Your company name"
     %p
       %span.specialties.text
-        Specialties
+        - if listing.try(:specialties).try(:present?)
+          = specialties(listing)
+        - else 
+          Specialties
       %br
       %span.location.text
-        Company location
+        = listing.try(:city).try(:name) || "Company location"
     = image_tag(session[:preview_photo_url] || 'small-listing.png', id: 'img_prev')
     %p
       %span.description.text
-        Your image description
+        = listing.try(:portfolio_photo_description) || "Your image description"
 
 = render 'form'
