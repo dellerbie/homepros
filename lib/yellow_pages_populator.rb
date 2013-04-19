@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
+require 'socksify/http'
 
 module YellowPagesPopulator
   class BusinessPageYamlBuilder
@@ -12,15 +13,17 @@ module YellowPagesPopulator
     
     class << self
       def build!
+        master_urls = YAML::load_file URLS_YML
         urls = {}
         
         categories = YAML::load_file(CATEGORIES_YML)
         cities = YAML::load_file(CITIES_YML)
-        last_city_category = File.open(File.join(Rails.root, 'lib', 'yellow_pages', 'last_city_category.txt')).try(:gets).try(:chop) || ""
+        last_city_category = File.open(File.join(Rails.root, 'lib', 'yellow_pages', 'last_city_category.txt')).try(:gets) || ""
         
         if last_city_category.present?
           city, cat = last_city_category.split('/')
-          cities.slice!(cities.index(city)..cities.length)
+          puts "Starting from #{city}/#{cat}"
+          cities = cities.slice(cities.index(city)..cities.length)
         end
         
         begin
@@ -31,28 +34,37 @@ module YellowPagesPopulator
               last_city_category = "#{city}/#{category}"
             
               url = "#{YP_DOMAIN}/#{city}/#{category}"
-              doc = get_business_page_urls(url, urls)
+              doc = get_business_page_urls(url, urls, master_urls)
               doc.css('.track-pagination li:not(.next) a').each do |node|
-                get_business_page_urls(YP_DOMAIN + node['href'], urls)
+                get_business_page_urls(YP_DOMAIN + node['href'], urls, master_urls)
               end
 
-              File.open(URLS_YML, 'a') { |out| YAML::dump(urls, out) }
+              File.open(URLS_YML, 'a') { |out| YAML::dump(urls, out) } unless urls.empty?
               save_last_city_category(last_city_category)
               
               sleep (1..6).to_a.sample # random sleep
             end
           end
-        rescue
+        rescue Exception => e
           save_last_city_category(last_city_category)
+          raise e
         end
       end
       
-      def get_business_page_urls(url, urls)
-        doc = Nokogiri::HTML(open(url))
+      def get_business_page_urls(url, urls, master_urls)
+        puts "opening #{url}"
+        uri = URI.parse(url)
+        res = nil
+        data = nil
+        Net::HTTP.SOCKSProxy('127.0.0.1', 9050).start(uri.host, uri.port) do |http|
+          data = http.get(uri.path).body
+        end
+        #puts "res: #{res.body} data: #{data}"
+        doc = Nokogiri::HTML(data)
         doc.css('#results .listing-content .thumbnail a').each do |node|
           url = node['href']
           lid = url.match(/lid=(\d+)/)[1]
-          urls[lid] = YP_DOMAIN + url unless urls.key?(lid)
+          urls[lid] = YP_DOMAIN + url unless master_urls.key?(lid) || urls.key?(lid)
         end
         doc
       end
