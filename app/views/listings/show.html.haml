@@ -9,9 +9,10 @@
       .edit-listing-btn
         = link_to 'Edit', edit_listing_path(current_user.listing), class: 'btn btn-success pull-right'
       
-      %span.action.ask-question
-        %i.icon-question-sign
-        Ask this business a question
+      - if @listing.contact_email.present?
+        %span.action.ask-question
+          %i.icon-question-sign
+          Ask this business a question
   
   .pull-right
     - if @listing.company_logo_photo.present?
@@ -46,11 +47,13 @@
     %br
     = link_to @listing.website
 
-  %p.contact-us
-    %strong
-      Contact Us
-    %br
-    = mail_to @listing.contact_email, nil, subject: 'Question from OC Homepros'
+  - if @listing.contact_email.present?
+    %p.contact-us
+      %strong
+        Contact Us
+      %br
+      %button.btn.btn-primary{type: 'button'}
+        Email
 
   .portfolio-image.img-polaroid
     = image_tag(@listing.portfolio_photo)
@@ -63,8 +66,10 @@
       = @listing.company_name
     
     %ul.links
-      %li
-        = mail_to @listing.contact_email, nil, subject: 'Question from OC Homepros'
+      - if @listing.contact_email.present?
+        %li
+          %button.btn.btn-large.btn-info{type: 'button'}
+            Email #{@listing.company_name}
       %li
         = link_to @listing.website
   
