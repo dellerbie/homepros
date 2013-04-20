@@ -3,4 +3,9 @@ namespace :populator do
   task :index_pages => :environment do
     YellowPagesPopulator::BusinessPageYamlBuilder.build!
   end
+  
+  desc "downloads the business pages"
+  task :index_pages => :environment do
+    YellowPagesPopulator::BusinessPageYamlBuilder.download_pages!
+  end
 end

@@ -9,16 +9,48 @@ module YellowPagesPopulator
     CITIES_YML = File.join(Rails.root, 'lib', 'yellow_pages', 'cities.yml')
     CATEGORIES_YML = File.join(Rails.root, 'lib', 'yellow_pages', 'categories.yml')
     LAST_CITY_CATEGORY = File.join(Rails.root, 'lib', 'yellow_pages', 'last_city_category.txt')
+    LAST_LID = File.join(Rails.root, 'lib', 'yellow_pages', 'last_lid.txt')
     YP_DOMAIN = "http://www.yellowpages.com"
     
     class << self
+      def download_pages!
+        urls = YAML::load_file URLS_YML
+        keys = urls.keys
+        
+        last_lid = File.open(LAST_LID).try(:gets) || ""
+        
+        if last_lid.present?
+          puts "Starting downloads from lid: #{last_lid}"
+          keys = keys.slice(keys.index(last_lid)..keys.length)
+        end
+
+        keys.each do |lid| 
+          last_lid = lid
+          file = File.join(Rails.root, 'lib', 'yellow_pages', 'business_pages', lid + '.html')
+          unless File.exists?(file)
+            puts "Downloading lid: #{lid}, url: #{urls[lid]}"
+            sleep 1
+            html = open(urls[lid]).read
+            File.open(file, 'w') { |f| f.print html }
+          end
+        end
+        
+      rescue Exception => e
+        save_last_lid(last_lid)
+        raise e
+      end
+      
+      def save_last_lid(lid)
+        File.open(LAST_LID, 'w') { |out| out.write(lid) }
+      end
+      
       def build!
         master_urls = YAML::load_file URLS_YML
         urls = {}
         
         categories = YAML::load_file(CATEGORIES_YML)
         cities = YAML::load_file(CITIES_YML)
-        last_city_category = File.open(File.join(Rails.root, 'lib', 'yellow_pages', 'last_city_category.txt')).try(:gets) || ""
+        last_city_category = File.open(LAST_CITY_CATEGORY).try(:gets) || ""
         
         if last_city_category.present?
           city, cat = last_city_category.split('/')
