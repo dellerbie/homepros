@@ -34,6 +34,7 @@ class ListingsController < ApplicationController
   
   def edit
     @base_css = 'edit-listing'
+    @hide_footer = true
   end
 
   def update

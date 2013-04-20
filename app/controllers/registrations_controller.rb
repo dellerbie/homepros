@@ -8,11 +8,17 @@ class RegistrationsController < Devise::RegistrationsController
     respond_with resource
   end
   
+  def edit
+    @base_css = ''
+    super
+  end
+  
   protected
   
   def set_css
     @base_css = 'new-listing'
     @hide_get_listed_btn = true
+    @hide_footer = true
   end
   
 end

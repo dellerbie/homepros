@@ -53,20 +53,20 @@ module YellowPagesPopulator
       
       def get_business_page_urls(url, urls, master_urls)
         puts "opening #{url}"
+
         uri = URI.parse(url)
-        res = nil
-        data = nil
+        
         Net::HTTP.SOCKSProxy('127.0.0.1', 9050).start(uri.host, uri.port) do |http|
           data = http.get(uri.path).body
+          doc = Nokogiri::HTML(data)
+          doc.css('#results .listing-content .thumbnail a').each do |node|
+            url = node['href']
+            lid = url.match(/lid=(\d+)/)[1]
+            urls[lid] = YP_DOMAIN + url unless master_urls.key?(lid) || urls.key?(lid)
+          end
+          
+          return doc
         end
-        #puts "res: #{res.body} data: #{data}"
-        doc = Nokogiri::HTML(data)
-        doc.css('#results .listing-content .thumbnail a').each do |node|
-          url = node['href']
-          lid = url.match(/lid=(\d+)/)[1]
-          urls[lid] = YP_DOMAIN + url unless master_urls.key?(lid) || urls.key?(lid)
-        end
-        doc
       end
       
       def save_last_city_category(last_city_category)
