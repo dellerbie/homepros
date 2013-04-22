@@ -29,9 +29,13 @@ module YellowPagesPopulator
           file = File.join(Rails.root, 'lib', 'yellow_pages', 'business_pages', lid + '.html')
           unless File.exists?(file)
             puts "Downloading lid: #{lid}, url: #{urls[lid]}"
-            sleep 1
-            html = open(urls[lid]).read
-            File.open(file, 'w') { |f| f.print html }
+            sleep (1..6).to_a.sample
+            
+            uri = URI.parse(urls[lid])
+            Net::HTTP.SOCKSProxy('127.0.0.1', 9050).start(uri.host, uri.port) do |http|
+              html = http.get(uri.path).body
+              File.open(file, 'w') { |f| f.print html }
+            end
           end
         end
         
