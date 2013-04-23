@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'pg'
+gem 'sqlite3'
 gem 'haml-rails', '>= 0.3.4', :group => :development
 gem 'devise'
 gem 'jquery-rails'
@@ -14,7 +15,6 @@ gem 'remotipart', '~> 1.0'
 gem "aws-ses", :require => 'aws/ses'
 gem 'will_paginate'
 gem 'friendly_id'
-
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -33,6 +33,7 @@ end
 
 group :development do
   gem 'nokogiri'
+  gem 'socksify'
 end
 
 group :test do 

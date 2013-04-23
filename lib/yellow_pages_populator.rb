@@ -9,10 +9,228 @@ module YellowPagesPopulator
     CITIES_YML = File.join(Rails.root, 'lib', 'yellow_pages', 'cities.yml')
     CATEGORIES_YML = File.join(Rails.root, 'lib', 'yellow_pages', 'categories.yml')
     LAST_CITY_CATEGORY = File.join(Rails.root, 'lib', 'yellow_pages', 'last_city_category.txt')
+    PORTFOLIO_IMAGE_DIR = File.join(Rails.root, 'lib', 'yellow_pages', 'portfolio_images')
+    LOGO_IMAGE_DIR = File.join(Rails.root, 'lib', 'yellow_pages', 'logo_images')
     LAST_LID = File.join(Rails.root, 'lib', 'yellow_pages', 'last_lid.txt')
+    LISTINGS_YML = File.join(Rails.root, 'lib', 'yellow_pages', 'listings.yml')
     YP_DOMAIN = "http://www.yellowpages.com"
     
     class << self
+      def download_images!
+        urls = YAML::load_file URLS_YML
+        lids = urls.keys
+        last_lid = File.open(LAST_LID).try(:gets) || ""
+        
+        if last_lid.present?
+          puts "Starting to download images from lid: #{last_lid}"
+          lids = lids.slice(lids.index(last_lid)..lids.length)
+        end
+        
+        lids.each do |lid|
+          last_lid = lid
+          puts "*******************************"
+          puts "Processing #{lid}.html"
+          
+          html = File.read(File.join(DOWNLOAD_DIR, "#{lid}.html"))
+          
+          doc = Nokogiri::HTML(html)
+        
+          image = doc.css("#gallery-thumbnails .thumbnail img:not(.video-thumb)")
+          if image.present?
+            image = image.first['src'].gsub('_112x84_crop', '_700')
+            
+            uri = URI.parse(image)
+
+            Net::HTTP.SOCKSProxy('127.0.0.1', 9050).start(uri.host, uri.port) do |http|
+              data = http.get(uri.path).body
+              
+              open(File.join(PORTFOLIO_IMAGE_DIR, "#{lid}.jpg"), 'wb') do |file|
+                file.write(data)
+                puts "Downloaded portfolio image #{lid}.jpg"
+              end
+            end
+          else
+            puts "Skipping #{lid}, image not found #{doc.css('#gallery-thumbnails .thumbnail img')}"
+            next
+          end
+          
+          company_logo = doc.css('#business-details p.graphic img').first
+          if company_logo.present?
+            company_logo = company_logo['src']
+            
+            uri = URI.parse(company_logo)
+
+            Net::HTTP.SOCKSProxy('127.0.0.1', 9050).start(uri.host, uri.port) do |http|
+              data = http.get(uri.path).body
+              
+              open(File.join(LOGO_IMAGE_DIR, "#{lid}.jpg"), 'wb') do |file|
+                file.write(data)
+                puts "Downloaded logo image #{lid}.jpg"
+              end
+            end
+          end
+          
+          puts "company_logo: #{company_logo}"
+        end
+        
+      rescue Exception => e
+        File.open(LAST_LID, 'w') { |out| out.write(last_lid) }
+        raise e
+      end
+      
+      def build_businesses!
+        urls = YAML::load_file URLS_YML
+        lids = urls.keys
+        business_count = 0
+        last_lid = nil
+        listings = []
+        
+        last_lid = File.open(LAST_LID).try(:gets) || ""
+        
+        if last_lid.present?
+          puts "Starting to build businesses from lid: #{last_lid}"
+          lids = lids.slice(lids.index(last_lid)..lids.length)
+        end
+        
+        lids.take(3).each do |lid|
+          last_lid = lid
+          puts "*******************************"
+          puts "Processing #{lid}.html"
+          
+          html = File.read(File.join(DOWNLOAD_DIR, "#{lid}.html"))
+          
+          doc = Nokogiri::HTML(html)
+          
+          listing = Listing.new
+          
+          company_name = doc.css('.listings h1.fn.org').text.strip
+          listing.company_name = company_name
+          
+          puts "company_name: #{company_name}"
+          
+          contact_email = doc.css('.primary-links a.primary-email').first
+          if contact_email.present?
+            contact_email = contact_email['href'].split("mailto:")[1]
+            listing.contact_email = contact_email.strip
+          else 
+            puts "Skipping #{lid}, contact email not found #{doc.css('.primary-links a.primary-email')}"
+            next
+          end
+          
+          puts "contact_email: #{contact_email}"
+          
+          website = doc.css('.primary-links a.primary-website').first
+          
+          if website.present?
+            listing.website = website['href'].strip
+          else
+            puts "Skipping #{lid}, website not found #{website}"
+            next
+          end
+          
+          puts "website: #{listing.website}"
+          
+          phone = doc.css('p.phone.tel').text
+          listing.phone = phone.strip
+          
+          puts "phone: #{phone.strip}"
+          
+          company_description = doc.css('#general-info p')
+          listing.company_description = company_description.first.text.strip if company_description.present?
+          
+          puts "company_description: #{company_description.first.text.strip}" if company_description.present?
+          
+          image = doc.css("#gallery-thumbnails .thumbnail img:not(.video-thumb)")
+          if image.present?
+            image = image.first['src'].gsub('_112x84_crop', '_700')
+            
+            uri = URI.parse(image)
+
+            Net::HTTP.SOCKSProxy('127.0.0.1', 9050).start(uri.host, uri.port) do |http|
+              data = http.get(uri.path).body
+              
+              open(File.join(PORTFOLIO_IMAGE_DIR, "#{lid}.jpg"), 'wb') do |file|
+                file.write(data)
+                puts "Downloaded portfolio image #{lid}.jpg"
+              end
+              
+              listing.portfolio_photo = File.open(TMP_IMAGE)
+            end
+            
+          else
+            puts "Skipping #{lid}, image not found #{doc.css('#gallery-thumbnails .thumbnail img')}"
+            next
+          end
+          
+          puts "image url: #{image}"
+          
+          company_logo = doc.css('#business-details p.graphic img').first
+          if company_logo.present?
+            company_logo = company_logo['src']
+            
+            uri = URI.parse(company_logo)
+
+            Net::HTTP.SOCKSProxy('127.0.0.1', 9050).start(uri.host, uri.port) do |http|
+              data = http.get(uri.path).body
+              
+              open(File.join(LOGO_IMAGE_DIR, "#{lid}.jpg"), 'wb') do |file|
+                file.write(data)
+                puts "Downloaded logo image #{lid}.jpg"
+              end
+              
+              listing.company_logo_photo = File.open(TMP_IMAGE)
+            end
+            
+          end
+          
+          puts "company_logo: #{company_logo}"
+          
+          specialties = doc.css('dd.categories span').first.text.gsub('&nbsp;', '').split(',')
+          more_specialties = doc.css('dd.categories span.expand-categories')
+          if more_specialties.present?
+            specialties << more_specialties.first.text.gsub('&nbsp;', '').split(',')
+          end
+          
+          specialties = Specialty.where(name: specialties)
+          
+          if specialties.present?
+            listing.specialties << specialties
+          else 
+            puts "Skipping #{lid}, speciality not found #{doc.css('dd.categories span').first.text}"
+            next
+          end
+          
+          puts "specialties: #{specialties}"
+          
+          city = doc.css('.primary-location .city-state .locality').text
+          city = City.where(name: city).first
+          
+          if city.present?
+            listing.city = city
+          else 
+            puts "Skipping #{lid}, city not found #{doc.css('.primary-location .city-state .locality').text}"
+            next
+          end
+          
+          puts "city: #{city}"
+          
+          business_count = business_count + 1
+          
+          # listing.save!
+          
+          listings << listing
+        end
+        
+        puts "business_count: #{business_count}"
+        
+        File.open(LISTINGS_YML, 'a') { |out| YAML::dump(listings, out) } unless listings.empty?
+        
+        
+      rescue Exception => e
+        File.open(LAST_LID, 'w') { |out| out.write(last_lid) }
+        raise e
+      end
+      
       def download_pages!
         urls = YAML::load_file URLS_YML
         keys = urls.keys
