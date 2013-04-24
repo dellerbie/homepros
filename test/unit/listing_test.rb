@@ -42,6 +42,7 @@ class ListingTest < ActiveSupport::TestCase
   end
   
   should_not allow_mass_assignment_of(:state)
+  should_not allow_mass_assignment_of(:claimable)
   
   test 'should allow a max of 2 specialties' do
     listing = FactoryGirl.build(:listing)
@@ -70,6 +71,16 @@ class ListingTest < ActiveSupport::TestCase
     listing.website = 'https://www.mysite.com'
     assert listing.valid?
     assert_equal 'https://www.mysite.com', listing.website
+  end
+  
+  test 'should not be claimable by default' do 
+    listing = FactoryGirl.build(:listing)
+    assert !listing.claimable
+  end
+  
+  test 'can make a listing claimable' do 
+    listing = FactoryGirl.create(:listing, claimable: true)
+    assert listing.claimable
   end
 
 end

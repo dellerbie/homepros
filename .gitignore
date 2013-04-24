@@ -20,3 +20,6 @@
 /public/portfolios
 lib/yellow_pages/last_city_category.txt
 lib/yellow_pages/business_page_urls.yml
+lib/yellow_pages/logo_images
+lib/yellow_pages/portfolio_images
+lib/yellow_pages/business_pages

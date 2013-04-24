@@ -8,7 +8,7 @@ class CompanyLogoUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::RailsHelper
   include Sprockets::Helpers::IsolatedHelper
 
-  if Rails.env.test?
+  if Rails.env.test? || Rails.env.development?
     storage :file
   else 
     storage :fog

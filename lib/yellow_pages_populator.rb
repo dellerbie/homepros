@@ -92,7 +92,7 @@ module YellowPagesPopulator
           lids = lids.slice(lids.index(last_lid)..lids.length)
         end
         
-        lids.take(3).each do |lid|
+        lids.each do |lid|
           last_lid = lid
           puts "*******************************"
           puts "Processing #{lid}.html"
@@ -106,101 +106,78 @@ module YellowPagesPopulator
           company_name = doc.css('.listings h1.fn.org').text.strip
           listing.company_name = company_name
           
-          puts "company_name: #{company_name}"
+          # puts "company_name: #{company_name}"
           
           contact_email = doc.css('.primary-links a.primary-email').first
           if contact_email.present?
             contact_email = contact_email['href'].split("mailto:")[1]
-            listing.contact_email = contact_email.strip
           else 
-            puts "Skipping #{lid}, contact email not found #{doc.css('.primary-links a.primary-email')}"
-            next
+            contact_email = Listing::NO_CONTACT_EMAIL
           end
           
-          puts "contact_email: #{contact_email}"
+          listing.contact_email = contact_email.strip
+          
+          # puts "contact_email: #{contact_email}"
           
           website = doc.css('.primary-links a.primary-website').first
           
           if website.present?
             listing.website = website['href'].strip
           else
-            puts "Skipping #{lid}, website not found #{website}"
-            next
+            listing.website = Listing::NO_WEBSITE
           end
           
-          puts "website: #{listing.website}"
+          # puts "website: #{listing.website}"
           
           phone = doc.css('p.phone.tel').text
           listing.phone = phone.strip
+          if phone.blank?
+            listing.phone = '555-555-5555'
+          end
           
-          puts "phone: #{phone.strip}"
+          # puts "phone: #{listing.phone}"
           
           company_description = doc.css('#general-info p')
-          listing.company_description = company_description.first.text.strip if company_description.present?
+          listing.company_description = company_description.first.text.strip[0..999] if company_description.present?
           
-          puts "company_description: #{company_description.first.text.strip}" if company_description.present?
+          # puts "company_description: #{company_description.first.text.strip}" if company_description.present?
           
-          image = doc.css("#gallery-thumbnails .thumbnail img:not(.video-thumb)")
-          if image.present?
-            image = image.first['src'].gsub('_112x84_crop', '_700')
-            
-            uri = URI.parse(image)
-
-            Net::HTTP.SOCKSProxy('127.0.0.1', 9050).start(uri.host, uri.port) do |http|
-              data = http.get(uri.path).body
-              
-              open(File.join(PORTFOLIO_IMAGE_DIR, "#{lid}.jpg"), 'wb') do |file|
-                file.write(data)
-                puts "Downloaded portfolio image #{lid}.jpg"
-              end
-              
-              listing.portfolio_photo = File.open(TMP_IMAGE)
-            end
-            
+          image = File.join(PORTFOLIO_IMAGE_DIR, "#{lid}.jpg")
+          if File.exists?(image)
+            listing.portfolio_photo = File.open image
+            listing.portfolio_photo_description = 'Contact Us For More Information'
           else
-            puts "Skipping #{lid}, image not found #{doc.css('#gallery-thumbnails .thumbnail img')}"
+            puts "Skipping #{lid}, image not found"
             next
           end
           
-          puts "image url: #{image}"
+          # puts "portfolio_photo: #{listing.portfolio_photo}"
           
-          company_logo = doc.css('#business-details p.graphic img').first
-          if company_logo.present?
-            company_logo = company_logo['src']
-            
-            uri = URI.parse(company_logo)
-
-            Net::HTTP.SOCKSProxy('127.0.0.1', 9050).start(uri.host, uri.port) do |http|
-              data = http.get(uri.path).body
-              
-              open(File.join(LOGO_IMAGE_DIR, "#{lid}.jpg"), 'wb') do |file|
-                file.write(data)
-                puts "Downloaded logo image #{lid}.jpg"
-              end
-              
-              listing.company_logo_photo = File.open(TMP_IMAGE)
+          company_logo = File.join(LOGO_IMAGE_DIR, "#{lid}.jpg")
+          if File.exists?(company_logo)
+            listing.company_logo_photo = File.open company_logo
+          end
+          
+          # puts "company_logo_photo: #{listing.company_logo_photo}"
+          
+          if doc.css('dd.categories span').present?
+            specialties = doc.css('dd.categories span').first.text.gsub('&nbsp;', '').split(',')
+            more_specialties = doc.css('dd.categories span.expand-categories')
+            if more_specialties.present?
+              specialties << more_specialties.first.text.gsub('&nbsp;', '').split(',')
             end
-            
+
+            specialties = Specialty.where(name: specialties).all
+            if specialties.present?
+              listing.specialties << specialties
+            else 
+              listing.specialties << Specialty.where(name: 'General Contractors').first
+            end
+          else
+            listing.specialties << Specialty.where(name: 'General Contractors').first
           end
           
-          puts "company_logo: #{company_logo}"
-          
-          specialties = doc.css('dd.categories span').first.text.gsub('&nbsp;', '').split(',')
-          more_specialties = doc.css('dd.categories span.expand-categories')
-          if more_specialties.present?
-            specialties << more_specialties.first.text.gsub('&nbsp;', '').split(',')
-          end
-          
-          specialties = Specialty.where(name: specialties)
-          
-          if specialties.present?
-            listing.specialties << specialties
-          else 
-            puts "Skipping #{lid}, speciality not found #{doc.css('dd.categories span').first.text}"
-            next
-          end
-          
-          puts "specialties: #{specialties}"
+          # puts "specialties: #{specialties}"
           
           city = doc.css('.primary-location .city-state .locality').text
           city = City.where(name: city).first
@@ -208,29 +185,27 @@ module YellowPagesPopulator
           if city.present?
             listing.city = city
           else 
-            puts "Skipping #{lid}, city not found #{doc.css('.primary-location .city-state .locality').text}"
-            next
+            listing.city = City.where(name: 'Orange').first
           end
           
-          puts "city: #{city}"
+          listing.claimable = true
+          
+          # puts "city: #{city}"
           
           business_count = business_count + 1
           
-          # listing.save!
+          listing.save!
           
           listings << listing
         end
         
         puts "business_count: #{business_count}"
         
-        File.open(LISTINGS_YML, 'a') { |out| YAML::dump(listings, out) } unless listings.empty?
-        
-        
       rescue Exception => e
         File.open(LAST_LID, 'w') { |out| out.write(last_lid) }
         raise e
       end
-      
+          
       def download_pages!
         urls = YAML::load_file URLS_YML
         keys = urls.keys

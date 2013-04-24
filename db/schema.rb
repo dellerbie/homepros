@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130420185825) do
+ActiveRecord::Schema.define(:version => 20130424202807) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -42,15 +42,16 @@ ActiveRecord::Schema.define(:version => 20130420185825) do
     t.string   "website"
     t.string   "phone"
     t.string   "portfolio_photo_description"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
     t.integer  "city_id"
     t.string   "portfolio_photo"
     t.string   "portfolio_photo_token"
     t.string   "company_logo_photo"
     t.string   "company_logo_photo_token"
     t.text     "company_description"
-    t.string   "slug",                        :null => false
+    t.string   "slug",                                           :null => false
+    t.boolean  "claimable",                   :default => false
   end
 
   add_index "listings", ["slug"], :name => "index_listings_on_slug", :unique => true

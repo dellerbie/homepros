@@ -15,6 +15,9 @@ class Listing < ActiveRecord::Base
   ALL_CITIES_FILTER_KEY = 'all-cities'
   ALL_SPECIALTIES_FILTER_KEY = 'all-specialties'
   
+  NO_CONTACT_EMAIL = 'no-reply@ochomepros.com'
+  NO_WEBSITE = 'ochomepros.com'
+  
   attr_accessible :specialty_ids, :city_id, :company_logo_photo, :company_logo_photo_cache, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_cache, :portfolio_photo_description, :website, :phone, :company_description
     
