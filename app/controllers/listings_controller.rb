@@ -100,6 +100,8 @@ class ListingsController < ApplicationController
     scope = scope.where("cities.slug" => city_slug) if city_slug.present?
     scope = scope.where("specialties.slug" => specialty_slug) if specialty_slug.present?
     
+    scope = scope.order("RANDOM()") if city_slug.blank? && specialty_slug.blank?
+    
     scope
   end
 end

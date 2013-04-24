@@ -9,7 +9,11 @@
   %body{class: @base_css || ''}
     .navbar
       .navbar-inner
-        = link_to 'OC Homepros', root_path, class: "brand"
+        = link_to root_path, class: "brand" do 
+          %span.oc
+            OC
+          %span.homepros
+            Homepros
         .pull-right
           - if user_signed_in?
             = link_to 'My Listing', listing_path(current_user.listing), class: "btn btn-primary"
