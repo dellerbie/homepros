@@ -1,22 +1,26 @@
 - unless current_user && current_user.listing == @listing
   %p
     %i.icon-arrow-left
-    = link_to 'Back to Listings', root_path
+    = link_to 'Back to Listings', :back
 
 .listing-container-xlarge  
   .actions.clearfix
     - if current_user && current_user.listing == @listing
       .edit-listing-btn
         = link_to 'Edit', edit_listing_path(current_user.listing), class: 'btn btn-success pull-right'
+    
+    - if @listing.claimable?
+      .claim-listing-btn
+        = link_to 'Claim this listing', edit_listing_path(@listing), class: 'btn btn-success pull-right'
       
-      - if @listing.contact_email.present?
-        %span.action.ask-question
-          %i.icon-question-sign
-          Ask this business a question
+    - if @listing.email?
+      %span.action.ask-question
+        %i.icon-question-sign
+        Ask this business a question
   
   .pull-right
     - if @listing.company_logo_photo.present?
-      - if @listing.website.present?
+      - if @listing.website?
         = link_to @listing.website, target: '_blank' do
           = image_tag(@listing.company_logo_photo)
       - else
@@ -36,18 +40,27 @@
     %span.value
       %strong
         = @listing.city.name
+  
+  - if @listing.phone?
+    %p.phone
+      %span.label-info
+        Phone Number:
+      %span.value
+        %strong
+          = number_to_phone(@listing.phone, area_code: true)
       
   .description 
     %p
       = simple_format(@listing.company_description)
   
-  %p.website
-    %strong
-      Website
-    %br
-    = link_to @listing.website
+  - if @listing.website?
+    %p.website
+      %strong
+        Website
+      %br
+      = link_to @listing.website, @listing.website, target: '_blank'
 
-  - if @listing.contact_email.present?
+  - if @listing.email?
     %p.contact-us
       %strong
         Contact Us
@@ -66,7 +79,7 @@
       = @listing.company_name
     
     %ul.links
-      - if @listing.contact_email.present?
+      - if @listing.email?
         %li
           %button.btn.btn-large.btn-info{type: 'button'}
             Email #{@listing.company_name}

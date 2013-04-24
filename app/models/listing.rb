@@ -16,7 +16,8 @@ class Listing < ActiveRecord::Base
   ALL_SPECIALTIES_FILTER_KEY = 'all-specialties'
   
   NO_CONTACT_EMAIL = 'no-reply@ochomepros.com'
-  NO_WEBSITE = 'ochomepros.com'
+  NO_WEBSITE = 'http://ochomepros.com'
+  NO_PHONE = '5555555555'
   
   attr_accessible :specialty_ids, :city_id, :company_logo_photo, :company_logo_photo_cache, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_cache, :portfolio_photo_description, :website, :phone, :company_description
@@ -56,6 +57,18 @@ class Listing < ActiveRecord::Base
   
   def company_name_and_location
     "#{company_name} #{city.try(:name)}"
+  end
+  
+  def website?
+    website.present? && website != NO_WEBSITE
+  end
+  
+  def email?
+    contact_email.present? && contact_email != NO_CONTACT_EMAIL
+  end
+  
+  def phone?
+    phone.present? && phone != NO_PHONE
   end
   
   protected

@@ -22,14 +22,14 @@
 $(function() {
   
   function setupInfiniteScroll() {
-    $('#listings').infinitescroll({
-      navSelector  : "div.pagination",    
-      nextSelector : "div.pagination a:first",
-      itemSelector : "#listings li.listing-container",
+    $('.listings').infinitescroll({
+      navSelector  : "div.pagination",
+      nextSelector : "div.pagination a.next_page",
+      itemSelector : ".listings li.listing-container",
       loading: {
         msgText: "<em>Loading the next set of listings...</em>",
         finishedMsg: 'No more listings to load.',
-        img: '/images/loader.gif'
+        img: '/assets/loader.gif'
       }
     });
   }

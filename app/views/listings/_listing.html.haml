@@ -1,8 +1,8 @@
 %li.listing-container.thumbnail
-  = link_to listing.company_name, listing_path(listing), class: 'company-name'
+  = link_to truncate(listing.company_name, length: 24), listing_path(listing), class: 'company-name'
   %p
     %span.specialties.text
-      = specialties(listing)
+      = truncate(specialties(listing), length: 30)
     %br
     %span.location.text
       = listing.city.name
@@ -10,4 +10,4 @@
     = image_tag(listing.portfolio_photo)
   %p
     %span.description.text
-      = listing.portfolio_photo_description
+      = truncate(listing.portfolio_photo_description, length: 31)
