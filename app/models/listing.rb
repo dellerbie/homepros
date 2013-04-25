@@ -70,7 +70,7 @@ class Listing < ActiveRecord::Base
   def phone?
     phone.present? && phone != NO_PHONE
   end
-  
+
   protected
   
   def ensure_max_specialties

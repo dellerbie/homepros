@@ -13,8 +13,8 @@
       .claim-listing-btn
         = link_to 'Claim this listing', edit_listing_path(@listing), class: 'btn btn-success pull-right'
       
-    - if @listing.email?
-      %span.action.ask-question
+    - if can_email?(@listing)
+      %span.action.ask-question{"data-toggle" => 'modal', "data-target" => '#contact-modal'}
         %i.icon-question-sign
         Ask this business a question
   
@@ -60,12 +60,12 @@
       %br
       = link_to @listing.website, @listing.website, target: '_blank'
 
-  - if @listing.email?
+  - if can_email?(@listing)
     %p.contact-us
       %strong
         Contact Us
       %br
-      %button.btn.btn-primary{type: 'button'}
+      %button.btn.btn-primary{type: 'button', "data-toggle" => 'modal', "data-target" => '#contact-modal'}
         Email
 
   .portfolio-image.img-polaroid
@@ -79,14 +79,35 @@
       = @listing.company_name
     
     %ul.links
-      - if @listing.email?
+      - if can_email?(@listing)
         %li
-          %button.btn.btn-large.btn-info{type: 'button'}
+          %button.btn.btn-large.btn-info{type: 'button', "data-toggle" => 'modal', "data-target" => '#contact-modal'}
             Email #{@listing.company_name}
       %li
         = link_to @listing.website
   
     %p.plug
       Be sure to let 'em know OC Homepros sent you.
+  
+  - if can_email?(@listing)
+    #contact-modal.modal.hide.fade
+      .modal-header
+        %button.close{type: 'button', 'data-dismiss' => 'modal'}="x"
+        %h4
+          %span.email-label 
+            Email
+          = @listing.company_name
+      .modal-body
+        = simple_form_for(@question, :url => questions_path(@question)) do |f|
+          .errors
+            %p 
+              Email can't be blank, Message can't be blank
+          = f.input :sender_email, label: 'Your Email:', input_html: { maxlength: 255, class: 'input-xlarge' }, placeholder: 'your@email.com'
+          = f.input :text, as: :text, label: 'Message:', input_html: { maxlength: 1000, rows: 10 }, placeholder: 'Enter up to 1000 characters'
+          = f.input :listing_id, as: :hidden
+      .modal-footer
+        %button.btn{type: 'button', 'data-dismiss' => 'modal'}="Cancel"
+        %button.btn.btn-primary{type: 'button'}="Send"
+      
     
   

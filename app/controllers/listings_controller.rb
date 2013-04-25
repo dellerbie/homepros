@@ -24,6 +24,8 @@ class ListingsController < ApplicationController
 
   def show
     @listing = Listing.find(params[:id])
+    @question = Question.new
+    @question.listing = @listing
     @base_css = 'show-listing'
     
     respond_to do |format|
