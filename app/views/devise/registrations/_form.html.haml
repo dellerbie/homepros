@@ -21,8 +21,8 @@
       = listing_form.input :company_name, label: "What's your company name?", hint: "You can use your own name if you're a freelancer and don't have a company name.", input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'Your Company Inc.'
       = listing_form.input :company_logo_photo, label: 'Upload your company logo (optional)', hint: 'GIF, JPG, or PNG. We’ll resize what you have.<br/>This is shown on your listing page for clients to see.', as: :file
       = listing_form.input :company_logo_photo_cache, as: :hidden
-      = listing_form.association :specialties, collection: Specialty.order("name ASC"), label: 'What do you specialize in?', hint: 'You can select up to 2 specialties'
-      = listing_form.association :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose the closest city', collection: City.all(order: 'name'), prompt: 'Please select a city'
+      = listing_form.association :specialties, collection: Specialty.order("name ASC"), label: 'What do you specialize in?', hint: 'You can select up to 2 specialties', input_html: { class: 'chzn-select', 'data-placeholder' => 'Choose up to 2 Specialties' }
+      = listing_form.association :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose the closest city', collection: City.all(order: 'name'), prompt: 'Please select a city', input_html: { class: 'chzn-select', 'data-placeholder' => 'Choose a City' }
   
     %fieldset.contact-info
       %p.title
@@ -36,8 +36,6 @@
     %p.title
       Finally, create an account
     
-    = f.input :first_name, label: 'First name', input_html: {class: 'input-xlarge'}, placeholder: 'First name'
-    = f.input :last_name, label: 'Last name', input_html: {class: 'input-xlarge'}, placeholder: 'Last name'
     = f.input :email, label: 'Your email address', hint: "This is how we'll stay in touch (clients don’t see this address).", input_html: {class: 'input-xlarge'}, placeholder: 'example@email.com'
     = f.input :password, hint: "Must be at least 6 characters.", input_html: {class: 'input-xlarge'}
     = f.input :password_confirmation, label: 'Password again', hint: 'Confirm your password by entering it again.', input_html: {class: 'input-xlarge'}

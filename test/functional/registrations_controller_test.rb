@@ -29,7 +29,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
   
   def invalid_user_valid_listing
-    user = FactoryGirl.attributes_for(:user).except(:first_name, :last_name)
+    user = FactoryGirl.attributes_for(:user).except(:password)
     user[:listing_attributes] = valid_listing
     user
   end
@@ -64,7 +64,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     
     assert ActionMailer::Base.deliveries.present?, 'no email delivered'
     email = ActionMailer::Base.deliveries.last
-    assert email.body.include?("Welcome to OC Homepros Derrick!")
+    assert email.body.include?("Welcome to OC Homepros")
     assert_equal ["slowblues@gmail.com"], email.from
   end
 end

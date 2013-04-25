@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130424202807) do
+ActiveRecord::Schema.define(:version => 20130425191643) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(:version => 20130424202807) do
   create_table "listings", :force => true do |t|
     t.integer  "user_id"
     t.string   "company_name"
-    t.string   "company_logo"
     t.string   "state"
     t.string   "contact_email"
     t.string   "website"
@@ -84,8 +83,6 @@ ActiveRecord::Schema.define(:version => 20130424202807) do
   add_index "specialties", ["slug"], :name => "index_specialties_on_slug", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "first_name",             :default => "", :null => false
-    t.string   "last_name",              :default => "", :null => false
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"

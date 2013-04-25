@@ -7,13 +7,7 @@ class User < ActiveRecord::Base
   
   default_scope :include => [:listing => [:city, :specialties]]
   
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :listing_attributes
-  
-  validates_presence_of :first_name
-  validates_length_of :first_name, maximum: 255
-
-  validates_presence_of :last_name
-  validates_length_of :last_name, maximum: 255
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :listing_attributes
   
   after_commit :welcome_email, on: :create
   

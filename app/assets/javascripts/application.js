@@ -16,6 +16,7 @@
 //= require jquery.iframe-post-form
 //= require jquery.imagefit-0.2
 //= require jquery.infinitescroll.min
+//= require chosen.jquery.min
 //= require twitter/bootstrap
 //= require_tree .
 

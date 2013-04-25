@@ -1,4 +1,6 @@
 $(function() {
+  $(".new-listing .chzn-select, .edit-listing .chzn-select").chosen();
+  
   $('#user_listing_attributes_portfolio_photo, #listing_portfolio_photo, #listing_company_logo_photo').bind('change', function(e) { 
     var file = $(this),
         form = $(this).closest("form"),
@@ -33,7 +35,13 @@ $(function() {
   }
 
   $('#user_listing_attributes_portfolio_photo_description, #listing_portfolio_photo_description').on('blur keyup', function() {
-    var text = $(this).val() || 'Your image description';
+    var text = $(this).val() || 'Your image description',
+        limit = 65;
+        
+    if(text.length > limit) {
+      text = text.substring(0,limit) + '...';
+    }
+    
     $('.preview .description').text(text);
   });
 

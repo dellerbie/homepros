@@ -7,7 +7,7 @@ class UserMailerTest < ActionMailer::TestCase
     assert ActionMailer::Base.deliveries.present?, 'no email delivered'
     
     email = ActionMailer::Base.deliveries.last
-    assert email.body.include?("Welcome to OC Homepros Derrick!")
+    assert email.body.include?("Welcome to OC Homepros!")
     assert_equal ["slowblues@gmail.com"], email.from 
     assert_equal "Welcome to OC Homepros", email.subject
   end
