@@ -1,3 +1,42 @@
-// Place all the styles related to the Questions controller here.
-// They will automatically be included in application.css.
-// You can use Less here: http://lesscss.org/
+@import "mixins";
+
+#contact-modal {
+  &.modal {
+    width: 500px;
+    
+    form {
+      margin-bottom: 0;
+    }
+    
+    .errors p, .success p {
+      color: #f00;
+      font-weight: bold;
+    }
+    
+    .success p {
+      color: #0a0;
+    }
+    
+    input, textarea {
+      width: 96%;
+    }
+    
+    label {
+      font-weight: bold;
+    }
+    
+    textarea {
+      height: 150px;
+    }
+    
+    .modal-header {
+      h4 {
+        color: #000;
+      }
+      
+      .email-label {
+        color: #000;
+      }
+    }
+  }
+}

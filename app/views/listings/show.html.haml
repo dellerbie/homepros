@@ -98,10 +98,9 @@
             Email
           = @listing.company_name
       .modal-body
+        .success
         = simple_form_for(@question, :url => questions_path(@question)) do |f|
           .errors
-            %p 
-              Email can't be blank, Message can't be blank
           = f.input :sender_email, label: 'Your Email:', input_html: { maxlength: 255, class: 'input-xlarge' }, placeholder: 'your@email.com'
           = f.input :text, as: :text, label: 'Message:', input_html: { maxlength: 1000, rows: 10 }, placeholder: 'Enter up to 1000 characters'
           = f.input :listing_id, as: :hidden
