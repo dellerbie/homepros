@@ -12,7 +12,7 @@ class Question < ActiveRecord::Base
   
   attr_accessible :sender_email, :text
   
-  # after_commit :question_email, on: :create
+  after_commit :question_email, on: :create
   
   def question_email
     QuestionMailer.question_email(self).deliver

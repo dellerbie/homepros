@@ -4,7 +4,11 @@ Homepros::Application.routes.draw do
     registrations: 'registrations'
   }
   
-  resources :listings, only: [:index, :show, :edit, :update]
+  resources :listings, only: [:index, :show, :edit, :update] do
+    member do 
+      post :claim
+    end
+  end
   resources :preview_photos, only: :create
   resources :questions, only: [:create]
   

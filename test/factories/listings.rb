@@ -9,6 +9,6 @@ FactoryGirl.define do
     state 'CA'
     website 'http://dellerbie.com'
     phone "7146124582"
-    specialties { FactoryGirl.create_list(:specialty, 2) }
+    specialties { [FactoryGirl.create(:specialty), FactoryGirl.create(:specialty)] }
   end
 end

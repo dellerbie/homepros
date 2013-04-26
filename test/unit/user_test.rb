@@ -6,4 +6,6 @@ class UserTest < ActiveSupport::TestCase
   should_not allow_value('d.com').for(:email)
   
   should validate_presence_of :password
+  should ensure_length_of(:password).is_at_least(6)
+  should ensure_length_of(:password).is_at_most(128)
 end

@@ -1,6 +1,9 @@
 class ListingsController < ApplicationController
+  include Devise::Controllers::Helpers
+  
   before_filter :authenticate_user!, only: [:edit, :update, :destroy]
-  before_filter :find_listing, only: [:edit, :update, :destroy]
+  before_filter :find_current_user_listing, only: [:edit, :update, :destroy]
+  before_filter :find_listing, only: [:claim]
   
   PER_PAGE = 32
 
@@ -60,10 +63,36 @@ class ListingsController < ApplicationController
     end
   end
   
+  def claim
+    respond_to do |format|
+      format.json do
+        if @listing.claimable?
+          @user = User.new(params[:user])
+          @listing.claimable = false
+          @user.listing = @listing
+
+          if @user.save
+            sign_in(:user, @user)
+            render json: @user, :location => listing_path(@listing)
+          else 
+            @user.clean_up_passwords if @user.respond_to?(:clean_up_passwords)
+            render json: @user.errors, status: :unprocessable_entity
+          end
+        else 
+          render json: ["This listing can't be claimed"], status: :unprocessable_entity
+        end
+      end
+    end
+  end
+  
   protected
   
-  def find_listing
+  def find_current_user_listing
     @listing = current_user.listing
+  end
+  
+  def find_listing
+    @listing = Listing.find(params[:id])
   end
   
   def paging_options 
