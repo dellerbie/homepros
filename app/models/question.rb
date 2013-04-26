@@ -11,4 +11,10 @@ class Question < ActiveRecord::Base
   validates_format_of :sender_email, :with => EmailAddress::VALID_PATTERN, :message => "Please enter a valid email address", :allow_blank => true
   
   attr_accessible :sender_email, :text
+  
+  after_commit :question_email, on: :create
+  
+  def question_email
+    QuestionMailer.question_email(self).deliver
+  end
 end

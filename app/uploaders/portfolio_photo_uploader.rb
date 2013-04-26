@@ -8,7 +8,7 @@ class PortfolioPhotoUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::RailsHelper
   include Sprockets::Helpers::IsolatedHelper
 
-  if Rails.env.test? || Rails.env.development?
+  if Rails.env.test?
     storage :file
   else 
     storage :fog
