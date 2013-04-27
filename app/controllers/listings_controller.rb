@@ -64,26 +64,30 @@ class ListingsController < ApplicationController
   end
   
   def claim
-    respond_to do |format|
-      format.json do
-        if @listing.claimable?
-          @user = User.new(params[:user])
-          @listing.claimable = false
-          @user.listing = @listing
-
-          if @user.save
-            sign_in(:user, @user)
-            render json: @user, :location => listing_path(@listing)
-          else 
-            @user.clean_up_passwords if @user.respond_to?(:clean_up_passwords)
-            render json: @user.errors, status: :unprocessable_entity
-          end
+    if request.get?
+      @user = User.new
+    else
+      if @listing.claimable?
+        @user = User.new(params[:user])
+        @listing.claimable = false
+        @user.listing = @listing
+    
+        if @user.save
+          sign_in(:user, @user)
+          flash.notice = "You have successfully claimed this profile. Click 'Edit' to make changes to the listing."
+          redirect_to listing_path(@listing)
         else 
-          render json: ["This listing can't be claimed"], status: :unprocessable_entity
+          flash.alert = 'Could not create account.  Please fix the errors below'
+          @user.clean_up_passwords if @user.respond_to?(:clean_up_passwords)
+          # render action: 'claim'
         end
+      else 
+        flash.alert = "This listing can't be claimed"
+        # render action: 'claim'
       end
     end
   end
+  
   
   protected
   

@@ -16,6 +16,7 @@ class ActiveSupport::TestCase
   def clean_database
     DatabaseCleaner.clean
   end
+  
   teardown :clean_database
 
   # Add more helper methods to be used by all tests here...

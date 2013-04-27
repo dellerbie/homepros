@@ -5,9 +5,7 @@ Homepros::Application.routes.draw do
   }
   
   resources :listings, only: [:index, :show, :edit, :update] do
-    member do 
-      post :claim
-    end
+    match :claim, via: [:get, :post], on: :member
   end
   resources :preview_photos, only: :create
   resources :questions, only: [:create]

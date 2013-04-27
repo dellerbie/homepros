@@ -3,14 +3,15 @@ require 'test_helper'
 class ListingsControllerTest < ActionController::TestCase
   
   def setup
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+    DatabaseCleaner.start
   end
   
-  test 'claim' do
-    listing = FactoryGirl.build(:listing, claimable: true)
-    listing.specialties.destroy_all
-    listing.specialties << FactoryGirl.create(:specialty) << FactoryGirl.create(:specialty)
-    listing.save!
+  def teardown
+    DatabaseCleaner.clean
+  end
+  
+  test 'successfully claim listing' do    
+    listing = FactoryGirl.create(:listing, claimable: true, id: 100000)
     
     user = FactoryGirl.attributes_for(:user, email: 'claim@example.com')
     user[:password_confirmation] = user[:password]
@@ -18,7 +19,7 @@ class ListingsControllerTest < ActionController::TestCase
     assert listing.claimable?
     
     assert_difference('User.count') do 
-      post :claim, id: listing.id, user: user, format: :json
+      post :claim, id: listing.id, user: user
     end
     
     listing.reload
@@ -29,28 +30,26 @@ class ListingsControllerTest < ActionController::TestCase
     assert_equal user.listing, listing
     assert_equal user, listing.user
     
-    assert_response :success
+    assert_redirected_to listing_path(listing)
   end
   
-  test 'cant claim an unclaimable listing' do 
+  test 'cant claim an unclaimable listing' do     
     user = FactoryGirl.attributes_for(:user, email: 'claim2@example.com')
     user[:password_confirmation] = user[:password]
     
-    listing = FactoryGirl.build(:listing, claimable: false)
-    listing.specialties.destroy_all
-    listing.specialties << FactoryGirl.create(:specialty) << FactoryGirl.create(:specialty)
-    listing.save!
+    listing = FactoryGirl.create(:listing, claimable: false, id: 100001)
     
     assert !listing.claimable?
     
     assert_no_difference('User.count') do 
-      post :claim, id: listing.id, user: user, format: :json
+      post :claim, id: listing.id, user: user
     end
     
     listing.reload
     assert !listing.claimable?
     assert_nil listing.user_id
     
+    assert_equal "This listing can't be claimed", flash[:alert]
   end
 
 end

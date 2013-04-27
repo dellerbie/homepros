@@ -10,8 +10,9 @@ FactoryGirl.define do
     website 'http://dellerbie.com'
     phone "7146124582"
     
-    before(:create) do |listing|
-      listing.specialties = [FactoryGirl.create(:specialty), FactoryGirl.create(:specialty)]
+    after(:build) do |listing|
+      listing.specialties.delete_all
+      listing.specialties << FactoryGirl.build(:specialty) << FactoryGirl.build(:specialty)
     end
   end
 end
