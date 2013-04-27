@@ -1,0 +1,16 @@
+.preview
+  %span.header
+    You are claiming this listing
+  .listing-container
+    %span.company-name
+      = @listing.company_name 
+    %p
+      %span.specialties.text
+        = specialties(@listing)
+      %br
+      %span.location.text
+        = @listing.city.name
+    = image_tag(@listing.portfolio_photo, id: 'img_prev')
+    %p
+      %span.description.text
+        = @listing.portfolio_photo_description

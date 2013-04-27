@@ -29,6 +29,7 @@ end
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
+  gem "rspec-rails", "~> 2.0"
 end
 
 group :development do
@@ -39,4 +40,5 @@ end
 group :test do 
   gem 'shoulda'
   gem 'database_cleaner'
+  gem 'email_spec'
 end
