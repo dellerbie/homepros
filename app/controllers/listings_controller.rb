@@ -64,6 +64,9 @@ class ListingsController < ApplicationController
   end
   
   def claim
+    @base_css = 'claim-listing'
+    @hide_footer = true
+    
     if request.get?
       @user = User.new
     else
@@ -77,13 +80,11 @@ class ListingsController < ApplicationController
           flash.notice = "You have successfully claimed this profile. Click 'Edit' to make changes to the listing."
           redirect_to listing_path(@listing)
         else 
-          flash.alert = 'Could not create account.  Please fix the errors below'
           @user.clean_up_passwords if @user.respond_to?(:clean_up_passwords)
-          # render action: 'claim'
         end
       else 
         flash.alert = "This listing can't be claimed"
-        # render action: 'claim'
+        redirect_to listing_path(@listing)
       end
     end
   end

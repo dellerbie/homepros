@@ -11,7 +11,7 @@
     
     - if @listing.claimable?
       .claim-listing-btn
-        = link_to 'Claim this listing', edit_listing_path(@listing), class: 'btn btn-success pull-right'
+        = link_to 'Claim this listing', claim_listing_path(@listing), class: 'btn btn-success pull-right'
       
     - if can_email?(@listing)
       %span.action.ask-question{"data-toggle" => 'modal', "data-target" => '#contact-modal'}

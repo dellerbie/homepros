@@ -1,3 +1,9 @@
+%header
+  %h1 
+    You are claiming
+    %span.company-name
+      = @listing.company_name 
+      
 .preview
   %span.header
     You are claiming this listing
@@ -14,3 +20,21 @@
     %p
       %span.description.text
         = @listing.portfolio_photo_description
+
+= simple_form_for(@user, url: claim_listing_path(@listing), method: :post) do |f|
+  = f.error_notification
+  = display_base_errors @user
+
+  %fieldset.account-info
+    %p.title
+      Create an account
+
+    = f.input :email, label: 'Your email address', hint: "This is how we'll stay in touch (clients don’t see this address).", input_html: {class: 'input-xlarge'}, placeholder: 'example@email.com'
+    = f.input :password, hint: "Must be at least 6 characters.", input_html: {class: 'input-xlarge'}
+    = f.input :password_confirmation, label: 'Password again', hint: 'Confirm your password by entering it again.', input_html: {class: 'input-xlarge'}
+
+  .form-actions
+    %button.btn.btn-primary
+      Create Account
+    %button{type: 'button', class: 'btn'}
+      Cancel

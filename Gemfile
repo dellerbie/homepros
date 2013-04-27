@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'pg'
 gem 'sqlite3'
-gem 'haml-rails', '>= 0.3.4', :group => :development
+gem 'haml-rails'
 gem 'devise'
 gem 'jquery-rails'
 gem 'simple_form'
@@ -30,11 +30,15 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem "rspec-rails", "~> 2.0"
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-bundler'
 end
 
 group :development do
   gem 'nokogiri'
   gem 'socksify'
+  gem 'quiet_assets'
 end
 
 group :test do 
