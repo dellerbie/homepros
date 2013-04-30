@@ -15,6 +15,9 @@ gem 'remotipart', '~> 1.0'
 gem "aws-ses", :require => 'aws/ses'
 gem 'will_paginate'
 gem 'friendly_id'
+gem 'stripe_event'
+gem 'stripe'
+gem 'figaro'
 
 # Gems used only for assets and not required
 # in production environments by default.
