@@ -102,9 +102,8 @@ describe User do
         Stripe::Customer.stub(:create).and_raise(Stripe::StripeError)
         
         user.stripe_token = 'abcd1234'
-        expect {
-          user.upgrade
-        }.to raise_error Stripe::StripeError
+        expect(user.upgrade).to be_false
+        expect(user.errors).to_not be_empty
         
         expect(user).to_not be_premium
       end

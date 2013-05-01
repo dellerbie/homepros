@@ -83,4 +83,10 @@ describe Listing do
     listing = FactoryGirl.create(:listing, claimable: true)
     listing.should be_claimable
   end
+  
+  it 'is premium' do 
+    user = FactoryGirl.create(:user, premium: true)
+    listing = FactoryGirl.create(:listing, user: user)
+    expect(listing).to be_premium
+  end
 end

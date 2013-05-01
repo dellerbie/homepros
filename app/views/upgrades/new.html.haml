@@ -1,0 +1,2 @@
+= form_tag upgrades_path do 
+  %script.stripe-button{src: 'https://checkout.stripe.com/v2/checkout.js', 'data-key' => ENV["STRIPE_PUBLIC_KEY"], 'data-description' => 'Upgrade to Premium', 'data-amount' => '9900'}

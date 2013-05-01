@@ -12,7 +12,9 @@ Homepros::Application.routes.draw do
   end
   
   resources :preview_photos, only: :create
-  resources :questions, only: [:create]
+  resources :questions, only: :create
+  resources :upgrades, only: [:new, :create, :show]
+  mount StripeEvent::Engine => '/stripe' 
   
   get '/(:city_slug/(:specialty_slug))' => 'listings#index'
   

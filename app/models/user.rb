@@ -49,18 +49,30 @@ class User < ActiveRecord::Base
   rescue Stripe::StripeError => e
     logger.error "Stripe Error: #{e.message}"
     self.stripe_token = nil
-    raise e
+    errors.add :base, "Unable to upgrade to premium #{e.message}."
+    false
   end
   
   def update_card
-    unless customer_id.blank?
+    unless customer_id.blank? || stripe_token.blank?
       customer = Stripe::Customer.retrieve(customer_id)
-      customer.update_subscription(plan: PREMIUM_PLAN)
+      customer.card = stripe_token
+      customer.email = email
+      customer.description = "Customer for #{email}"
+      customer.save
+      self.last_4_digits = customer.active_card.last4
+      self.customer_id = customer.id
+      self.card_type = customer.active_card.type
+      self.exp_month = customer.active_card.exp_month
+      self.exp_year = customer.active_card.exp_year
+      self.stripe_token = nil
+      self.premium = true
     end
     true
   rescue Stripe::StripeError => e
     logger.error "Stripe Error: #{e.message}"
-    raise e
+    errors.add :base, "Unable to update your credit card #{e.message}."
+    false
   end
   
   def downgrade
@@ -75,6 +87,7 @@ class User < ActiveRecord::Base
     end
   rescue Stripe::StripeError => e
     logger.error "Stripe Error: #{e.message}"
-    raise e
+    errors.add :base, "Unable to cancel your subscription #{e.message}."
+    false
   end
 end
