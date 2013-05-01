@@ -25,8 +25,6 @@ class User < ActiveRecord::Base
   end
   
   def upgrade
-    raise STRIPE_ERROR_BLANK_TOKEN if stripe_token.blank?
-    
     if customer_id.present?
       customer = Stripe::Customer.retrieve(customer_id)
       customer.update_subscription(plan: PREMIUM_PLAN)
@@ -54,7 +52,7 @@ class User < ActiveRecord::Base
   end
   
   def update_card
-    unless customer_id.blank? || stripe_token.blank?
+    if customer_id.present? && stripe_token.present?
       customer = Stripe::Customer.retrieve(customer_id)
       customer.card = stripe_token
       customer.email = email
@@ -67,8 +65,10 @@ class User < ActiveRecord::Base
       self.exp_year = customer.active_card.exp_year
       self.stripe_token = nil
       self.premium = true
+    else 
+      errors.add :base, "Unable to update your credit card. Please try again later."
+      false
     end
-    true
   rescue Stripe::StripeError => e
     logger.error "Stripe Error: #{e.message}"
     errors.add :base, "Unable to update your credit card #{e.message}."
@@ -81,10 +81,10 @@ class User < ActiveRecord::Base
       unless customer.blank? || customer.respond_to?('deleted')
         if customer.subscription.status == 'active'
           customer.cancel_subscription
-          true
         end
       end
     end
+    true
   rescue Stripe::StripeError => e
     logger.error "Stripe Error: #{e.message}"
     errors.add :base, "Unable to cancel your subscription #{e.message}."

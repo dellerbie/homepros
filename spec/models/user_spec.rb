@@ -79,9 +79,9 @@ describe User do
       end
       
       it 'should not upgrade to premium if stripe_token is blank' do 
-        expect {
-          user.upgrade
-        }.to raise_error User::STRIPE_ERROR_BLANK_TOKEN
+        Stripe::Customer.stub(:create).and_raise(Stripe::StripeError)
+        expect(user.upgrade).to be_false
+        expect(user.errors).to_not be_empty
       end
 
 

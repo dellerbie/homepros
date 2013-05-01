@@ -17,7 +17,7 @@
         .pull-right
           - if user_signed_in?
             - unless current_user.premium?
-              = link_to 'Upgrade to Premium', upgrades_path, class: 'btn btn-success'
+              = link_to 'Upgrade to Premium', new_upgrade_path, class: 'btn btn-success'
             = link_to 'My Listing', listing_path(current_user.listing), class: "btn btn-primary"
             = link_to 'My Account', edit_user_registration_path, class: "btn btn-info"
             = button_to 'Logout', destroy_user_session_path, class: 'btn btn-danger', method: :delete

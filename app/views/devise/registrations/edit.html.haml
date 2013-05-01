@@ -1,5 +1,5 @@
 .edit-account
-  %p
+  %h3
     Your Account
 
   = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
@@ -14,6 +14,41 @@
     
     %br
     %br
+  
+  - if current_user.customer_id.present? && current_user.card_type.present?
+    %h3 
+      Payment Info
+    
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th
+            Type
+          %th
+            Ending
+          %th
+            Expiration
+          %th
+          %th
+      %tbody
+        %tr
+          %td
+            = current_user.card_type
+          %td
+            = "****#{current_user.last_4_digits}"
+          %td
+            = "#{current_user.exp_month}/#{current_user.exp_year}"
+          %td
+            = form_tag(upgrade_path(current_user), method: :put) do 
+              %script.stripe-button{src: 'https://checkout.stripe.com/v2/checkout.js', 'data-key' => ENV["STRIPE_PUBLIC_KEY"], 'data-description' => 'Update Card', 'data-amount' => '0', 'data-panel-label' => 'Update Card', 'data-label' => 'Update Card'}
+          - if current_user.premium?
+            %td
+              = button_to "Downgrade to Free Listing", upgrade_path(current_user), :data => { :confirm => "Are you sure that you want to downgrade to a free listing?" }, :method => :delete, class: 'btn btn-danger'
+          - else
+            %td
+              %button.btn.btn-success
+                Upgrade to Premium
+        
   
   %h3
     Cancel my account
