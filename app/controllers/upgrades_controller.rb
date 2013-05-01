@@ -3,7 +3,7 @@ class UpgradesController < ApplicationController
   
   def new
     @hide_footer = true
-    @base_css = 'upgrade'
+    @base_css = 'upgrades'
   end
   
   def create

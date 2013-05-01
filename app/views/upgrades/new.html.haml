@@ -1,5 +1,25 @@
-- if current_user.customer_id.blank?
-  = form_tag upgrades_path do 
-    %script.stripe-button{src: 'https://checkout.stripe.com/v2/checkout.js', 'data-key' => ENV["STRIPE_PUBLIC_KEY"], 'data-description' => 'Upgrade to Premium', 'data-amount' => '9900'}
-- else
-  = button_to "Upgrade to Premium", upgrades_path, :method => :post, class: 'btn btn-success'
+.upgrade.clearfix
+  .preview
+    %h4
+      Your premium listing will look like this...
+    = render partial: 'listings/premium_listing', locals: { listing: current_user.listing }
+  .copy
+    %header
+      Premium Listings:
+    %ul.benefits
+      %li
+        Display 2x larger than a free listing
+      %li
+        Show up in search results before any free listings
+      %li
+        Receive more leads because your listing is easier to find
+    .cost
+      $99/month
+      %span.text
+        * no contracts, cancel anytime
+    
+    - if current_user.customer_id.blank?
+      = form_tag upgrades_path, id: 'payment-form' do 
+        %script.stripe-button{src: 'https://checkout.stripe.com/v2/checkout.js', 'data-key' => ENV["STRIPE_PUBLIC_KEY"], 'data-description' => 'Upgrade to Premium', 'data-amount' => '9900'}
+    - else
+      = button_to "Upgrade to Premium", upgrades_path, :method => :post, class: 'btn btn-primary btn-large btn-block' 

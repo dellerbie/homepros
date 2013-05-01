@@ -1,0 +1,14 @@
+.listing-container.thumbnail.premium
+  %header.clearfix
+    = link_to truncate(listing.company_name, length: 35), listing_path(listing), class: 'company-name'
+    = link_to image_tag(listing.company_logo_photo_url), listing_path(listing), class: 'company-logo pull-right'
+    %span.specialties.text
+      = truncate(specialties(listing), length: 48)
+    %span.location.text
+      = listing.city.name
+      
+  = link_to listing_path(listing) do
+    = image_tag listing.portfolio_photo_url(:premium), class: 'portfolio-img'
+  %p
+    %span.description.text
+      = truncate(listing.portfolio_photo_description, length: 310)

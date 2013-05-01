@@ -9,6 +9,7 @@
   height: 248px;
   overflow: hidden;
   margin: 0 auto;
+  position: relative;
   
   p {
     line-height: 1.2em;
@@ -25,11 +26,37 @@
     word-wrap: break-word;
   }
   
-  img {
+  img.portfolio-img {
     display: block;
     margin-bottom: 10px;
     width: 195px;
     height: 136px;
+  }
+  
+  &.premium {
+    width: 430px;
+    height: 490px;
+    
+    header {
+      display: block;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e8e8e8;
+      
+      .company-name {
+        font-size: 18px;
+      }
+    }
+    
+    .text {
+      display: block;
+      font-size: 12px;
+    }
+    
+    img.portfolio-img {
+      width: 430px;
+      height: 300px;
+    }
   }
 }
 

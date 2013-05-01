@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   attr_accessor :stripe_token
   
   after_commit :welcome_email, on: :create
+  before_destroy :downgrade
   
   STRIPE_ERROR_BLANK_TOKEN = "Can't upgrade to premium at this time.  Please try again later."
   STRIPE_ERROR_ALREADY_PREMIUM_USER = "You are already a premium user."

@@ -129,5 +129,17 @@ describe User do
         expect(user.stripe_token).to be_nil
       end
     end
+    
+    context '#before_destroy' do
+      it 'cancels subscription' do 
+        expect(user.upgrade).to be_true
+        user.reload
+        expect(user.premium).to be_true
+        
+        expect {
+          user.destroy
+        }.to change{ user.pending_downgrade }.from(false).to(true)
+      end
+    end
   end
 end
