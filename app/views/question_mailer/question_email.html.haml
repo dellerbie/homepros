@@ -1,17 +1,17 @@
 !!!
 %html
   %head
-    %title=Question::SUBJECT
+    %title=QuestionMailer::SUBJECT
   %body
-  %p
-    = "#{@question.sender_email} has you sent you a message from "
-    = "#{link_to 'OC Homepros', root_path}:"
-    %br
-    = @question.text
-  %p 
-   You can reply to this email directly and you can manage your listing by logging in to your account here:
-    = new_user_session_url
-  %p
-    Sincerely,
-  %p
-    The OC Homepros Team
+    %p
+      = "#{@question.sender_email} has you sent you a message from "
+      = "#{link_to 'OC Homepros', root_path}:"
+      %br
+      = @question.text
+    %p 
+      You can reply to this email directly and you can manage your listing by logging in to your account here:
+      = new_user_session_url
+    %p
+      Sincerely,
+    %p
+      The OC Homepros Team

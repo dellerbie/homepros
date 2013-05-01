@@ -37,13 +37,10 @@ class User < ActiveRecord::Base
       )
     end
     
-    self.last_4_digits = customer.active_card.last4
-    self.customer_id = customer.id
-    self.card_type = customer.active_card.type
-    self.exp_month = customer.active_card.exp_month
-    self.exp_year = customer.active_card.exp_year
-    self.stripe_token = nil
+    save_cc_info(customer)
     self.premium = true
+    self.pending_downgrade = false
+    save
   rescue Stripe::StripeError => e
     logger.error "Stripe Error: #{e.message}"
     self.stripe_token = nil
@@ -58,13 +55,10 @@ class User < ActiveRecord::Base
       customer.email = email
       customer.description = "Customer for #{email}"
       customer.save
-      self.last_4_digits = customer.active_card.last4
-      self.customer_id = customer.id
-      self.card_type = customer.active_card.type
-      self.exp_month = customer.active_card.exp_month
-      self.exp_year = customer.active_card.exp_year
-      self.stripe_token = nil
+      save_cc_info(customer)
       self.premium = true
+      self.pending_downgrade = false
+      save
     else 
       errors.add :base, "Unable to update your credit card. Please try again later."
       false
@@ -80,14 +74,26 @@ class User < ActiveRecord::Base
       customer = Stripe::Customer.retrieve(customer_id)
       unless customer.blank? || customer.respond_to?('deleted')
         if customer.subscription.status == 'active'
-          customer.cancel_subscription
+          customer.cancel_subscription(at_period_end: true)
+          self.pending_downgrade = true
         end
       end
     end
-    true
+    save
   rescue Stripe::StripeError => e
     logger.error "Stripe Error: #{e.message}"
     errors.add :base, "Unable to cancel your subscription #{e.message}."
     false
+  end
+  
+  private 
+  
+  def save_cc_info(customer)
+    self.last_4_digits = customer.active_card.last4
+    self.customer_id = customer.id
+    self.card_type = customer.active_card.type
+    self.exp_month = customer.active_card.exp_month
+    self.exp_year = customer.active_card.exp_year
+    self.stripe_token = nil
   end
 end

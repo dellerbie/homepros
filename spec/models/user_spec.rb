@@ -10,6 +10,7 @@ describe User do
   it { should ensure_length_of(:password).is_at_most(128) }
   
   it { should_not allow_mass_assignment_of(:premium) }
+  it { should_not allow_mass_assignment_of(:pending_downgrade) }
   it { should_not allow_mass_assignment_of(:customer_id) }
   it { should_not allow_mass_assignment_of(:last_4_digits) }
   it { should_not allow_mass_assignment_of(:card_type) }
@@ -34,8 +35,8 @@ describe User do
     let(:visa) do
       {
         number: '4242424242424242',
-        exp_month: 4,
-        exp_year: 1.year.from_now.year,
+        exp_month: '4',
+        exp_year: 1.year.from_now.year.to_s,
         cvc: '123'
       }
     end
@@ -67,7 +68,9 @@ describe User do
     context 'upgrade' do
       it 'success' do
         user.stripe_token = "abcd1234"
-        user.upgrade
+        expect(user.upgrade).to be_true
+        user.reload
+        
         expect(user.last_4_digits).to eql(visa[:number].slice(-4..-1))
         expect(user.card_type).to eql('Visa')
         expect(user.exp_month).to eql(visa[:exp_month])
@@ -75,7 +78,6 @@ describe User do
         expect(user.customer_id).to_not be_nil
         expect(user.stripe_token).to be_nil
         expect(user).to be_premium
-        expect(user.save).to be_true
       end
       
       it 'should not upgrade to premium if stripe_token is blank' do 
@@ -84,17 +86,16 @@ describe User do
         expect(user.errors).to_not be_empty
       end
 
-
       it 'should upgrade the user if already a stripe customer' do
         user.stripe_token = "abcd1234"
         user.upgrade
-
+        user.reload
         expect(user).to be_premium
 
         user.downgrade
         user.stripe_token = "abcd1234"
-        user.upgrade
-        expect(user.save).to be_true
+        expect(user.upgrade).to be_true
+        user.reload
         expect(user).to be_premium
       end
       
@@ -104,17 +105,22 @@ describe User do
         user.stripe_token = 'abcd1234'
         expect(user.upgrade).to be_false
         expect(user.errors).to_not be_empty
-        
         expect(user).to_not be_premium
       end
     end
     
     context 'downgrade' do
       it 'success' do 
+        expect(user.pending_downgrade).to be_false
+        
         user.stripe_token = "abcd1234"
         user.upgrade
         expect(user.downgrade).to be_true
+        user.reload
+        
+        expect(user.pending_downgrade).to be_true
 
+        expect(user).to be_premium # still premium until the end of the charge cycle
         expect(user.last_4_digits).to eql(visa[:number].slice(-4..-1))
         expect(user.card_type).to eql('Visa')
         expect(user.exp_month).to eql(visa[:exp_month])

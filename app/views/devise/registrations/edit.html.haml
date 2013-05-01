@@ -20,6 +20,10 @@
       Payment Info
     
     %table.table.table-bordered
+      - if current_user.pending_downgrade?
+        %caption
+          %span
+            ** Your account will be downgraded to a free listing at the end of the pay period. You can always upgrade back to Premium after that.
       %thead
         %tr
           %th
@@ -41,19 +45,18 @@
           %td
             = form_tag(upgrade_path(current_user), method: :put) do 
               %script.stripe-button{src: 'https://checkout.stripe.com/v2/checkout.js', 'data-key' => ENV["STRIPE_PUBLIC_KEY"], 'data-description' => 'Update Card', 'data-amount' => '0', 'data-panel-label' => 'Update Card', 'data-label' => 'Update Card'}
-          - if current_user.premium?
+          - if current_user.premium? && !current_user.pending_downgrade?
             %td
               = button_to "Downgrade to Free Listing", upgrade_path(current_user), :data => { :confirm => "Are you sure that you want to downgrade to a free listing?" }, :method => :delete, class: 'btn btn-danger'
+          - elsif current_user.pending_downgrade?
+            %td
+              = button_to "Pending Downgrade", 'javascript:void(0);', class: 'btn btn-danger disabled'
           - else
             %td
-              %button.btn.btn-success
-                Upgrade to Premium
-        
+              = button_to "Upgrade to Premium", upgrades_path, :method => :post, class: 'btn btn-success'
   
   %h3
     Cancel my account
   %p
     Unhappy?
     = button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, class: 'btn btn-danger'
-    
-  = link_to "Back", :back

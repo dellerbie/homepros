@@ -42,6 +42,7 @@ group :development do
   gem 'nokogiri'
   gem 'socksify'
   gem 'quiet_assets'
+  gem 'thin'
 end
 
 group :test do 
