@@ -1,6 +1,6 @@
 = render 'filters'
         
 %ul.thumbnails.listings
-  = render partial: 'listing', collection: @listings
+  = render partial: 'premium_listing_index', collection: @listings, as: :listing
   
 = will_paginate @listings
