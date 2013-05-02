@@ -1,4 +1,6 @@
-%h1 
-  Your listing has been upgraded to Premium.  Here's what it will look like in search results:
-  
-= render partial: 'listings/listing', locals: { listing: current_user.listing }
+.preview
+  %h4
+    You have successfully been upgraded to a Premium listing!
+  %h4
+    Here's what your Premium listing will look like in search results:
+  = render partial: 'listings/premium_listing', locals: { listing: current_user.listing }

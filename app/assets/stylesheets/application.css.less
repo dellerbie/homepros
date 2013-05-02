@@ -54,6 +54,28 @@
   display: inline-block;
 }
 
+.navbar .nav.actions {
+  li a {
+    text-shadow: none;
+    color: #fff;
+    
+    &:hover {
+      color: #ccc;
+    }
+  }
+  
+  li.sign-up, li.upgrade-to-premium {
+    .btn {
+      padding: 8px 18px;
+      
+      &.btn-success:hover {
+        color: #ffffff;
+        background-color: #51a351;
+      }
+    }
+  }
+}
+
 .hp-container {
   width: 980px;
   margin: 0 auto;
