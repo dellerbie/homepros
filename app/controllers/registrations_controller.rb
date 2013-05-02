@@ -21,4 +21,8 @@ class RegistrationsController < Devise::RegistrationsController
     @hide_footer = true
   end
   
+  def after_sign_up_path_for(resource)
+    new_upgrade_path
+  end
+  
 end

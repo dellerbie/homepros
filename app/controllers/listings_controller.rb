@@ -79,7 +79,7 @@ class ListingsController < ApplicationController
         if @user.save
           sign_in(:user, @user)
           flash.notice = "You have successfully claimed this profile. Click 'Edit' to make changes to the listing."
-          redirect_to listing_path(@listing)
+          redirect_to new_upgrade_path
         else 
           @user.clean_up_passwords if @user.respond_to?(:clean_up_passwords)
         end
