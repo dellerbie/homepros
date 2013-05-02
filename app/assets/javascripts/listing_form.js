@@ -5,7 +5,7 @@ $(function() {
     var file = $(this),
         form = $(this).closest("form"),
         logo = file.is('#listing_company_logo_photo'),
-        imgEl = logo ? '#company_logo_prev' : '#img_prev';
+        imgEl = logo ? '.company_logo_prev' : '#img_prev';
 
     $.ajax('/preview_photos', {
       type: 'POST',
@@ -14,14 +14,18 @@ $(function() {
       dataType: "json",
       success: function (e) {
         var src = logo ? e.photo.logo.url : e.photo.url;
-        $(imgEl).attr("src", src);
+        if(imgEl.length) {
+          $(imgEl).attr("src", src);
+        }
       },
       error: function (e) {
         var response = $.parseJSON(e.responseText);
         if(response.errors) {
         } else {
           var src = logo ? response.photo.logo.url : response.photo.url;
-          $(imgEl).attr("src", src);
+          if(imgEl.length) {
+            $(imgEl).attr("src", src);
+          }
         }
       }    
     });
@@ -36,17 +40,23 @@ $(function() {
 
   $('#user_listing_attributes_portfolio_photo_description, #listing_portfolio_photo_description').on('blur keyup', function() {
     var text = $(this).val() || 'Your image description',
-        limit = 65;
+        limit = $('.preview').is('.premium') ? 310 : 65;
         
     if(text.length > limit) {
-      text = text.substring(0,limit) + '...';
+      text = text.substring(0,limit-3) + '...';
     }
     
     $('.preview .description').text(text);
   });
 
   $('#user_listing_attributes_company_name, #listing_company_name').on('blur keyup', function() {
-    var text = $(this).val() || 'Your company name';
+    var text = $(this).val() || 'Your company name',
+        limit = $('.preview').is('.premium') ? 31 : 24;
+        
+    if(text.length > limit) {
+      text = text.substring(0,limit-3) + '...';
+    }
+        
     $('.preview .company-name').text(text);
   });
 
@@ -57,7 +67,8 @@ $(function() {
 
   $('#user_listing_attributes_specialty_ids, #listing_specialty_ids').change(function(e) {    
     var text = 'Specialties',
-        specialties = [];
+        specialties = [],
+        limit = $('.preview').is('.premium') ? 48 : 30;
 
     $('option:selected', $(this)).each(function() {
       specialties.push($(this).text());
@@ -65,6 +76,9 @@ $(function() {
     
     if(specialties.length > 0) {
       text = specialties.join(', ');
+      if(text.length > limit) {
+        text = text.substring(0,limit-3) + '...';
+      }
     }
     
     $('.preview .specialties').text(text);

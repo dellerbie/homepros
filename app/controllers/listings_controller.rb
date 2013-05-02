@@ -39,6 +39,7 @@ class ListingsController < ApplicationController
   
   def edit
     @base_css = 'edit-listing'
+    @container_css = 'premium' if @listing.premium?
     @hide_footer = true
   end
 

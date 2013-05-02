@@ -1,4 +1,4 @@
-= simple_form_for(@listing, :url => listing_path(@listing)) do |f|
+= simple_form_for(@listing, :url => listing_path(@listing), html: {class: @listing.premium? ? 'premium':''}) do |f|
   = f.error_notification
   = display_base_errors @listing
   
@@ -19,18 +19,19 @@
     
     = f.input :company_name, label: "What's your company name?", hint: "You can use your own name if you're a freelancer and don't have a company name.", input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'Your Company Inc.'
     = f.input :company_description, label: "Describe your company's services", hint: 'Enter up to 1000 characters', input_html: { maxlength: 1000 }, placeholder: "Describe your company's services"
+    = f.input :company_logo_photo_cache, as: :hidden
     = f.input :company_logo_photo, as: :text, label: 'Upload your company logo (optional)', hint: 'GIF, JPG, or PNG. We’ll resize what you have.<br/>This is shown on your listing page for clients to see.', as: :file
     
     - if session[:logo_photo_url].present?
-      = image_tag(session[:logo_photo_url], class: 'company-logo', id: 'company_logo_prev')
+      = image_tag(session[:logo_photo_url], class: 'company-logo company_logo_prev')
     - elsif @listing.company_logo_photo.present?
-      = image_tag(@listing.company_logo_photo, class: 'company-logo', id: 'company_logo_prev')
+      = image_tag(@listing.company_logo_photo, class: 'company-logo company_logo_prev')
     - else
-      = image_tag('', class: 'company-logo', id: 'company_logo_prev')      
+      = image_tag('', class: 'company-logo company_logo_prev')      
     = f.input :company_logo_photo_cache, as: :hidden
     
-    = f.association :specialties, collection: Specialty.order("name ASC"), label: 'What do you specialize in?', hint: 'You can select up to 2 specialties'
-    = f.association :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose the closest city', collection: City.all(order: 'name'), prompt: 'Please select a city'
+    = f.association :specialties, collection: Specialty.order("name ASC"), label: 'What do you specialize in?', hint: 'You can select up to 2 specialties', input_html: { class: 'chzn-select', 'data-placeholder' => 'Choose up to 2 Specialties' }
+    = f.association :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose the closest city', collection: City.all(order: 'name'), prompt: 'Please select a city', input_html: { class: 'chzn-select', 'data-placeholder' => 'Choose a City' }
 
   %fieldset.contact-info
     %p.title

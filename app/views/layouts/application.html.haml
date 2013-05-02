@@ -27,7 +27,7 @@
               = link_to 'Login', new_user_session_path, class: 'btn btn-primary'
             - unless @hide_get_listed_btn
               = link_to 'Get Listed Today', new_user_registration_path, class: "btn btn-success"
-    .hp-container
+    .hp-container.clearfix{class: @container_css || ''}
       = render 'shared/flash_messages', flash: flash
       = yield
       = render 'shared/footer' unless @hide_footer

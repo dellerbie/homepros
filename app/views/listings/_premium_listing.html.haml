@@ -1,6 +1,6 @@
-.listing-container.thumbnail.premium
+.listing-container.premium
   %header.clearfix
-    = link_to truncate(listing.company_name, length: 35), listing_path(listing), class: 'company-name'
+    = link_to truncate(listing.company_name, length: 31), listing_path(listing), class: 'company-name'
     = link_to image_tag(listing.company_logo_photo_url), listing_path(listing), class: 'company-logo pull-right'
     %span.specialties.text
       = truncate(specialties(listing), length: 48)

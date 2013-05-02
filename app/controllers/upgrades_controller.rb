@@ -2,6 +2,7 @@ class UpgradesController < ApplicationController
   before_filter :authenticate_user!
   
   def new
+    # redirect_to listing_path(current_user.listing) if current_user.premium?
     @hide_footer = true
     @base_css = 'upgrades'
   end
