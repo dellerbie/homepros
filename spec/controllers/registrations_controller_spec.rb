@@ -42,7 +42,7 @@ describe RegistrationsController do
     saved_user = User.find_by_email(user[:email])
     expect(saved_user).to_not be_nil
     expect(saved_user.listing).to_not be_nil
-    expect(response).to redirect_to listing_path(saved_user.listing)
+    expect(response).to redirect_to new_upgrade_path
   end
   
   it 'should not register a user with an invalid listing' do 

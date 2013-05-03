@@ -7,9 +7,9 @@
   .actions.clearfix
     - if current_user && current_user.listing == @listing
       .edit-listing-btn
-        = link_to 'Edit', edit_listing_path(current_user.listing), class: 'btn btn-success pull-right'
+        = link_to 'Edit', edit_listing_path(current_user.listing), class: 'btn btn-success btn-large'
     
-    - if @listing.claimable?
+    - if @listing.claimable? && !user_signed_in?
       .claim-listing-btn
         = link_to 'Claim this listing', claim_listing_path(@listing), class: 'btn btn-success pull-right'
       

@@ -2,7 +2,8 @@
   .preview
     %h4
       Your premium listing will look like this...
-    = render partial: 'listings/premium_listing', locals: { listing: current_user.listing }
+    .listing-container.premium
+      = render partial: 'listings/premium_listing', locals: { listing: current_user.listing }
   .copy
     %header
       Premium Listings:

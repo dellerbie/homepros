@@ -21,7 +21,7 @@ describe ListingsController do
     expect(user.listing).to eql(listing)
     expect(user).to eql(listing.user)
     
-    expect(response).to redirect_to(listing_path(listing))
+    expect(response).to redirect_to(new_upgrade_path)
   end
   
   it 'cant claim an unclaimable listing' do     

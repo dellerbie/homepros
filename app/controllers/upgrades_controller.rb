@@ -10,7 +10,6 @@ class UpgradesController < ApplicationController
   def create
     current_user.stripe_token = params[:stripeToken]
     if current_user.upgrade
-      flash[:notice] = 'Successfully upgraded your listing to premium.'
       redirect_to upgrade_path(current_user.listing)
     else 
       flash[:error] = current_user.errors.full_messages.join(' ')
@@ -20,7 +19,7 @@ class UpgradesController < ApplicationController
   
   def show
     @hide_footer = true
-    @base_css = 'show-upgrade'
+    @base_css = 'successful-upgrade'
   end
   
   def update
