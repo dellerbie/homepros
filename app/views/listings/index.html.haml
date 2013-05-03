@@ -1,6 +1,15 @@
 = render 'filters'
+- showed_premium = false
         
 %ul.thumbnails.listings
-  = render partial: 'premium_listing_index', collection: @listings, as: :listing
+  - @listings.each_with_index do |listing, index|
+    - if (index < 10 && !showed_premium) || listing.premium?
+      %li.listing-container.thumbnail.premium
+        = render partial: 'premium_listing', locals: { listing: listing }
+    - else
+      %li.listing-container.thumbnail
+        = render partial: 'listing', locals: { listing: listing }
+
+- showed_premium = true
   
 = will_paginate @listings

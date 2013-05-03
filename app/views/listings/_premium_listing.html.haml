@@ -1,6 +1,6 @@
 %header.clearfix
-  = link_to truncate(listing.company_name, length: 31), listing_path(listing), class: 'company-name'
-  = link_to image_tag(listing.company_logo_photo_url), listing_path(listing), class: 'company-logo pull-right' if listing.company_logo_photo.present?
+  = link_to truncate(listing.company_name, length: 41), listing_path(listing), class: 'company-name'
+  = link_to image_tag(listing.company_logo_photo_url), listing_path(listing), class: 'company-logo' if listing.company_logo_photo.present?
   %span.specialties.text
     = truncate(specialties(listing), length: 48)
   %span.location.text

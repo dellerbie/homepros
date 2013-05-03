@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130502040339) do
+ActiveRecord::Schema.define(:version => 20130502040153) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -53,7 +53,6 @@ ActiveRecord::Schema.define(:version => 20130502040339) do
     t.boolean  "claimable",                   :default => false
   end
 
-  add_index "listings", ["city_id"], :name => "index_listings_on_city_id"
   add_index "listings", ["slug"], :name => "index_listings_on_slug", :unique => true
   add_index "listings", ["user_id"], :name => "index_listings_on_user_id", :unique => true
 

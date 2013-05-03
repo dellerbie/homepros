@@ -1,13 +1,12 @@
-%li.listing-container.thumbnail
-  = link_to truncate(listing.company_name, length: 24), listing_path(listing), class: 'company-name'
-  %p
-    %span.specialties.text
-      = truncate(specialties(listing), length: 30)
-    %br
-    %span.location.text
-      = listing.city.name
-  = link_to listing_path(listing) do
-    = image_tag(listing.portfolio_photo_url(:small))
-  %p
-    %span.description.text
-      = truncate(listing.portfolio_photo_description, length: 31)
+= link_to truncate(listing.company_name, length: 24), listing_path(listing), class: 'company-name'
+%p
+  %span.specialties.text
+    = truncate(specialties(listing), length: 30)
+  %br
+  %span.location.text
+    = listing.city.name
+= link_to listing_path(listing) do
+  = image_tag(listing.portfolio_photo_url(:small))
+%p
+  %span.description.text
+    = truncate(listing.portfolio_photo_description, length: 31)

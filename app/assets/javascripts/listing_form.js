@@ -51,7 +51,7 @@ $(function() {
 
   $('#user_listing_attributes_company_name, #listing_company_name').on('blur keyup', function() {
     var text = $(this).val() || 'Your company name',
-        limit = $('.preview').is('.premium') ? 31 : 24;
+        limit = $('.preview').is('.premium') ? 41 : 24;
         
     if(text.length > limit) {
       text = text.substring(0,limit-3) + '...';

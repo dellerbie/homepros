@@ -6,7 +6,7 @@
     .listing-container.premium
       %header.clearfix
         %span.company-name
-          = truncate(@listing.company_name, length: 31)
+          = truncate(@listing.company_name, length: 41)
         %span.company-logo.pull-right
           - if session[:logo_photo_url].present?
             = image_tag(session[:logo_photo_url], class: 'company-logo company_logo_prev')
