@@ -17,6 +17,12 @@ class ListingsController < ApplicationController
     
     @listings = parse_filter.paginate(paging_options)
     
+    # for now, show the first few listings as premium no matter what
+    # this is to entice business owners to upgrade to premium
+    if @page == 1 
+      @listings.take((1..10).to_a.sample).each { |listing| listing.premium = true }
+    end
+    
     @base_css = 'listings-index'
 
     respond_to do |format|
@@ -137,7 +143,7 @@ class ListingsController < ApplicationController
     scope = scope.where("cities.slug" => city_slug) if city_slug.present?
     scope = scope.where("specialties.slug" => specialty_slug) if specialty_slug.present?
     
-    scope = scope.order("RANDOM()") if city_slug.blank? && specialty_slug.blank?
+    scope = scope.joins("LEFT JOIN users ON listings.user_id = users.id").order("users.premium, RANDOM()") if city_slug.blank? && specialty_slug.blank?
     
     scope
   end

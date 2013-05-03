@@ -17,7 +17,12 @@
             Homepros
         %ul.nav.pull-right.actions
           - if user_signed_in?
-            - unless current_user.premium?
+            - if current_user.premium?
+              %li.premium-user
+                %a{href: "javascript:void(0);"}
+                  %i.icon-star
+                  %span='Premium'
+            - else
               %li.upgrade-to-premium
                 = link_to 'Upgrade to Premium', new_upgrade_path, class: 'btn btn-success'
             %li.my-listing

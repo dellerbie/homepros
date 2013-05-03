@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130502040153) do
+ActiveRecord::Schema.define(:version => 20130503184757) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20130502040153) do
 
   add_index "users", ["customer_id"], :name => "index_users_on_customer_id"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["premium"], :name => "index_users_on_premium"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

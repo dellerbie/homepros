@@ -18,6 +18,7 @@ gem 'stripe_event'
 gem 'stripe'
 gem 'figaro'
 gem 'unicorn'
+gem 'asset_sync'
 
 # Gems used only for assets and not required
 # in production environments by default.

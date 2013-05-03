@@ -71,8 +71,12 @@ class Listing < ActiveRecord::Base
     phone.present? && phone != NO_PHONE
   end
   
+  def premium=(premium)
+    @premium = premium
+  end
+  
   def premium?
-    user.try(:premium?)
+    @premium || user.try(:premium?)
   end
 
   protected

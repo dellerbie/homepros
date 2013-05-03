@@ -2,7 +2,7 @@
         
 %ul.thumbnails.listings
   - @listings.each_with_index do |listing, index|
-    - if (index < 10) || listing.premium?
+    - if listing.premium?
       %li.listing-container.thumbnail.premium
         = render partial: 'premium_listing', locals: { listing: listing }
     - else

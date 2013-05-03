@@ -19,6 +19,11 @@ Homepros::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
+  
+  config.assets.enabled = true
+  
+  config.action_controller.asset_host = "d1gaowcp2wajo5.cloudfront.net"
+   config.assets.prefix = "/assets"
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
