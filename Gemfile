@@ -18,7 +18,6 @@ gem 'stripe_event'
 gem 'stripe'
 gem 'figaro'
 gem 'unicorn'
-gem 'faker'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -32,6 +31,7 @@ end
 
 group :development, :test do
   gem 'factory_girl_rails'
+  gem 'faker'
   gem "rspec-rails", "~> 2.0"
   gem 'guard'
   gem 'guard-rspec'
