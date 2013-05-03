@@ -17,6 +17,7 @@ gem 'friendly_id'
 gem 'stripe_event'
 gem 'stripe'
 gem 'figaro'
+gem 'unicorn'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -41,7 +42,6 @@ group :development do
   gem 'nokogiri'
   gem 'socksify'
   gem 'quiet_assets'
-  gem 'thin'
 end
 
 group :test do 
