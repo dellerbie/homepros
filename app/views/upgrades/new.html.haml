@@ -1,4 +1,6 @@
 .upgrade.clearfix
+  %h1 
+    Upgrade to a Premium Listing
   .preview
     %h4
       Your premium listing will look like this...
@@ -24,3 +26,5 @@
         %script.stripe-button{src: 'https://checkout.stripe.com/v2/checkout.js', 'data-key' => ENV["STRIPE_PUBLIC_KEY"], 'data-description' => 'Upgrade to Premium', 'data-amount' => '9900'}
     - else
       = button_to "Upgrade to Premium", upgrades_path, :method => :post, class: 'btn btn-primary btn-large btn-block' 
+    
+    = link_to 'Not Now', listing_path(current_user.listing), class: 'not-now'

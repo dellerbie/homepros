@@ -22,10 +22,10 @@ Homepros::Application.configure do
   
   config.assets.enabled = true
   
-  config.action_controller.asset_host = "d1gaowcp2wajo5.cloudfront.net"
+  config.action_controller.asset_host = ENV['ASSET_HOST']
   config.assets.prefix = "/assets"
   
-  config.action_mailer.default_url_options = { :host => 'limitless-hamlet-4234.herokuapp.com/' }
+  config.action_mailer.default_url_options = { :host => ENV['APP_HOST'] }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"

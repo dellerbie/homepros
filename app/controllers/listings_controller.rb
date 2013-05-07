@@ -96,7 +96,6 @@ class ListingsController < ApplicationController
     end
   end
   
-  
   protected
   
   def find_current_user_listing
