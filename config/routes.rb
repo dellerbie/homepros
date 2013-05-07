@@ -1,9 +1,13 @@
 Homepros::Application.routes.draw do
-
+  root :to => 'listings#index'
+  
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+  
   devise_for :users, controllers: {
     registrations: 'registrations'
   }
-  
+
   resources :listings, only: [:index, :show, :edit, :update] do
     member do 
       get :claim
@@ -18,6 +22,6 @@ Homepros::Application.routes.draw do
   
   get '/(:city_slug/(:specialty_slug))' => 'listings#index'
   
-  root :to => 'listings#index'
+  
   
 end
