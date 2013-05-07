@@ -25,6 +25,7 @@ ActiveAdmin.register User do
     column :email
     column :created_at
     column :updated_at
+    column 'Last Sign In', :last_sign_in_at
     column :customer_id
     column :premium
     column :pending_downgrade
@@ -48,6 +49,9 @@ ActiveAdmin.register User do
         end
         row :premium
         row :pending_downgrade
+        row 'Last Sign In' do 
+          user.last_sign_in_at
+        end
         row :created_at
         row :updated_at
       end

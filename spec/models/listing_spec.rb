@@ -24,6 +24,7 @@ describe Listing do
   
   it { should have_and_belong_to_many :specialties }
   it { should belong_to :city }
+  it { should have_many :questions }
   
   it { should ensure_length_of(:contact_email).is_at_most(255) }
   it { should allow_value("d@d.com").for(:contact_email) }
