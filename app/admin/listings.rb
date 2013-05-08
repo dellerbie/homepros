@@ -2,7 +2,7 @@ ActiveAdmin.register Listing do
   menu priority: 2
   
   filter :city
-  filter :user, collection: proc { User.all.map(&:email) }
+  filter :user, collection: proc { Hash[User.all.map{|u| [u.email, u.id]}] }
   filter :id
   filter :company_name
   filter :slug
@@ -30,6 +30,11 @@ ActiveAdmin.register Listing do
     end
   end
   
+  action_item :only => :show do
+    links = ''.html_safe
+    links += link_to 'View User', admin_user_path(listing.user) if listing.user.present?
+  end
+  
   show do
     panel 'Details' do
       attributes_table_for listing do
@@ -40,7 +45,9 @@ ActiveAdmin.register Listing do
         row :claimable
         row :company_name
         row :slug
-        row :specialties
+        row :specialties do 
+          listing.specialties.collect { |s| s.name }.join(', ')
+        end
         row :contact_email
         row :website
         row :phone
@@ -86,16 +93,16 @@ ActiveAdmin.register Listing do
   
   form do |f|
     f.inputs "Listing Details" do
-      # city
-      # user
+      f.input :city_id, as: :select, collection: Hash[City.all.map{|c| [c.name,c.id]}]
+      f.input :specialties
       f.input :company_name
       f.input :contact_email
       f.input :website
       f.input :phone
       f.input :company_description
-      # f.input :portfolio_photo
+      f.input :portfolio_photo, as: :file
       f.input :portfolio_photo_description
-      # f.input :company_logo_photo
+      f.input :company_logo_photo, as: :file
     end
     f.actions
   end
