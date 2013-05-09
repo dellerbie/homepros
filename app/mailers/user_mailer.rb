@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: 'slowblues@gmail.com', bcc: 'slowblues@gmail.com'
+  default from: ENV['MAILER_EMAIL'], bcc: ENV['MAILER_EMAIL']
   
   def welcome_email(user)
     @user = user

@@ -1,9 +1,15 @@
-# Add application configuration variables here, as shown below.
-
+APP_HOST: limitless-hamlet-4234.herokuapp.com
+ASSET_HOST: d1gaowcp2wajo5.cloudfront.net
+AWS_ACCESS_KEY_ID: AKIAJEJ4Y7CXETXMGLHA
+AWS_SECRET_ACCESS_KEY: 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
+FOG_DIRECTORY: homepros-development
+FOG_PROVIDER: AWS
+S3_ACCESS_KEY: AKIAJEJ4Y7CXETXMGLHA
+S3_BUCKET: homepros-development
+S3_SECRET_ACCESS_KEY: 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
 STRIPE_API_KEY: sk_test_xIZHuNvWU7FprwSeYziNKSEh
 STRIPE_PUBLIC_KEY: pk_test_0vpenXfCEPd4WFCCWLkeuJhr
-S3_ACCESS_KEY: AKIAJEJ4Y7CXETXMGLHA
-S3_SECRET_ACCESS_KEY: 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
-S3_BUCKET: homepros-development
 DB_USERNAME: derrick
 DB_PASSWORD: 
+RACK_ENV: development
+MAILER_EMAIL: slowblues@gmail.com

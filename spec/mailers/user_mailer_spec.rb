@@ -9,11 +9,11 @@ describe UserMailer do
     end
     
     it 'has the correct senders email' do
-      mail.from.should == ['slowblues@gmail.com']
+      mail.from.should == [Figaro.env.mailer_email]
     end
     
     it 'has the correct bcc email' do
-      mail.bcc.should == ['slowblues@gmail.com']
+      mail.bcc.should == [Figaro.env.mailer_email]
     end
     
     it 'has the correct subject' do

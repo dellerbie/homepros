@@ -9,7 +9,7 @@ describe QuestionMailer do
     end
     
     it 'has the correct senders email' do
-      mail.from.should == [question.sender_email]
+      mail.from.should == [Figaro.env.mailer_email]
     end
     
     it 'has the correct subject' do
