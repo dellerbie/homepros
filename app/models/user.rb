@@ -13,8 +13,6 @@ class User < ActiveRecord::Base
   after_commit :welcome_email, on: :create
   before_destroy :downgrade
   
-  STRIPE_ERROR_BLANK_TOKEN = "Can't upgrade to premium at this time.  Please try again later."
-  STRIPE_ERROR_ALREADY_PREMIUM_USER = "You are already a premium user."
   PREMIUM_PLAN = 'premium'
   
   def after_initialize
@@ -95,6 +93,8 @@ class User < ActiveRecord::Base
     self.card_type = customer.active_card.type
     self.exp_month = customer.active_card.exp_month
     self.exp_year = customer.active_card.exp_year
+    self.current_period_start = Time.at(customer.subscription.current_period_start)
+    self.current_period_end = Time.at(customer.subscription.current_period_end)
     self.stripe_token = nil
   end
 end

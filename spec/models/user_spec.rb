@@ -65,6 +65,14 @@ describe User do
       expect(user.exp_year).to be_nil
     end
     
+    it 'should not have current_period_start' do
+      expect(user.current_period_start).to be_nil
+    end
+    
+    it 'should not have current_period_end' do
+      expect(user.current_period_end).to be_nil
+    end
+    
     context 'upgrade' do
       it 'success' do
         user.stripe_token = "abcd1234"
@@ -76,6 +84,8 @@ describe User do
         expect(user.exp_month).to eql(visa[:exp_month])
         expect(user.exp_year).to eql(visa[:exp_year])
         expect(user.customer_id).to_not be_nil
+        expect(user.current_period_start).to_not be_nil
+        expect(user.current_period_end).to_not be_nil
         expect(user.stripe_token).to be_nil
         expect(user).to be_premium
       end
@@ -126,6 +136,8 @@ describe User do
         expect(user.exp_month).to eql(visa[:exp_month])
         expect(user.exp_year).to eql(visa[:exp_year])
         expect(user.customer_id).to_not be_nil
+        expect(user.current_period_start).to_not be_nil
+        expect(user.current_period_end).to_not be_nil
         expect(user.stripe_token).to be_nil
       end
     end

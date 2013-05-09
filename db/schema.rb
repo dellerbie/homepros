@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130507213505) do
+ActiveRecord::Schema.define(:version => 20130508233936) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20130507213505) do
     t.boolean  "claimable",                   :default => false
   end
 
+  add_index "listings", ["city_id"], :name => "index_listings_on_city_id"
   add_index "listings", ["slug"], :name => "index_listings_on_slug", :unique => true
   add_index "listings", ["user_id"], :name => "index_listings_on_user_id", :unique => true
 
@@ -138,6 +139,8 @@ ActiveRecord::Schema.define(:version => 20130507213505) do
     t.string   "exp_year"
     t.boolean  "premium",                :default => false
     t.boolean  "pending_downgrade",      :default => false
+    t.datetime "current_period_start"
+    t.datetime "current_period_end"
   end
 
   add_index "users", ["customer_id"], :name => "index_users_on_customer_id"

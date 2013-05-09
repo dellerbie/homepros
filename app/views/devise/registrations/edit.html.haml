@@ -23,7 +23,15 @@
       - if current_user.pending_downgrade?
         %caption
           %span
-            ** Your account will be downgraded to a free listing at the end of the pay period. You can always upgrade back to Premium after that.
+            = "** Your account will be downgraded to a free listing at the end of the pay period (#{next_billing_date}). You can always upgrade back to Premium after that."
+      - elsif current_user.current_period_end > Time.now
+        %caption
+          %span 
+            = "You will be billed again on #{next_billing_date}"
+      - else
+        %caption
+          %span 
+            You are not being billed
       %thead
         %tr
           %th

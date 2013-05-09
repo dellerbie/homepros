@@ -26,4 +26,8 @@ module ApplicationHelper
         flash_type.to_s
     end
   end
+  
+  def next_billing_date
+    1.day.from_now(current_user.current_period_end).strftime("%m/%d/%Y") if current_user.current_period_end.present?
+  end
 end
