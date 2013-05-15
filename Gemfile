@@ -52,4 +52,7 @@ group :test do
   gem 'shoulda'
   gem 'database_cleaner'
   gem 'email_spec'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'capybara-webkit', github: 'thoughtbot/capybara-webkit', branch: 'master'
 end
