@@ -40,4 +40,10 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+  
+  Capybara.configure do |config|
+    config.javascript_driver = :webkit
+    # config.javascript_driver = :selenium
+    config.default_selector = :css
+  end
 end
