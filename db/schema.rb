@@ -86,7 +86,6 @@ ActiveRecord::Schema.define(:version => 20130508233936) do
     t.boolean  "claimable",                   :default => false
   end
 
-  add_index "listings", ["city_id"], :name => "index_listings_on_city_id"
   add_index "listings", ["slug"], :name => "index_listings_on_slug", :unique => true
   add_index "listings", ["user_id"], :name => "index_listings_on_user_id", :unique => true
 
