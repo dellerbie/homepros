@@ -1,7 +1,7 @@
 class QuestionMailer < ActionMailer::Base
   default from: ENV['MAILER_EMAIL']
   
-  SUBJECT = "Question from prospective customer on OC Homepros"
+  SUBJECT = "Question from prospective customer on OC HomeMasters"
   
   def question_email(question)
     @question = question

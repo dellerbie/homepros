@@ -3,16 +3,16 @@ class UserMailer < ActionMailer::Base
   
   def welcome_email(user)
     @user = user
-    mail(to: user.email, subject: 'Welcome to OC Homepros!')
+    mail(to: user.email, subject: 'Welcome to OC HomeMasters!')
   end
   
   def downgrade_email(user)
     @user = user
-    mail(to: user.email, subject: 'OC Homepros, Your Listing Will Be Downgraded')
+    mail(to: user.email, subject: 'OC HomeMasters, Your Listing Will Be Downgraded')
   end
   
   def welcome_to_premium_email(user)
     @user = user
-    mail(to: user.email, subject: 'Welcome to OC Homepros Premium Listings!')
+    mail(to: user.email, subject: 'Welcome to OC HomeMasters Premium Listings!')
   end
 end
