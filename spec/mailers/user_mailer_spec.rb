@@ -3,17 +3,18 @@ require 'spec_helper'
 describe UserMailer do
   shared_examples 'oc homepros user mailer' do
     let(:user) { FactoryGirl.create(:user) }
+    let(:sender_email) { Figaro.env.mailer_email.match(/<(.*)>/)[1] }
     
     it 'sends to the correct email' do 
       mail.to.should == [user.email]
     end
     
     it 'has the correct senders email' do
-      mail.from.should == [Figaro.env.mailer_email]
+      mail.from.should == [sender_email]
     end
     
     it 'has the correct bcc email' do
-      mail.bcc.should == [Figaro.env.mailer_email]
+      mail.bcc.should == [sender_email]
     end
     
     it 'has the correct subject' do

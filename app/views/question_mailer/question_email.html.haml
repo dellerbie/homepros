@@ -3,15 +3,57 @@
   %head
     %title=QuestionMailer::SUBJECT
   %body
-    %p
-      = "#{@question.sender_email} has you sent you a message from "
-      = "#{link_to 'OC HomeMasters', root_url}:"
-      %br
-      = "&#34; #{@question.text} &#34;"
     %p 
-      = "You can reply to this message by emailing #{@question.sender_email} directly and you can manage your listing by logging in to your account here:"
-      = new_user_session_url
+      = "#{@question.listing.company_name},"
+    %p
+      A prospective customer has sent your business a message on 
+      = link_to 'OCHomeMasters.com', root_url
+      \. Orange County's leading website where OC homeowners seek out local home improvement businesses like yours.
+    %p
+      = @question.sender_email 
+      sent you this message on
+      = link_to 'OCHomeMasters.com', root_url
+      \:
+    %p
+      &#34;
+      = @question.text
+      &#34;
+    %p
+      = "You can reply to this message by emailing #{@question.sender_email} directly."
+      
+    - if @question.listing.claimable?
+      %p 
+        We also noticed that you haven't claimed your business's
+        = link_to 'FREE OC HomeMasters', listing_url(@question.listing)
+        listing.
+      %p 
+        There are HUGE benefits to claiming your business's FREE listing including:
+      %ul
+        %li
+          Access to 1000s of proud homeowners in Orange County.  These homeowners tend to have very high pride of ownership and are 10x more serious and likely to find a home improvement specialist than users on Yelp or YellowPages.com
+        %li
+          The ability to upgrade to a Premium OC HomeMaster account which makes your business's listing even more visible to highly targeted and qualified homeowners in the OC
+        %li 
+          Customize your business listing by adding photos that showcase some of your best work
+        %li 
+          Publish the most up to date contact information for your business
+        %li 
+          Best of all, a basic listing is ABSOLUTELY FREE, with ZERO commitment from your business!
+      %p 
+        Claiming your free listing only takes 30 seconds.
+      %p 
+        Claim your FREE listing at:
+        = claim_listing_url(@question.listing)
+      %p 
+        We look forward to working with and helping your business generate QUALITY leads!
+    - else
+      %p
+        You can login to your OC HomeMasters business account by signing in here:
+      %p
+        = new_user_session_url
     %p
       Sincerely,
     %p
       The OC HomeMasters Team
+    %p
+      = link_to 'OCHomeMasters.com', root_url
