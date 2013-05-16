@@ -1,9 +1,33 @@
-<%= @question.sender_email %> has you sent you a message from OC HomeMasters (<%= root_url %>):
+<%= @question.listing.company_name %>,
+
+A prospective customer has sent your business a message on OC HomeMasters (<%= root_url %>), Orange County's leading website where OC homeowners seek out local home improvement businesses like yours.
+
+<%= @question.sender_email %> sent you this message:
 
 "<%= @question.text %>"
 
-You can reply to this message by emailing <%= @question.sender_email %> directly and you can manage your listing by logging in to your account here:
-<%= new_user_session_url %>
+You can reply to this message by emailing <%= @question.sender_email %> directly.
+
+<% if @question.listing.claimable? %>
+We also noticed that you haven't claimed your business's FREE OC HomeMasters listing (<%= listing_url(@question.listing) %>).
+  
+There are HUGE benefits to claiming your business's FREE listing including:
+  - Access to 1000s of proud homeowners in Orange County.  These homeowners tend to have very high pride of ownership and are 10x more serious and likely to find a home improvement specialist than users on Yelp or YellowPages.com
+  - The ability to upgrade to a Premium OC HomeMaster account which makes your business's listing even more visible to highly targeted and qualified homeowners in the OC
+  - Customize your business listing by adding photos that showcase some of your best work
+  - Publish the most up to date contact information for your business
+  - Best of all, a basic listing is ABSOLUTELY FREE, with ZERO commitment from your business!
+
+Claiming your free listing only takes 30 seconds.
+
+Claim your FREE listing at <%= claim_listing_url(@question.listing) %>.
+
+We look forward to working with and helping your business generate QUALITY leads!
+<% else %>
+You can login to your OC HomeMasters business account by signing in here <%= new_user_session_url %>.
+<% end %>
 
 Sincerely,
 The OC HomeMasters Team
+
+<%= root_url %>
