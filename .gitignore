@@ -18,6 +18,7 @@
 /public/uploads
 /public/logos
 /public/portfolios
+/public/previews
 lib/yellow_pages/last_city_category.txt
 lib/yellow_pages/business_page_urls.yml
 lib/yellow_pages/logo_images
