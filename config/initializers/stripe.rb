@@ -14,11 +14,11 @@ StripeEvent.setup do
   
   subscribe 'invoice.payment_succeeded' do |event|
     puts "Received Stripe Event 'invoice.payment_succeeded'"
-    p event
+    StripeWebhooks.payment_succeeded(event.data.object.customer)
   end
   
   subscribe 'invoice.payment_failed' do |event|
     puts "Received Stripe Event 'invoice.payment_failed'"
-    p event
+    StripeWebhooks.payment_failed(event.data.object.customer)
   end
 end
