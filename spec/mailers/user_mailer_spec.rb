@@ -23,19 +23,19 @@ describe UserMailer do
   
   describe '#welcome_email' do
     let(:mail) { UserMailer.welcome_email(user) }
-    let(:subject) { 'Welcome to OC Homepros!' }
+    let(:subject) { 'Welcome to OC HomeMasters!' }
     it_behaves_like 'oc homepros user mailer'
   end
   
   describe '#downgrade_email' do
     let(:mail) { UserMailer.downgrade_email(user) }
-    let(:subject) { 'OC Homepros, Your Listing Will Be Downgraded' }
+    let(:subject) { 'OC HomeMasters, Your Listing Will Be Downgraded' }
     it_behaves_like 'oc homepros user mailer'
   end
   
   describe '#welcome_to_premium_email' do
     let(:mail) { UserMailer.welcome_to_premium_email(user) }
-    let(:subject) { 'Welcome to OC Homepros Premium Listings!' }
+    let(:subject) { 'Welcome to OC HomeMasters Premium Listings!' }
     it_behaves_like 'oc homepros user mailer'
   end
 end

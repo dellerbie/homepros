@@ -7,6 +7,7 @@ homepros
 * Set the config vars in application.yml (heroku config:add ENV_VAR=value)
 * heroku keys:add ~/.ssh/id_rsa.pub
 * heroku addons:add heroku-postgresql:dev
+* heroku addons:add pgbackups
 * heroku pg:wait
 * heroku pg:info
 * heroku pgbackups:restore DATABASE 'url-to-s3-mysql.dump'
