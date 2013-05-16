@@ -1,3 +1,5 @@
+- content_for :title, @listing.company_name
+
 - unless current_user && current_user.listing == @listing
   %p
     %i.icon-arrow-left
