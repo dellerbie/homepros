@@ -3,12 +3,15 @@
   %head
     %title="Welcome to OC HomeMasters"
   %body
+    %p 
+      = "#{@user.listing.company_name},"
     %p
       = "Welcome to OC HomeMasters!"
     %p
       You can manage your listing by logging in to your account here:
-      = new_user_session_url
+      = link_to new_user_session_url
     %p
       Sincerely,
     %p
       The OC HomeMasters Team
+      = link_to root_url
