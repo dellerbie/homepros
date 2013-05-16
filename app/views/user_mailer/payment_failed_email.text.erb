@@ -1,0 +1,14 @@
+Dear <%= @user.listing.company_name %>:
+
+We have been unable to charge your credit card for your premium listing on http://www.OCHomeMasters.com.
+
+To resolve this quickly, please view your "My Account" page and update your credit card details:
+<%= new_user_session_url %>
+
+We attempt to charge the credit card that we have on file again in 3 days.
+
+Need to contact us? Simply reply to this email or reach us at: support@OCHomeMasters.com
+
+Sincerely,
+The OC HomeMasters Team
+<%= root_url %>

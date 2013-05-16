@@ -8,11 +8,21 @@ class UserMailer < ActionMailer::Base
   
   def downgrade_email(user)
     @user = user
-    mail(to: user.email, subject: 'OC HomeMasters, Your Listing Will Be Downgraded')
+    mail(to: user.email, subject: '[OC HomeMasters] Your Listing Will Be Downgraded')
   end
   
   def welcome_to_premium_email(user)
     @user = user
     mail(to: user.email, subject: 'Welcome to OC HomeMasters Premium Listings!')
+  end
+  
+  def payment_receipt_email(user)
+    @user = user
+    mail(to: user.email, subject: '[OC HomeMasters] Payment Receipt')
+  end
+  
+  def payment_failed_email(user)
+    @user = user
+    mail(to: user.email, subject: '[OC HomeMasters] Declined Payment')
   end
 end

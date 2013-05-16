@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe UserMailer do
+describe UserMailer do  
   shared_examples 'oc homepros user mailer' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:user, listing: FactoryGirl.create(:listing), current_period_end: Time.now) }
     let(:sender_email) { Figaro.env.mailer_email.match(/<(.*)>/)[1] }
     
     it 'sends to the correct email' do 
@@ -30,13 +30,25 @@ describe UserMailer do
   
   describe '#downgrade_email' do
     let(:mail) { UserMailer.downgrade_email(user) }
-    let(:subject) { 'OC HomeMasters, Your Listing Will Be Downgraded' }
+    let(:subject) { '[OC HomeMasters] Your Listing Will Be Downgraded' }
     it_behaves_like 'oc homepros user mailer'
   end
   
   describe '#welcome_to_premium_email' do
     let(:mail) { UserMailer.welcome_to_premium_email(user) }
     let(:subject) { 'Welcome to OC HomeMasters Premium Listings!' }
+    it_behaves_like 'oc homepros user mailer'
+  end
+  
+  describe '#payment_receipt_email' do
+    let(:mail) { UserMailer.payment_receipt_email(user) }
+    let(:subject) { '[OC HomeMasters] Payment Receipt' }
+    it_behaves_like 'oc homepros user mailer'
+  end
+  
+  describe '#payment_failed_email' do
+    let(:mail) { UserMailer.payment_failed_email(user) }
+    let(:subject) { '[OC HomeMasters] Declined Payment' }
     it_behaves_like 'oc homepros user mailer'
   end
 end

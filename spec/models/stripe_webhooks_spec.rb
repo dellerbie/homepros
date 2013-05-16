@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe StripeWebhooks do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user, listing: FactoryGirl.create(:listing)) }
   
   before(:each) do
     successful_stripe_response = StripeHelper::Response.new("customer_success")

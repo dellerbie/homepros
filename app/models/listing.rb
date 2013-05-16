@@ -20,6 +20,8 @@ class Listing < ActiveRecord::Base
   NO_WEBSITE = 'http://ochomepros.com'
   NO_PHONE = '5555555555'
   
+  PREMIUM_COST_STRING = "$99.00"
+  
   attr_accessible :specialty_ids, :city_id, :company_logo_photo, :company_logo_photo_cache, :company_name, :contact_email,
     :portfolio_photo, :portfolio_photo_cache, :portfolio_photo_description, :website, :phone, :company_description
     

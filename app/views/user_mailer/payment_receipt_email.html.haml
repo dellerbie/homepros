@@ -1,0 +1,33 @@
+!!!
+%html
+  %head
+    %title="[OC HomeMasters] Payment Receipt"
+  %body
+    %p 
+      = "Dear #{@user.listing.company_name}:"
+    %p
+      This is a receipt for your OC HomeMaster's premium listing. This is only a receipt, no
+      payment is due. If you have any questions, please contact us anytime at
+      support@ochomemasters.com. Thank you for your business!
+    %p
+      You can manage your listing by logging in to your account here:
+      = link_to new_user_session_url, new_user_session_url
+
+    %p
+      = "-------------------------------------------------"
+      %br
+      = "OC HOMEMASTERS RECEIPT - #{Time.now.strftime("%d %B %Y - %I:%M")}"
+    %p
+      = "User: #{@user.email}" 
+      %br
+      Plan: Premium
+      %br
+      = "Amount: #{Listing::PREMIUM_COST_STRING}"
+    %p
+      Dellerbie, Inc.
+      1002 E Chestnut Ave
+      Orange, CA 92867
+    %p
+      = "-------------------------------------------------"
+    %p
+      = link_to root_url, root_url

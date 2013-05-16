@@ -1,4 +1,4 @@
-APP_HOST: limitless-hamlet-4234.herokuapp.com
+APP_HOST: localhost:5000
 ASSET_HOST: d1gaowcp2wajo5.cloudfront.net
 AWS_ACCESS_KEY_ID: AKIAJEJ4Y7CXETXMGLHA
 AWS_SECRET_ACCESS_KEY: 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
@@ -12,4 +12,4 @@ STRIPE_PUBLIC_KEY: pk_test_0vpenXfCEPd4WFCCWLkeuJhr
 DB_USERNAME: derrick
 DB_PASSWORD: 
 RACK_ENV: development
-MAILER_EMAIL: "The OC HomeMasters Team" <support@ochomemasters.com>
+MAILER_EMAIL: '"The OC HomeMasters Team" <support@ochomemasters.com>'

@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %title="[OC HomeMasters] Declined Payment"
+  %body
+    %p 
+      = "Dear #{@user.listing.company_name}:"
+    %p
+      We have been unable to charge your credit card for your premium listing on http://www.OCHomeMasters.com.
+    %p
+      To resolve this quickly, please view your "My Account" page and update your credit card details:
+      = link_to new_user_session_url, new_user_session_url
+    %p
+      We attempt to charge the credit card that we have on file again in 3 days.
+    %p
+      Need to contact us? Simply reply to this email or reach us at: support@OCHomeMasters.com
+    %p
+      Sincerely,
+    %p
+      The OC HomeMasters Team
+      = link_to root_url, root_url

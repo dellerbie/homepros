@@ -4,23 +4,16 @@
     %title="Welcome to OC HomeMasters Premium Listings"
   %body
     %p 
-      = "#{@user.listing.company_name},"
+      = "Dear #{@user.listing.company_name}:"
     %p
-      Thank you for signing up for a OC HomeMasters Premium listing!
-    %p
-      With a Premium listing, your listing will:
-    %ul
-      %li
-        Display 2x larger than a free listing
-      %li
-        Show up in search results before any free listings
-      %li
-        Receive more leads because your listing is easier to find
+      This email is to confirm that your listing on OCHomeMasters.com has been upgraded to a Premium Listing.
     %p
       You can manage your listing by logging in to your account here:
-      = link_to new_user_session_url
+      = link_to new_user_session_url, new_user_session_url
+    %p
+      Thank you for your business!
     %p
       Sincerely,
     %p
       The OC HomeMasters Team
-      = link_to root_url
+      = link_to root_url, root_url
