@@ -20,6 +20,6 @@
     = image_tag(session[:preview_photo_url] || 'small-listing.png', id: 'img_prev')
     %p
       %span.description.text
-        = listing.portfolio_photos.first.try(:portfolio_photo_description) || "Your image description"
+        = listing.portfolio_photos.first.try(:description) || "Your image description"
 
 = render 'form'
