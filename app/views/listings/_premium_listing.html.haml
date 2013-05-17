@@ -6,7 +6,7 @@
   %span.location.text
     = listing.city.name
 = link_to listing_path(listing) do
-  = image_tag listing.portfolio_photo_url(:premium), class: 'portfolio-img'
+  = image_tag listing.portfolio_photos.first.portfolio_photo_url(:premium), class: 'portfolio-img'
 %p
   %span.description.text
-    = truncate(listing.portfolio_photo_description, length: 310)
+    = truncate(listing.portfolio_photos.first.description, length: 310)

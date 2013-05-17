@@ -40,7 +40,7 @@ $(function() {
 
   $('#user_listing_attributes_portfolio_photo_description, #listing_portfolio_photo_description').on('blur keyup', function() {
     var text = $(this).val() || 'Your image description',
-        limit = $('.preview').is('.premium') ? 310 : 65;
+        limit = $('.preview').is('.premium') ? 310 : 60;
         
     if(text.length > limit) {
       text = text.substring(0,limit-3) + '...';

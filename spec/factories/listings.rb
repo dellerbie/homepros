@@ -3,8 +3,6 @@ FactoryGirl.define do
     company_logo_photo { File.open(File.join(Rails.root, 'spec', 'fixtures', 'files', 'guitar.jpg')) }
     company_name 'Dellerbie Inc.'
     contact_email 'derrick@dellerbie.com'
-    portfolio_photo { File.open(File.join(Rails.root, 'spec', 'fixtures', 'files', 'guitar.jpg')) }
-    portfolio_photo_description 'Sample of the work I did for Visa.com and Mastercard'
     city { FactoryGirl.create(:city) }
     state 'CA'
     website 'http://dellerbie.com'
@@ -12,6 +10,10 @@ FactoryGirl.define do
     
     after(:build) do |listing|
       listing.specialties << FactoryGirl.build(:specialty) << FactoryGirl.build(:specialty)
+    end
+    
+    after(:build) do |listing|
+      listing.portfolio_photos << FactoryGirl.build(:portfolio_photo)
     end
   end
 end

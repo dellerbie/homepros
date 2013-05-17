@@ -4,7 +4,8 @@ class RegistrationsController < Devise::RegistrationsController
   
   def new
     resource = build_resource({})
-    resource.build_listing 
+    listing = resource.build_listing 
+    Listing::MAX_FREE_PHOTOS.times { listing.portfolio_photos.build }
     respond_with resource
   end
   

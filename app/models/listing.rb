@@ -2,47 +2,45 @@ class Listing < ActiveRecord::Base
   include EmailAddress
   extend FriendlyId
   
+  MAX_SPECIALTIES = 2
+  MAX_PREMIUM_PHOTOS = 6
+  MAX_FREE_PHOTOS = 1
+  ALL_CITIES_FILTER_KEY = 'all-cities'
+  ALL_SPECIALTIES_FILTER_KEY = 'all-specialties'
+  NO_CONTACT_EMAIL = 'no-reply@ochomepros.com'
+  NO_WEBSITE = 'http://ochomepros.com'
+  NO_PHONE = '5555555555'
+  PREMIUM_COST_STRING = "$99.00"
+  
   friendly_id :company_name_and_location, use: [:slugged]
   
   belongs_to :user
   has_and_belongs_to_many :specialties
   has_many :questions
+  has_many :portfolio_photos, dependent: :destroy
   belongs_to :city
+  
+  accepts_nested_attributes_for :portfolio_photos, limit: MAX_PREMIUM_PHOTOS, reject_if: :all_blank, allow_destroy: true
   
   default_scope :include => [:city, :specialties]
   
-  MAX_SPECIALTIES = 2
-  
-  ALL_CITIES_FILTER_KEY = 'all-cities'
-  ALL_SPECIALTIES_FILTER_KEY = 'all-specialties'
-  
-  NO_CONTACT_EMAIL = 'no-reply@ochomepros.com'
-  NO_WEBSITE = 'http://ochomepros.com'
-  NO_PHONE = '5555555555'
-  
-  PREMIUM_COST_STRING = "$99.00"
-  
-  attr_accessible :specialty_ids, :city_id, :company_logo_photo, :company_logo_photo_cache, :company_name, :contact_email,
-    :portfolio_photo, :portfolio_photo_cache, :portfolio_photo_description, :website, :phone, :company_description
+  attr_accessible :specialty_ids, :city_id, :company_logo_photo, :company_logo_photo_cache, :company_name, 
+    :contact_email, :website, :phone, :company_description, :portfolio_photos_attributes
     
-  mount_uploader :portfolio_photo, PortfolioPhotoUploader
   mount_uploader :company_logo_photo, CompanyLogoUploader
   
-  validates :portfolio_photo, :file_size => { :maximum => 10.megabytes }
   validates :company_logo_photo, :file_size => { :maximum => 10.megabytes }
   
-  validates_presence_of :portfolio_photo, message: 'Please upload a sample photo of your work'
-  validates_presence_of :portfolio_photo_description
   validates_presence_of :company_name
   validates_presence_of :city, message: 'Please select a city closest to your business'
   validates_presence_of :contact_email
   validates_presence_of :specialties, message: 'Please select at least one specialty'
+  validates_presence_of :portfolio_photos, message: 'Please upload at least one portfolio photo'
   
   validates_presence_of :phone
   validates_numericality_of :phone, integer_only: true, message: 'is not a number'
   validates_length_of :phone, is: 10, message: 'must be 10 numbers'
   
-  validates_length_of :portfolio_photo_description, maximum: 255
   validates_length_of :company_name, maximum: 255
   validates_length_of :company_description, maximum: 1000
   
@@ -57,6 +55,8 @@ class Listing < ActiveRecord::Base
   before_create :default_state
   
   before_validation :add_default_website_protocol
+  
+  before_save :ensure_max_portfolio_photos
   
   def company_name_and_location
     "#{company_name} #{city.try(:name)}"
@@ -87,6 +87,18 @@ class Listing < ActiveRecord::Base
   def ensure_max_specialties
     if self.specialties.length > MAX_SPECIALTIES
       errors.add(:specialties, "You cannot have more than #{MAX_SPECIALTIES} specialties")
+    end
+  end
+  
+  def ensure_max_portfolio_photos
+    n_photos = self.portfolio_photos.length
+    
+    if premium? && n_photos > MAX_PREMIUM_PHOTOS
+      photos = self.portfolio_photos.take(MAX_PREMIUM_PHOTOS)
+      self.portfolio_photos = photos
+    elsif !premium? && self.portfolio_photos.length > MAX_FREE_PHOTOS
+      photo = self.portfolio_photos.first
+      self.portfolio_photos = [photo]
     end
   end
   

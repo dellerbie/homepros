@@ -19,6 +19,25 @@ describe User do
   
   it { should allow_mass_assignment_of(:stripe_token) }
   
+  it { should accept_nested_attributes_for :listing }
+  
+  it 'should accept nested attributes for listing portfolio_photos' do
+    listing_attributes = FactoryGirl.attributes_for(:listing).except(:state, :specialties, :city)
+    listing_attributes[:specialty_ids] = [FactoryGirl.create(:specialty).id, FactoryGirl.create(:specialty).id]
+    listing_attributes[:city_id] = FactoryGirl.create(:city).id
+    listing_attributes[:company_logo_photo] = Rack::Test::UploadedFile.new(Rails.root.to_s + '/spec/fixtures/files/guitar.jpg', 'image/jpeg')
+    # listing_attributes[:portfolio_photo] = Rack::Test::UploadedFile.new(Rails.root.to_s + '/spec/fixtures/files/guitar.jpg', 'image/jpeg')
+    listing_attributes[:portfolio_photos_attributes] = [FactoryGirl.attributes_for(:portfolio_photo)]
+    
+    user = FactoryGirl.attributes_for(:user)
+    user[:listing_attributes] = listing_attributes
+    
+    _user = User.new(user)
+    expect { 
+      _user.save
+    }.to change{ User.count }
+  end
+  
   describe 'premium' do
     before(:each) do
       successful_stripe_response = StripeHelper::Response.new("customer_success")

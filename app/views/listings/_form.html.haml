@@ -9,9 +9,10 @@
     %p
       Upload an image of your work that best represents your primary style. You can always change this image after your card has been created.
     
-    = f.input :portfolio_photo, label: 'For best results upload a 900 x 630 JPG or PNG.', hint: 'Don’t have that size? We’ll resize what you have to make sure it fits.', as: :file
-    = f.input :portfolio_photo_cache, as: :hidden
-    = f.input :portfolio_photo_description, as: :text, hint: 'Example: This is a screenshot from our latest homepage redesign of starbucks.com', input_html: { maxlength: 255 }, placeholder: 'Describe your portfolio photo'
+    = f.fields_for :portfolio_photos do |pp|
+      = pp.input :portfolio_photo, label: 'For best results upload a 900 x 630 JPG or PNG.', hint: 'Don’t have that size? We’ll resize what you have to make sure it fits.', as: :file
+      = pp.input :portfolio_photo_cache, as: :hidden
+      = pp.input :description, as: :text, hint: 'Example: This is a screenshot from our latest homepage redesign of starbucks.com', input_html: { maxlength: 255 }, placeholder: 'Describe your portfolio photo'
   
   %fieldset.company-info
     %p.title

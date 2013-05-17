@@ -67,7 +67,6 @@ ActiveAdmin.register User do
         row :company_description
         row :website
         row :phone
-        row :portfolio_photo_description
         row :created_at
         row :updated_at
         row 'City' do |listing|

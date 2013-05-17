@@ -55,8 +55,6 @@ ActiveAdmin.register Listing do
           listing.city.name
         end
         row :company_description
-        row :portfolio_photo
-        row :portfolio_photo_description
         row :company_logo_photo
         row :created_at
         row :updated_at

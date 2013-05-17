@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130508233936) do
+ActiveRecord::Schema.define(:version => 20130517215636) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -73,17 +73,14 @@ ActiveRecord::Schema.define(:version => 20130508233936) do
     t.string   "contact_email"
     t.string   "website"
     t.string   "phone"
-    t.string   "portfolio_photo_description"
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.integer  "city_id"
-    t.string   "portfolio_photo"
-    t.string   "portfolio_photo_token"
     t.string   "company_logo_photo"
     t.string   "company_logo_photo_token"
     t.text     "company_description"
-    t.string   "slug",                                           :null => false
-    t.boolean  "claimable",                   :default => false
+    t.string   "slug",                                        :null => false
+    t.boolean  "claimable",                :default => false
   end
 
   add_index "listings", ["slug"], :name => "index_listings_on_slug", :unique => true
@@ -95,6 +92,15 @@ ActiveRecord::Schema.define(:version => 20130508233936) do
   end
 
   add_index "listings_specialties", ["listing_id", "specialty_id"], :name => "index_listings_specialties_on_listing_id_and_specialty_id", :unique => true
+
+  create_table "portfolio_photos", :force => true do |t|
+    t.integer  "listing_id"
+    t.string   "portfolio_photo"
+    t.string   "portfolio_photo_token"
+    t.string   "description"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+  end
 
   create_table "preview_photos", :force => true do |t|
     t.string   "token"
