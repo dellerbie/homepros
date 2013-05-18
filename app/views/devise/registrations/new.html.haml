@@ -17,7 +17,8 @@
       %br
       %span.location.text
         = listing.try(:city).try(:name) || "Company location"
-    = image_tag(session[:preview_photo_url] || 'small-listing.png', id: 'img_prev')
+
+    = image_tag(session[:preview_photo_url] || 'small-listing.png', id: 'img_prev', class: 'portfolio-img')
     %p
       %span.description.text
         = listing.portfolio_photos.first.try(:description) || "Your image description"

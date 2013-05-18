@@ -1,7 +1,7 @@
 $(function() {
   $(".new-listing .chzn-select, .edit-listing .chzn-select").chosen();
   
-  $('#user_listing_attributes_portfolio_photo, #listing_portfolio_photo, #listing_company_logo_photo').bind('change', function(e) { 
+  $('#user_listing_attributes_portfolio_photos_attributes_0_portfolio_photo, #listing_portfolio_photo, #listing_company_logo_photo').bind('change', function(e) { 
     var file = $(this),
         form = $(this).closest("form"),
         logo = file.is('#listing_company_logo_photo'),
@@ -31,14 +31,14 @@ $(function() {
     });
   });
 
-  var newListingShowDefaultPhoto = $('.new-listing').is(':visible') && !$('#user_listing_attributes_portfolio_photo_cache').val(),
+  var newListingShowDefaultPhoto = $('.new-listing').is(':visible') && (!$('#user_listing_attributes_portfolio_photos_attributes_0_portfolio_photo_cache').val() && $('#img_prev').attr('src').match('small-listing.png')),
     editListingShowDefaultPhoto = $('.edit-listing').is(':visible') && !$('#listing_portfolio_photo_cache').val() && !$('#img_prev').attr('src');
 
   if(newListingShowDefaultPhoto || editListingShowDefaultPhoto) {
     $('#img_prev').attr('src', '/assets/small-listing.png');
   }
 
-  $('#user_listing_attributes_portfolio_photo_description, #listing_portfolio_photo_description').on('blur keyup', function() {
+  $('#user_listing_attributes_portfolio_photos_attributes_0_description, #listing_portfolio_photo_description').on('blur keyup', function() {
     var text = $(this).val() || 'Your image description',
         limit = $('.preview').is('.premium') ? 310 : 60;
         

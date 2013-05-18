@@ -4,4 +4,6 @@ class PreviewPhoto < ActiveRecord::Base
   mount_uploader :photo, PreviewPhotoUploader
   
   validates :photo, :file_size => { :maximum => 10.megabytes }
+  
+  validates_presence_of :photo
 end
