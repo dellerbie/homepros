@@ -6,14 +6,12 @@ class PreviewPhotosController < ApplicationController
   def create
     @preview_photo = PreviewPhoto.new
     photo = nil
-    company_logo = false
     
-    # these first two blocks are for the edit listing form
-    if params[:listing] && params[:listing][:portfolio_photo]
-      photo = params[:listing][:portfolio_photo]
+    # edit mvp listing photo
+    if params[:listing] && params[:listing][:portfolio_photos_attributes]
+      photo = params[:listing][:portfolio_photos_attributes]['0'][:portfolio_photo]
     elsif params[:listing] && params[:listing][:company_logo_photo]
       photo = params[:listing][:company_logo_photo]
-      company_logo = true
     else
       # this is for the registration form
       photo = params[:user][:listing_attributes][:portfolio_photos_attributes]['0'][:portfolio_photo]
