@@ -7,7 +7,7 @@ namespace :move_photos do
         photo[:portfolio_photo] = listing.attributes['portfolio_photo']
         photo.portfolio_photo_token = listing.portfolio_photo_token
         photo.listing = listing
-        photo.save!
+        photo.save!(validate: false)
       end
     end
   end

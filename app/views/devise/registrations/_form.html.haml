@@ -11,7 +11,7 @@
         Upload an image of your work that best represents your primary style. You can always change this image after your card has been created.
       
       = listing_form.fields_for :portfolio_photos do |pp|
-        = pp.input :portfolio_photo, as: :file
+        = pp.input :portfolio_photo, label: 'For best results upload a 900 x 630 JPG or PNG.', hint: 'Don’t have that size? We’ll resize what you have to make sure it fits.', as: :file
         = pp.input :portfolio_photo_cache, as: :hidden
         = pp.input :description, as: :text, hint: 'Example: This is a screenshot from our latest homepage redesign of starbucks.com', input_html: { maxlength: 255 }, placeholder: 'Describe your portfolio photo'
     
@@ -21,7 +21,11 @@
       
       = listing_form.input :company_name, label: "What's your company name?", hint: "You can use your own name if you're a freelancer and don't have a company name.", input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'Your Company Inc.'
       = listing_form.input :company_logo_photo, label: 'Upload your company logo (optional)', hint: 'GIF, JPG, or PNG. We’ll resize what you have.<br/>This is shown on your listing page for clients to see.', as: :file
+
+      - if resource.listing.company_logo_photo.present?
+        = image_tag(resource.listing.company_logo_photo, class: 'company-logo company_logo_prev')
       = listing_form.input :company_logo_photo_cache, as: :hidden
+      
       = listing_form.association :specialties, collection: Specialty.order("name ASC"), label: 'What do you specialize in?', hint: 'You can select up to 2 specialties', input_html: { class: 'chzn-select', 'data-placeholder' => 'Choose up to 2 Specialties' }
       = listing_form.association :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose the closest city', collection: City.all(order: 'name'), prompt: 'Please select a city', input_html: { class: 'chzn-select', 'data-placeholder' => 'Choose a City' }
   
