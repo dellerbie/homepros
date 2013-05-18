@@ -47,16 +47,20 @@ class ListingsController < ApplicationController
     @base_css = 'edit-listing'
     @container_css = 'premium' if @listing.premium?
     @hide_footer = true
+    if @listing.premium?
+      n_photos = @listing.portfolio_photos.length
+      (Listing::MAX_PREMIUM_PHOTOS - n_photos).times { @listing.portfolio_photos.build }
+    end
   end
 
   def update
     respond_to do |format|
       if @listing.update_attributes(params[:listing])
         format.html { redirect_to @listing, notice: 'Listing was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render 'photos', status: :ok }
       else
         format.html { render action: "edit" }
-        format.json { render json: @listing.errors, status: :unprocessable_entity }
+        format.json { render 'photos', status: :unprocessable_entity }
       end
     end
   end

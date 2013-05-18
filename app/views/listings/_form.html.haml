@@ -1,18 +1,42 @@
+- if @listing.premium?
+  = simple_form_for(@listing, :url => listing_path(@listing), html: {class: 'premium photos'}) do |f|
+    .errors
+  
+    %fieldset.sample
+      %p.title
+        Upload up to #{Listing::MAX_PREMIUM_PHOTOS} photos of your work
+      
+      - index = 0
+      = f.fields_for :portfolio_photos do |pp|
+        .portfolio_photo_wrapper
+          = pp.input :portfolio_photo, label: "Photo #{index + 1}", as: :file
+          = pp.input :portfolio_photo_cache, as: :hidden
+          = pp.input :description, as: :text, hint: 'Example: This is a screenshot from our latest homepage redesign of starbucks.com', input_html: { maxlength: 255 }, placeholder: 'Describe your portfolio photo'
+
+          - if @listing.portfolio_photos[index].portfolio_photo.present?
+            = image_tag(@listing.portfolio_photos[index].portfolio_photo_url(:small), class: "portfolio_photo_prev portfolio_photo_#{index}_prev")
+          - else
+            = image_tag('small-listing.png', class: 'portfolio_photo_prev')      
+
+          - index = index + 1
+    
+
 = simple_form_for(@listing, :url => listing_path(@listing), html: {class: @listing.premium? ? 'premium':''}) do |f|
   = f.error_notification
   = display_base_errors @listing
   
-  %fieldset.sample
-    %p.title
-      First, add a picture of your best work
-    = image_tag('sample-listing-size.png', class: 'sample-listing-size')
-    %p
-      Upload an image of your work that best represents your primary style. You can always change this image after your card has been created.
+  - unless @listing.premium?
+    %fieldset.sample
+      %p.title
+        First, add a picture of your best work
+      = image_tag('sample-listing-size.png', class: 'sample-listing-size')
+      %p
+        Upload an image of your work that best represents your primary style. You can always change this image after your card has been created.
     
-    = f.fields_for :portfolio_photos do |pp|
-      = pp.input :portfolio_photo, label: 'For best results upload a 900 x 630 JPG or PNG.', hint: 'Don’t have that size? We’ll resize what you have to make sure it fits.', as: :file
-      = pp.input :portfolio_photo_cache, as: :hidden
-      = pp.input :description, as: :text, hint: 'Example: This is a screenshot from our latest homepage redesign of starbucks.com', input_html: { maxlength: 255 }, placeholder: 'Describe your portfolio photo'
+      = f.fields_for :portfolio_photos do |pp|
+        = pp.input :portfolio_photo, label: 'For best results upload a 900 x 630 JPG or PNG.', hint: 'Don’t have that size? We’ll resize what you have to make sure it fits.', as: :file
+        = pp.input :portfolio_photo_cache, as: :hidden
+        = pp.input :description, as: :text, hint: 'Example: This is a screenshot from our latest homepage redesign of starbucks.com', input_html: { maxlength: 255 }, placeholder: 'Describe your portfolio photo'
   
   %fieldset.company-info
     %p.title

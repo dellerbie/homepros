@@ -1,0 +1,5 @@
+%textarea{'data-type' => 'application/json'}
+  - if @listing.errors.empty?
+    = @listing.to_json
+  - else 
+    = { errors: @listing.errors.full_messages.to_json }.to_json

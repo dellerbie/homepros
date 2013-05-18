@@ -8,6 +8,5 @@ class PortfolioPhoto < ActiveRecord::Base
   validates_presence_of :portfolio_photo
   validates :portfolio_photo, :file_size => { :maximum => 10.megabytes }
   
-  validates_presence_of :description
-  validates_length_of :description, maximum: 255
+  validates_length_of :description, maximum: 255, allow_blank: true
 end
