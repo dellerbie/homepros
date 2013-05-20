@@ -291,4 +291,34 @@
       top: 0;
     }
   }
+  
+  .portfolio-photo-forms {
+    width: 533px;
+    float: right;
+    margin-bottom: 20px;
+    
+    form {
+      &.premium.photos {
+        margin: 0;
+        
+        .errors {
+          display: none;
+          color: #f00;
+          font-weight: bold;
+          text-align: center;
+          background: #F7EED0;
+          padding-bottom: 5px;
+        }
+
+        fieldset {
+          margin-bottom: 0;
+          padding-top: 0px;
+          
+          &.sample0 {
+            padding-top: 30px;
+          }
+        }
+      }
+    }
+  }
 }

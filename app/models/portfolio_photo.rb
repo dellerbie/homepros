@@ -1,4 +1,6 @@
 class PortfolioPhoto < ActiveRecord::Base
+  default_scope order('created_at ASC')
+  
   attr_accessible :description, :portfolio_photo, :portfolio_photo_cache
   
   belongs_to :listing

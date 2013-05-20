@@ -13,6 +13,12 @@ Homepros::Application.routes.draw do
       get :claim
       post :claim
     end
+    
+    resources :portfolio_photos, only: [:create, :destroy] do
+      member do 
+        post :update
+      end
+    end
   end
   
   resources :preview_photos, only: :create
@@ -21,7 +27,5 @@ Homepros::Application.routes.draw do
   mount StripeEvent::Engine => '/stripe' 
   
   get '/(:city_slug/(:specialty_slug))' => 'listings#index'
-  
-  
   
 end

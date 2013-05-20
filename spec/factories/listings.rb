@@ -8,6 +8,10 @@ FactoryGirl.define do
     website 'http://dellerbie.com'
     phone "7146124582"
     
+    factory :premium_listing do
+      association :user, factory: :premium_user
+    end
+    
     after(:build) do |listing|
       listing.specialties << FactoryGirl.build(:specialty) << FactoryGirl.build(:specialty)
     end

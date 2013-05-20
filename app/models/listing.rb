@@ -81,6 +81,12 @@ class Listing < ActiveRecord::Base
   def premium?
     @premium || user.try(:premium?)
   end
+  
+  def can_add_photos?
+    n_photos = self.portfolio_photos.count
+    max_photos = premium? ? MAX_PREMIUM_PHOTOS : MAX_FREE_PHOTOS
+    n_photos < max_photos
+  end
 
   protected
   
@@ -96,7 +102,7 @@ class Listing < ActiveRecord::Base
     if premium? && n_photos > MAX_PREMIUM_PHOTOS
       photos = self.portfolio_photos.take(MAX_PREMIUM_PHOTOS)
       self.portfolio_photos = photos
-    elsif !premium? && self.portfolio_photos.length > MAX_FREE_PHOTOS
+    elsif !premium? && n_photos > MAX_FREE_PHOTOS
       photo = self.portfolio_photos.first
       self.portfolio_photos = [photo]
     end

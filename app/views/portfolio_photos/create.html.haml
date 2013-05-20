@@ -1,0 +1,5 @@
+%textarea{'data-type' => 'application/json'}
+  - if @portfolio_photo.errors.empty?
+    = @portfolio_photo.to_json
+  - else 
+    = { errors: @portfolio_photo.errors.full_messages }.to_json

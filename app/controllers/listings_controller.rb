@@ -3,7 +3,7 @@ class ListingsController < ApplicationController
   
   before_filter :authenticate_user!, only: [:edit, :update, :destroy]
   before_filter :find_current_user_listing, only: [:edit, :update, :destroy]
-  before_filter :find_listing, only: [:claim]
+  before_filter :find_listing, only: [:claim, :show]
   
   PER_PAGE = 32
 
@@ -32,7 +32,6 @@ class ListingsController < ApplicationController
   end
 
   def show
-    @listing = Listing.find(params[:id])
     @question = Question.new
     @question.listing = @listing
     @base_css = 'show-listing'
