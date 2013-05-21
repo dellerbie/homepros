@@ -17,6 +17,7 @@ Homepros::Application.routes.draw do
     resources :portfolio_photos, only: [:create, :destroy] do
       member do 
         post :update
+        post :update_description
       end
     end
   end

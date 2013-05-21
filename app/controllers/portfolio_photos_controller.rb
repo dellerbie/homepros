@@ -5,6 +5,7 @@ class PortfolioPhotosController < ApplicationController
   before_filter :find_listing
   skip_before_filter :verify_authenticity_token
   
+  # render custom templates because of the ajax file upload plugin being used
   def create
     max_photos = @listing.premium? ? Listing::MAX_PREMIUM_PHOTOS : Listing::MAX_FREE_PHOTOS
     @portfolio_photo = @listing.portfolio_photos.new(params[:portfolio_photo])
@@ -25,6 +26,16 @@ class PortfolioPhotosController < ApplicationController
       render 'create', status: :ok, formats: [:html]
     else
       render 'create', status: :unprocessable_entity, formats: [:html]
+    end
+  end
+  
+  def update_description
+    @portfolio_photo = @listing.portfolio_photos.find(params[:id])
+    if @portfolio_photo.update_attribute(:description, params[:portfolio_photo][:description])
+      respond_with @portfolio_photo, location: ''
+    else
+      errors = { :errors => @portfolio_photo.errors.full_messages }
+      respond_with(errors, status: 422, location: nil)
     end
   end
   
