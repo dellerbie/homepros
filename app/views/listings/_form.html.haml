@@ -1,7 +1,7 @@
 - if @listing.premium?  
   .portfolio-photo-forms.clearfix
     - @listing.portfolio_photos.each_with_index do |portfolio_photo, index|  
-      = simple_form_for([@listing, portfolio_photo], html: {class: 'premium photos', id: "portfolio_photo_form_#{index}"}) do |f|
+      = simple_form_for([@listing, portfolio_photo], html: {class: 'premium photos', id: "portfolio_photo_form_#{index}", "data-listing-id" => @listing.id, "data-portfolio-photo-id" => portfolio_photo.id}) do |f|
         .errors
   
         %fieldset{class: "sample sample#{index}"}

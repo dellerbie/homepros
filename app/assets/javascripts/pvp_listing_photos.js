@@ -11,7 +11,7 @@ $(function() {
     
     $.ajax({
       type: 'POST',
-      url: form.prop('action') + '/update_description',
+      url: '/listings/' + form.data('listing-id') + '/portfolio_photos/' + form.data('portfolio-photo-id') + '/update_description',
       data: {
         "portfolio_photo": {
           "description": textarea.val()
@@ -32,20 +32,27 @@ $(function() {
         form = $(this).closest("form"),
         textarea = $('textarea', form),
         imgEl = file.parents('.portfolio_photo_wrapper').find('.portfolio_photo_prev'),
-        errorEl = $('.errors', form).text('').hide();
+        errorEl = $('.errors', form).text('').hide(),
+        url = '/listings/' + form.data('listing-id') + '/portfolio_photos',
+        photoId = form.data('portfolio-photo-id'),
+        isCreate = photoId ? false : true;
+        
+    if(!isCreate) {
+      url += '/' + photoId;
+    }
     
     textarea.attr('disabled', 'disabled');
 
-    $.ajax(form.prop('action'), {
+    $.ajax(url, {
       type: 'POST',
       files: $(file, form[0]),
       iframe: true,
       dataType: "json",
       // for some reason the error handler runs
       error: function (e) {
-        console.log(e);
         textarea.removeAttr('disabled');
         var response = $.parseJSON(e.responseText);
+        console.log(response);
         
         if(response.errors) {
           console.log(response.errors.length);
@@ -56,15 +63,9 @@ $(function() {
           if(imgEl.length) {
             $(imgEl).attr("src", src);
           }
-          var action = form.prop('action');
-          if(!action.match(/\d+$/)) {
-            action = action + '/' + response.id;
-            console.log('setting the action to ' + action);
-            $(form[0]).prop('action', action);
-            console.log($(form[0]).prop('action'));
+          if(isCreate) {
+            form.data('portfolio-photo-id', response.id);
           }
-          
-          console.log(response);
         }
       }
     });
