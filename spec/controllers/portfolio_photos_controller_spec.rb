@@ -55,4 +55,22 @@ describe PortfolioPhotosController do
       expect(photo.errors[:base]).to eql(["You cannot have more than 6 photos"])
     end
   end
+  
+  it 'successfully destroys' do
+    @listing.portfolio_photos << FactoryGirl.build(:portfolio_photo)
+    
+    expect {
+      delete :destroy, listing_id: @listing.id, id: @listing.portfolio_photos.first, format: :json
+    }.to change{ PortfolioPhoto.count }
+    
+    expect(response.status).to eql(204)
+  end
+  
+  it "doesn't destroy the last photo" do
+    expect {
+      delete :destroy, listing_id: @listing.id, id: @listing.portfolio_photos.first, format: :json
+    }.to_not change{ PortfolioPhoto.count }
+    
+    expect(response.status).to eql(204)
+  end
 end

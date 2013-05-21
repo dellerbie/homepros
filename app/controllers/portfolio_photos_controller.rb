@@ -39,6 +39,12 @@ class PortfolioPhotosController < ApplicationController
     end
   end
   
+  def destroy
+    @portfolio_photo = @listing.portfolio_photos.find(params[:id])
+    @portfolio_photo.destroy if @listing.portfolio_photos.count > 1
+    respond_with @portfolio_photo
+  end
+  
   private
   
   def find_listing
