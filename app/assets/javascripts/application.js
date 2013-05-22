@@ -17,6 +17,8 @@
 //= require jquery.imagefit-0.2
 //= require jquery.infinitescroll.min
 //= require chosen.jquery.min
+//= require jquery.easing.1.3
+//= require jquery.bxslider.min
 //= require twitter/bootstrap
 //= require_tree .
 
@@ -43,5 +45,14 @@ $(function() {
   
   setupInfiniteScroll();
 });
+
+function truncate(text, limit) {
+  if(!text) return '';
+  
+  if(text.length > limit) {
+    text = text.substring(0,limit-3) + '...';
+  }
+  return text;
+};
 
 
