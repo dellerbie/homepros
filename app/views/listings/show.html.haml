@@ -70,10 +70,11 @@
       %button.btn.btn-primary{type: 'button', "data-toggle" => 'modal', "data-target" => '#contact-modal'}
         Email
 
-  .portfolio-image.img-polaroid
-    = image_tag(@listing.portfolio_photos.first.portfolio_photo)
-    %p
-      = @listing.portfolio_photos.first.description
+  - @listing.portfolio_photos.each do |photo|
+    .portfolio-image.img-polaroid
+      = image_tag(photo.portfolio_photo)
+      %p
+        = photo.description
 
   .contact-container
     %p
