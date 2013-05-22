@@ -23,7 +23,6 @@ $(function() {
       
       url = selection + specialty;
     } else if(dropdown.is('.specialties')) {
-      console.log(city);
       if(city == 'all-cities') {
         city = '';
       } else {

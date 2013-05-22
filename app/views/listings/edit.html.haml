@@ -18,11 +18,12 @@
           = truncate(specialties(@listing), length: 48)
         %span.location.text
           = @listing.city.name
-      
-      - if @listing.portfolio_photos.try(:first).try(:portfolio_photo).present?
-        = image_tag(@listing.portfolio_photos.first.portfolio_photo, id: 'img_prev', class: 'portfolio-img')
-      - else
-        = image_tag 'small-listing.png', id: 'img_prev', class: 'portfolio-img'
+
+      %ul.bxslider
+        - @listing.portfolio_photos.each do |photo|
+          - if photo.persisted?
+            %li{"data-description" => truncate(photo.description, length: 200)}
+              = image_tag photo.portfolio_photo_url(:premium), class: 'portfolio-img'
       
       %p
         %span.description.text

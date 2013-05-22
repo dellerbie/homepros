@@ -1,8 +1,6 @@
 $(function() {
-  
   if(!$('.new-listing form:first, .edit-listing form:first').is('.premium')) return;
-  
-  
+
   function nPhotos() {
     var count = 0;
     $('form.photos').each(function(i, el) {
@@ -32,9 +30,61 @@ $(function() {
     }
   }
   
+  function reloadSliderOpts() {
+    return {
+      onSlideAfter: function(el) {
+        $(el).closest('.listing-container').find('.description.text').text($(el).data('description') || '');
+      }
+    }
+  }
+  
+  function addPhotoToSlider(form) {
+    var slider = $('body').data('bxslider'),
+        index = $(form).index(),
+        description = $('textarea', form).val() || '',
+        src = $('.portfolio_photo_prev', form).data('large-src');
+    
+    var li = '<li data-description="' + description + '"><img class="portfolio-img" src="' + src + '"></li>';
+    slider.append(li);
+    slider.reloadSlider(reloadSliderOpts());
+  }
+  
+  function removePhotoFromSlider(form) {
+    var slider = $('body').data('bxslider'),
+        index = $(form).index();
+    
+    slider.find('li:not(.bx-clone)').eq(index).remove();
+    slider.reloadSlider(reloadSliderOpts());
+  }
+  
+  function updatePhotoInSlider(form) {
+    var slider = $('body').data('bxslider'),
+        index = $(form).index(),
+        description = $('textarea', form).val() || '',
+        src = $('.portfolio_photo_prev', form).data('large-src');
+    
+    var li = slider.find('li:not(.bx-clone)').eq(index);
+    li.data('description', description);
+    li.find('img').attr('src', src);
+    
+    slider.reloadSlider(reloadSliderOpts());
+  }
+  
+  function updatePhotoDescriptionInSlider(form) {
+    var slider = $('body').data('bxslider'),
+        index = $(form).index(),
+        description = $('textarea', form).val() || '';
+    
+    slider.find('li:not(.bx-clone)').eq(index).data('description', description);
+    slider.goToSlide(index);
+    
+    if(index == 0) {
+      $('.listing-container .description.text').text(description);
+    }
+  }
+  
   $('form.photos a.delete').click(function(e) {
     e.preventDefault();
-    console.log('delete');
     
     var r = confirm("Are you sure that you want to delete this photo?");
     if(r != true) return;
@@ -45,14 +95,13 @@ $(function() {
         photoId = form.data('portfolio-photo-id'),
         photoCount = nPhotos();
     
-    console.log("listingId: %s, photoId: %s", listingId, photoId);
-    
     if(photoId && photoCount > 1) {
       $.ajax({
         type: 'DELETE',
         url: '/listings/' + listingId + '/portfolio_photos/' + photoId,
         dataType: "json",
         success: function (response) {
+          removePhotoFromSlider(form);
           form = form.detach();
           form.find("input:file, textarea").val('');
           form.find('.portfolio_photo_prev').attr('src', '/assets/small-listing.png');
@@ -91,6 +140,8 @@ $(function() {
         textarea.removeAttr('disabled');
         if(response.errors) {
           errorEl.text(response.errors).show();
+        } else {
+          updatePhotoDescriptionInSlider(form);
         }
       }
     });
@@ -121,10 +172,8 @@ $(function() {
       error: function (e) {
         textarea.removeAttr('disabled');
         var response = $.parseJSON(e.responseText);
-        console.log(response);
         
         if(response.errors) {
-          console.log(response.errors.length);
           errorEl.text(response.errors).show();
         } else {
           var now = +new Date;
@@ -137,6 +186,9 @@ $(function() {
             var deleteLink = $('a.delete', form);
             deleteLink.attr('href', deleteLink.attr('href') + '/' + response.id);
             activateDeleteLinks();
+            addPhotoToSlider(form);
+          } else {
+            updatePhotoInSlider(form);
           }
         }
       }

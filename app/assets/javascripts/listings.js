@@ -1,10 +1,11 @@
 $(function() {
-  if(!$('.listings-index').length) return;
-  
-  $('.bxslider').bxSlider({
+  var bxslider = $('.bxslider').bxSlider({
     onSlideAfter: function(el) {
-      console.log($(el).data('description'));
-      $(el).closest('.listing-container').find('.description.text').text($(el).data('description'));
+      $(el).closest('.listing-container').find('.description.text').text($(el).data('description') || '');
     }
   });
+  
+  if($('.edit-listing').length) {
+    $('body').data('bxslider', bxslider);
+  }
 });
