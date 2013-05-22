@@ -1,6 +1,6 @@
 $(function() {
   
-  if($('.new-listing form:first, .edit-listing form:first').is('.premium')) return;
+  // if($('.new-listing form:first, .edit-listing form:first').is('.premium')) return;
   
   $('#user_listing_attributes_portfolio_photos_attributes_0_portfolio_photo, #listing_portfolio_photos_attributes_0_portfolio_photo, #listing_company_logo_photo').bind('change', function(e) { 
     var file = $(this),

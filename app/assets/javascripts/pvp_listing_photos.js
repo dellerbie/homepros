@@ -41,7 +41,7 @@ $(function() {
   function addPhotoToSlider(form) {
     var slider = $('body').data('bxslider'),
         index = $(form).index(),
-        description = $('textarea', form).val() || '',
+        description = truncate($('textarea', form).val() || '', 200),
         src = $('.portfolio_photo_prev', form).data('large-src');
     
     var li = '<li data-description="' + description + '"><img class="portfolio-img" src="' + src + '"></li>';
@@ -60,7 +60,7 @@ $(function() {
   function updatePhotoInSlider(form) {
     var slider = $('body').data('bxslider'),
         index = $(form).index(),
-        description = $('textarea', form).val() || '',
+        description = truncate($('textarea', form).val() || '', 200),
         src = $('.portfolio_photo_prev', form).data('large-src');
     
     var li = slider.find('li:not(.bx-clone)').eq(index);
@@ -73,7 +73,7 @@ $(function() {
   function updatePhotoDescriptionInSlider(form) {
     var slider = $('body').data('bxslider'),
         index = $(form).index(),
-        description = $('textarea', form).val() || '';
+        description = truncate($('textarea', form).val() || '', 200);
     
     slider.find('li:not(.bx-clone)').eq(index).data('description', description);
     slider.goToSlide(index);

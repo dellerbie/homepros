@@ -13,7 +13,7 @@
           - if @listing.company_logo_photo.present?
             = image_tag(@listing.company_logo_photo, class: 'company-logo company_logo_prev')
           - else
-            = image_tag('', class: 'company-logo company_logo_prev')
+            = image_tag('spacer.gif', class: 'company-logo company_logo_prev')
         %span.specialties.text
           = truncate(specialties(@listing), length: 48)
         %span.location.text
