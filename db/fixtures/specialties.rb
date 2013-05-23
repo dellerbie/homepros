@@ -12,7 +12,7 @@ Specialty.seed(
   {name: 'Handyman Services', slug: 'handyman-services'},
   {name: 'Home Repair & Maintenance', slug: 'home-repair-maintenance'},
   {name: 'Heating Contractors & Specialties', slug: 'heating-contractors-specialties'},
-  {name: 'Air Conditioning Contractors & Systems', slug: 'air-conditioning-contractros-systems'},
+  {name: 'Air Conditioning Contractors & Systems', slug: 'air-conditioning-contractors-systems'},
   {name: 'House Cleaning', slug: 'house-cleaning'},
   {name: 'Real Estate Inspection Service', slug: 'real-estate-inspection-service'},
   {name: 'Organizing Services-Household & Business', slug: 'organizing-services-household-business'},
