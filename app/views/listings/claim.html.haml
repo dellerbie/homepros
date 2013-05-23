@@ -11,17 +11,17 @@
     You are claiming this listing
   .listing-container
     %span.company-name
-      = @listing.company_name 
+      = truncate(@listing.company_name, length: 24)
     %p
       %span.specialties.text
-        = specialties(@listing)
+        = truncate(specialties(@listing), length: 30)
       %br
       %span.location.text
         = @listing.city.name
-    = image_tag(@listing.portfolio_photos.first.portfolio_photo_url, id: 'img_prev')
+    = image_tag(@listing.portfolio_photos.first.portfolio_photo_url, id: 'img_prev', class: 'portfolio-img')
     %p
       %span.description.text
-        = @listing.portfolio_photos.first.description
+        = truncate(@listing.portfolio_photos.first.description, length: 31)
 
 = simple_form_for(@user, url: claim_listing_path(@listing), method: :post) do |f|
   = f.error_notification
