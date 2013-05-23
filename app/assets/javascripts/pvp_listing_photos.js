@@ -75,11 +75,13 @@ $(function() {
         index = $(form).index(),
         description = truncate($('textarea', form).val() || '', 200);
     
-    slider.find('li:not(.bx-clone)').eq(index).data('description', description);
-    slider.goToSlide(index);
+    var li = slider.find('li:not(.bx-clone)').eq(index);
+    li.data('description', description);
     
-    if(index == 0) {
+    if(index == 0 || slider.getCurrentSlide() == index) {
       $('.listing-container .description.text').text(description);
+    } else {
+      slider.goToSlide(index);
     }
   }
   
