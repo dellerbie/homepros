@@ -1,4 +1,4 @@
-- content_for :title, @listing.company_name
+- content_for :title, "#{@listing.company_name} - #{@listing.city.name}"
 
 - unless current_user && current_user.listing == @listing
   %p
@@ -24,9 +24,9 @@
     - if @listing.company_logo_photo.present?
       - if @listing.website?
         = link_to @listing.website, target: '_blank' do
-          = image_tag(@listing.company_logo_photo)
+          = image_tag(@listing.company_logo_photo, alt: @listing.company_name)
       - else
-        = image_tag(@listing.company_logo_photo)
+        = image_tag(@listing.company_logo_photo, alt: @listing.company_name)
     
   %p.company-name
     = @listing.company_name
@@ -72,7 +72,7 @@
 
   - @listing.portfolio_photos.each do |photo|
     .portfolio-image.img-polaroid
-      = image_tag(photo.portfolio_photo)
+      = image_tag(photo.portfolio_photo, alt: photo.description)
       %p
         = photo.description
 
