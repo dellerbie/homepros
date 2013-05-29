@@ -11,7 +11,7 @@
     - listing.portfolio_photos.each do |photo|
       %li{"data-description" => truncate(photo.description, length: 200)}
         = link_to listing_path(listing) do
-          = image_tag photo.portfolio_photo_url(:premium), class: 'portfolio-img'
+          = image_tag photo.portfolio_photo_url(:premium) || 'small-listing.png', class: 'portfolio-img'
 - else
   = link_to listing_path(listing) do
     = image_tag listing.portfolio_photos.first.portfolio_photo_url(:premium), class: 'portfolio-img'

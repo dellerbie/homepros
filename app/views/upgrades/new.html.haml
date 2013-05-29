@@ -3,11 +3,22 @@
 .upgrade.clearfix
   %h1 
     Upgrade to a Premium Listing
-  .preview
-    %h4
-      Your premium listing will look like this...
-    .listing-container.premium
-      = render partial: 'listings/premium_listing', locals: { listing: current_user.listing }
+    
+  .previews.clearfix
+    .preview.free
+      %h4
+        This is your free listing
+      .listing-container
+        = render partial: 'listings/listing', locals: { listing: current_user.listing }
+      
+    .transform-arrow
+      %i.icon-share-alt.icon-large
+    
+    .preview.premium
+      %h4
+        Your premium listing will look like this
+      .listing-container.premium
+        = render partial: 'listings/premium_listing', locals: { listing: current_user.listing }
   .copy
     %header
       Premium Listings:
