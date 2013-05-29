@@ -5,8 +5,7 @@ class UpgradesController < ApplicationController
     # redirect_to listing_path(current_user.listing) if current_user.premium?
     @hide_footer = true
     @base_css = 'upgrades'
-    n_photos = current_user.listing.portfolio_photos.length
-    (Listing::MAX_PREMIUM_PHOTOS - n_photos).times { current_user.listing.portfolio_photos.build }
+    current_user.listing.build_portfolio_photos
   end
   
   def create
