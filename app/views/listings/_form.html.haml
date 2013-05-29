@@ -13,7 +13,7 @@
             - if portfolio_photo.portfolio_photo.present?
               = image_tag(portfolio_photo.portfolio_photo_url(:small), class: "portfolio_photo_prev portfolio_photo_#{index}_prev", "data-large-src" => portfolio_photo.portfolio_photo_url(:premium))
             - else
-              = image_tag('small-listing.png', class: "portfolio_photo_prev portfolio_photo_#{index}_prev")
+              = image_tag('premium-listing.png', class: "portfolio_photo_prev portfolio_photo_#{index}_prev")
             = link_to 'Delete', [@listing, portfolio_photo], class: "delete #{!portfolio_photo.persisted? || @listing.portfolio_photos.count == 1 ? 'hide':''}"
     
 

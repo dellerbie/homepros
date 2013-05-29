@@ -41,5 +41,5 @@
       %h4
         Your premium listing will look like this
       .listing-container.premium
-        = render partial: 'listings/premium_listing', locals: { listing: current_user.listing }
+        = render partial: 'listings/premium_listing', locals: { listing: current_user.listing, upgrade: true }
 
