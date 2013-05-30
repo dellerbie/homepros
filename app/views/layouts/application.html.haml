@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title= content_for?(:title) ? "OC HomeMasters - #{yield(:title)}" : "OC HomeMasters"
+    %title= content_for?(:title) ? "#{yield(:title)} | OC HomeMasters" : "OC HomeMasters"
     %meta{name: 'description', content: 'Easily find home improvement professionals in Orange County, California'}
     = favicon_link_tag
     = stylesheet_link_tag "application", :media => "all"
