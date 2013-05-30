@@ -3,7 +3,7 @@
   %head
     %title= content_for?(:title) ? "#{yield(:title)} | OC HomeMasters" : "OC HomeMasters"
     %meta{name: 'description', content: 'Easily find home improvement professionals in Orange County, California'}
-    = favicon_link_tag
+    %link{rel: 'SHORTCUT ICON', href: '/favicon.ico'}
     = stylesheet_link_tag "application", :media => "all"
     = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Lobster+Two:700', rel: 'stylesheet', type: 'text/css'
     = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Noto+Sans:400,700', rel: 'stylesheet', type: 'text/css'
