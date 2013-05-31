@@ -22,7 +22,7 @@ class Listing < ActiveRecord::Base
   
   accepts_nested_attributes_for :portfolio_photos, limit: MAX_PREMIUM_PHOTOS
   
-  default_scope :include => [:city, :specialties]
+  default_scope :include => [:city, :specialties, :portfolio_photos]
   
   attr_accessible :specialty_ids, :city_id, :company_logo_photo, :company_logo_photo_cache, :company_name, 
     :contact_email, :website, :phone, :company_description, :portfolio_photos_attributes

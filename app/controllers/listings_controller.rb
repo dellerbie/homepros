@@ -15,7 +15,7 @@ class ListingsController < ApplicationController
     
     slugs
     
-    @listings = parse_filter.paginate(paging_options)
+    @listings = parse_filter.order("users.premium, RANDOM()").paginate(paging_options)
     
     # for now, show the first few listings as premium no matter what
     # this is to entice business owners to upgrade to premium
@@ -56,7 +56,7 @@ class ListingsController < ApplicationController
     
     respond_to do |format|
       if @listing.update_attributes(params[:listing])
-        format.html { redirect_to @listing, notice: 'Listing was successfully updated.' }
+        format.html { redirect_to @listing, notice: 'Your listing was successfully updated.' }
         format.json { render 'photos', status: :ok }
       else
         @listing.build_portfolio_photos
@@ -146,9 +146,7 @@ class ListingsController < ApplicationController
     
     scope = scope.where("cities.slug" => city_slug) if city_slug.present?
     scope = scope.where("specialties.slug" => specialty_slug) if specialty_slug.present?
-    
-    scope = scope.joins("LEFT JOIN users ON listings.user_id = users.id").order("users.premium, RANDOM()") if city_slug.blank? && specialty_slug.blank?
-    
+    scope = scope.joins("LEFT JOIN users ON listings.user_id = users.id")
     scope
   end
 end
