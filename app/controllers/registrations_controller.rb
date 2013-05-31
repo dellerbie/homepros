@@ -1,6 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController 
   
-  before_filter :set_css
+  before_filter :set_css, except: [:edit, :update]
+  before_filter :hide_elements
   
   def new
     resource = build_resource({})
@@ -9,15 +10,13 @@ class RegistrationsController < Devise::RegistrationsController
     respond_with resource
   end
   
-  def edit
-    @base_css = ''
-    super
-  end
-  
   protected
   
   def set_css
     @base_css = 'new-listing'
+  end
+  
+  def hide_elements
     @hide_get_listed_btn = true
     @hide_footer = true
   end
