@@ -90,7 +90,7 @@ class Listing < ActiveRecord::Base
   
   def build_portfolio_photos
     n_photos = portfolio_photos.length
-    (Listing::MAX_PREMIUM_PHOTOS - n_photos).times { portfolio_photos.build } if premium?
+    (Listing::MAX_PREMIUM_PHOTOS - n_photos).times { portfolio_photos.build }
   end
 
   protected
