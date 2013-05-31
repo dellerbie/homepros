@@ -86,8 +86,10 @@
         %li
           %button.btn.btn-large.btn-info{type: 'button', "data-toggle" => 'modal', "data-target" => '#contact-modal'}
             Email #{@listing.company_name}
-      %li
-        = link_to @listing.website
+      
+      - if @listing.website?
+        %li
+          = link_to @listing.website, @listing.website, target: '_blank'
   
     %p.plug
       Be sure to let 'em know OC HomeMasters sent you.
