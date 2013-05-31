@@ -8,18 +8,18 @@
         First, add a picture of your best work
       = image_tag('sample-listing-size.png', class: 'sample-listing-size')
       %p
-        Upload an image of your work that best represents your primary style. You can always change this image after your card has been created.
+        Upload an image of your work that best represents your primary style. You can always change this image after your listing has been created.
       
       = listing_form.fields_for :portfolio_photos do |pp|
         = pp.input :portfolio_photo, label: 'For best results upload a 900 x 630 JPG or PNG.', hint: 'Don’t have that size? We’ll resize what you have to make sure it fits.', as: :file
         = pp.input :portfolio_photo_cache, as: :hidden
-        = pp.input :description, as: :text, hint: 'Example: This is a screenshot from our latest homepage redesign of starbucks.com', input_html: { maxlength: 255 }, placeholder: 'Describe your portfolio photo'
+        = pp.input :description, as: :text, hint: 'Example: This is a photo from one of our kitchen redesign projects.', input_html: { maxlength: 255 }, placeholder: 'Describe your portfolio photo'
     
     %fieldset.company-info
       %p.title
         Now, tell us about your business
       
-      = listing_form.input :company_name, label: "What's your company name?", hint: "You can use your own name if you're a freelancer and don't have a company name.", input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'Your Company Inc.'
+      = listing_form.input :company_name, label: "What's your company name?", hint: "You can use your own name if you don't have a company name.", input_html: {class: 'input-xlarge', maxlength: 255}, placeholder: 'Your Company Inc.'
       = listing_form.input :company_logo_photo, label: 'Upload your company logo (optional)', hint: 'GIF, JPG, or PNG. We’ll resize what you have.<br/>This is shown on your listing page for clients to see.', as: :file
 
       - if resource.listing.company_logo_photo.present?
