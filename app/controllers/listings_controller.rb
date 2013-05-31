@@ -50,11 +50,16 @@ class ListingsController < ApplicationController
   end
 
   def update
+    @base_css = 'edit-listing'
+    @container_css = 'premium' if @listing.premium?
+    @hide_footer = true
+    
     respond_to do |format|
       if @listing.update_attributes(params[:listing])
         format.html { redirect_to @listing, notice: 'Listing was successfully updated.' }
         format.json { render 'photos', status: :ok }
       else
+        @listing.build_portfolio_photos
         format.html { render action: "edit" }
         format.json { render 'photos', status: :unprocessable_entity }
       end
