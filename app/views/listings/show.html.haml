@@ -1,11 +1,11 @@
-- content_for :title, @listing.company_name
+- content_for :title, "#{@listing.company_name} - #{@listing.city.name}, CA"
 
 - unless current_user && current_user.listing == @listing
   %p
     %i.icon-arrow-left
     = link_to 'Back to Listings', :back
 
-.listing-container-xlarge  
+.listing-container-xlarge{itemscope: '', itemtype: 'http://data-vocabulary.org/Organization'}
   .actions.clearfix
     - if current_user && current_user.listing == @listing
       .edit-listing-btn
@@ -24,11 +24,11 @@
     - if @listing.company_logo_photo.present?
       - if @listing.website?
         = link_to @listing.website, target: '_blank' do
-          = image_tag(@listing.company_logo_photo)
+          = image_tag(@listing.company_logo_photo, alt: @listing.company_name)
       - else
-        = image_tag(@listing.company_logo_photo)
+        = image_tag(@listing.company_logo_photo, alt: @listing.company_name)
     
-  %p.company-name
+  %p.company-name{itemprop: 'name'}
     = @listing.company_name
   %p.specialties
     %span.label-info
@@ -36,19 +36,20 @@
     %span.value 
       %strong
         = specialties(@listing)
-  %p.location 
+  %p.location{itemprop: 'address', itemscope: '', itemtype: 'http://data-vocabulary.org/Address'}
     %span.label-info
       Headquarted in:
     %span.value
-      %strong
-        = @listing.city.name
+      %strong{itemprop: 'locality'}
+        = "#{@listing.city.name},"
+      %strong{itemprop: 'region'}='CA'
   
   - if @listing.phone?
     %p.phone
       %span.label-info
         Phone Number:
       %span.value
-        %strong
+        %strong{itemprop: 'tel'}
           = number_to_phone(@listing.phone, area_code: true)
       
   .description 
@@ -60,7 +61,7 @@
       %strong
         Website
       %br
-      = link_to @listing.website, @listing.website, target: '_blank'
+      = link_to @listing.website, @listing.website, target: '_blank', itemprop: 'url'
 
   - if can_email?(@listing)
     %p.contact-us
@@ -72,7 +73,7 @@
 
   - @listing.portfolio_photos.each do |photo|
     .portfolio-image.img-polaroid
-      = image_tag(photo.portfolio_photo)
+      = image_tag(photo.portfolio_photo, alt: photo.description)
       %p
         = photo.description
 

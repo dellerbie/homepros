@@ -106,7 +106,7 @@ $(function() {
           removePhotoFromSlider(form);
           form = form.detach();
           form.find("input:file, textarea").val('');
-          form.find('.portfolio_photo_prev').attr('src', '/assets/small-listing.png');
+          form.find('.portfolio_photo_prev').attr('src', '/assets/premium-listing.png');
           form.data('portfolio-photo-id', '');
           form.find('.errors').text('').hide();
           form.find('a.delete').hide();
@@ -114,7 +114,7 @@ $(function() {
           form.find('.sample0').removeClass('sample0');
           $('form.photos:first').find('.sample').addClass('sample0');
           $('.portfolio-photo-forms').append(form);
-          $('#img_prev').attr('src', $('form.photos:first .portfolio_photo_prev').data('large-src') || '/assets/small-listing.png');
+          $('#img_prev').attr('src', $('form.photos:first .portfolio_photo_prev').data('large-src') || '/assets/premium-listing.png');
           
           activateDeleteLinks();
         }
