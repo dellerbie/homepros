@@ -46,7 +46,7 @@ class ListingsController < ApplicationController
     @base_css = 'edit-listing'
     @container_css = 'premium' if @listing.premium?
     @hide_footer = true
-    @listing.build_portfolio_photos
+    @listing.build_portfolio_photos if @listing.premium?
   end
 
   def update
