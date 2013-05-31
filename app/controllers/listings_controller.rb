@@ -59,7 +59,7 @@ class ListingsController < ApplicationController
         format.html { redirect_to @listing, notice: 'Your listing was successfully updated.' }
         format.json { render 'photos', status: :ok }
       else
-        @listing.build_portfolio_photos
+        @listing.build_portfolio_photos if @listing.premium?
         format.html { render action: "edit" }
         format.json { render 'photos', status: :unprocessable_entity }
       end
