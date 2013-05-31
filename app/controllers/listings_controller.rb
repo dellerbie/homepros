@@ -46,10 +46,7 @@ class ListingsController < ApplicationController
     @base_css = 'edit-listing'
     @container_css = 'premium' if @listing.premium?
     @hide_footer = true
-    if @listing.premium?
-      n_photos = @listing.portfolio_photos.length
-      (Listing::MAX_PREMIUM_PHOTOS - n_photos).times { @listing.portfolio_photos.build }
-    end
+    @listing.build_portfolio_photos
   end
 
   def update

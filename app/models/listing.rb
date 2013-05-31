@@ -20,7 +20,7 @@ class Listing < ActiveRecord::Base
   has_many :portfolio_photos, dependent: :destroy
   belongs_to :city
   
-  accepts_nested_attributes_for :portfolio_photos, limit: MAX_PREMIUM_PHOTOS, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :portfolio_photos, limit: MAX_PREMIUM_PHOTOS#, reject_if: :all_blank, allow_destroy: true
   
   default_scope :include => [:city, :specialties]
   
@@ -90,7 +90,7 @@ class Listing < ActiveRecord::Base
   
   def build_portfolio_photos
     n_photos = portfolio_photos.length
-    (Listing::MAX_PREMIUM_PHOTOS - n_photos).times { portfolio_photos.build }
+    (Listing::MAX_PREMIUM_PHOTOS - n_photos).times { portfolio_photos.build } if premium?
   end
 
   protected
