@@ -7,7 +7,10 @@
     Your free listing will look like this...
   .listing-container
     %span.company-name
-      = listing.try(:company_name) || "Your company name"
+      - if listing.company_name.present?
+        = listing.company_name
+      - else
+        = "Your company name"
     %p
       %span.specialties.text
         - if listing.try(:specialties).try(:present?)
@@ -16,14 +19,23 @@
           Specialties
       %br
       %span.location.text
-        = listing.try(:city).try(:name) || "Company location"
+        - if listing.try(:city).try(:name).present?
+          = listing.city.name
+        - else
+          = "Company location"
 
     - if listing.portfolio_photos.try(:first).try(:portfolio_photo).present?
-      = image_tag(listing.portfolio_photos.first.portfolio_photo, id: 'img_prev', class: 'portfolio-img')
+      - if tmp_photo?(listing)
+        %img{src: listing.portfolio_photos.first.portfolio_photo, id: 'img_prev', class: 'portfolio-img'}
+      - else
+        = image_tag(listing.portfolio_photos.first.portfolio_photo, id: 'img_prev', class: 'portfolio-img')
     - else
       = image_tag('small-listing.png', id: 'img_prev', class: 'portfolio-img')
     %p
       %span.description.text
-        = listing.portfolio_photos.first.try(:description) || "Your image description"
+        - if listing.portfolio_photos.first.description.present?
+          = listing.portfolio_photos.first.try(:description)
+        - else 
+          = "Your image description"
 
 = render 'form'
