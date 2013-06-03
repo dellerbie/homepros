@@ -1,6 +1,10 @@
 require 'spec_helper'
 
-feature 'Business signs up', js: true do  
+feature 'Business signs up', js: true do
+  before(:each) do
+
+  end
+  
   scenario 'with valid information' do
     @city1 = FactoryGirl.create(:city)
     @city2 = FactoryGirl.create(:city)
