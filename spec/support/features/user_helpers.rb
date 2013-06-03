@@ -18,16 +18,21 @@ module Features
     def sign_out
       visit '/users/sign_out'
     end
-
-    def should_be_signed_in(user)
-      should_see_profile_menu
-      page.should_not have_content "Sign up"
-      page.should_not have_content "Sign in"
+    
+    def should_see_signed_in_navbar_for_mvp_user
+      expect(page).to have_content('Upgrade to Premium')
+      should_see_signed_in_navbar
+    end
+    
+    def should_see_signed_in_navbar 
+      expect(page).to have_content('My Listing')
+      expect(page).to have_content('My Account')
+      expect(page).to have_content('Logout')
     end
 
-    def should_be_signed_out
-      page.should satisfy {|page| page.has_content?('Sign up') || page.has_content?('Sign in')}
-      page.should_not have_content "Logout"
+    def should_see_signed_out_navbar
+      page.should have_content 'Login'
+      page.should have_content 'Get Listed Today'
     end
 
     def should_see_successful_sign_in_message
