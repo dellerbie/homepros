@@ -1,29 +1,20 @@
 require 'spec_helper'
 
-feature 'Business signs up', js: true do
-  before(:each) do
-
-  end
-  
+feature 'Business signs up', js: true do  
   scenario 'with valid information' do
     @city1 = FactoryGirl.create(:city)
     @city2 = FactoryGirl.create(:city)
     @specialty1 = FactoryGirl.create(:specialty)
     @specialty2 = FactoryGirl.create(:specialty)
     
-    p @specialty1.name
-    p @city1.name
-    
     visit root_path
     click_on 'Get Listed Today'
     
-    expect(visible_in_chosen('#user_listing_attributes_city_id_chzn', @specialty1.name)).to be_true
-    
-    attach_file 'user[listing_attributes][portfolio_photo]', File.join(Rails.root, 'spec', 'fixtures', 'files', 'gibson.jpg')
-    fill_in 'Portfolio photo description', with: 'Lorem Ipsum dolor color set'
+    attach_file 'user[listing_attributes][portfolio_photos_attributes][0][portfolio_photo]', File.join(Rails.root, 'spec', 'fixtures', 'files', 'gibson.jpg')
+    fill_in 'Description', with: 'Lorem Ipsum dolor color set'
     fill_in "What's your company name?", with: 'Dellerbie Inc'
-    select_from_chosen(@specialty1.name, '#user_listing_attributes_specialty_ids_chzn .search-field input')
-    select_from_chosen(@city1.name, '#user_listing_attributes_city_id_chzn .chzn-single')
+    select_from_chosen('#user_listing_attributes_specialty_ids_chzn .search-field input', @specialty1.name)
+    select_from_chosen('#user_listing_attributes_city_id_chzn .chzn-single', @city1.name)
     fill_in "Sales contact email", with: 'slowblues@gmail.com'
     fill_in "Website URL (optional)", with: 'dellerbie.com'
     fill_in "Phone Number", with: "201-253-7772"
