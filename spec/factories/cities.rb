@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :city do
-    name 'Orange'
+    name { Faker::Lorem.characters(12) }
   end
 end

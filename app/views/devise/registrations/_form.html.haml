@@ -28,7 +28,7 @@
         = image_tag(resource.listing.company_logo_photo, class: 'company-logo company_logo_prev')
       = listing_form.input :company_logo_photo_cache, as: :hidden
       
-      = listing_form.association :specialties, collection: Specialty.order("name ASC"), label: 'What do you specialize in?', hint: 'You can select up to 2 specialties', input_html: { class: 'chzn-select', 'data-placeholder' => 'Choose up to 2 Specialties' }
+      = listing_form.association :specialties, collection: Specialty.all(order: "name ASC"), label: 'What do you specialize in?', hint: 'You can select up to 2 specialties', input_html: { class: 'chzn-select', 'data-placeholder' => 'Choose up to 2 Specialties' }
       = listing_form.association :city, label: 'Which city or metro area is closest to your company headquarters?', hint: '- If your company has multiple locations, choose the main location.<br/>- If your city is not listed, choose the closest city', collection: City.all(order: 'name'), prompt: 'Please select a city', input_html: { class: 'chzn-select', 'data-placeholder' => 'Choose a City' }
   
     %fieldset.contact-info
