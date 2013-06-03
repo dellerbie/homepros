@@ -16,13 +16,13 @@ class Listing < ActiveRecord::Base
   
   belongs_to :user
   has_and_belongs_to_many :specialties
-  has_many :questions
+  has_many :questions, dependent: :destroy
   has_many :portfolio_photos, dependent: :destroy
   belongs_to :city
   
-  accepts_nested_attributes_for :portfolio_photos, limit: MAX_PREMIUM_PHOTOS, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :portfolio_photos, limit: MAX_PREMIUM_PHOTOS
   
-  default_scope :include => [:city, :specialties]
+  default_scope :include => [:city, :specialties, :portfolio_photos]
   
   attr_accessible :specialty_ids, :city_id, :company_logo_photo, :company_logo_photo_cache, :company_name, 
     :contact_email, :website, :phone, :company_description, :portfolio_photos_attributes

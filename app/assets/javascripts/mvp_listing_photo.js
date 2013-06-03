@@ -1,27 +1,22 @@
 $(function() {
-  
-  // if($('.new-listing form:first, .edit-listing form:first').is('.premium')) return;
-  
   $('#user_listing_attributes_portfolio_photos_attributes_0_portfolio_photo, #listing_portfolio_photos_attributes_0_portfolio_photo, #listing_company_logo_photo').bind('change', function(e) { 
     var file = $(this),
         form = $(this).closest("form"),
         logo = file.is('#listing_company_logo_photo'),
-        imgEl = logo ? '.company_logo_prev' : '#img_prev';
+        imgEl = logo ? '.company_logo_prev' : '#img_prev',
+        errors = logo ? $('.company-info .logo-errors', form) : $('.sample .errors', form);
+        
+    errors.hide();
 
     $.ajax('/preview_photos', {
       type: 'POST',
       files: $(file, form[0]),
       iframe: true,
       dataType: "json",
-      success: function (e) {
-        var src = logo ? e.photo.logo.url : e.photo.url;
-        if(imgEl.length) {
-          $(imgEl).attr("src", src);
-        }
-      },
       error: function (e) {
         var response = $.parseJSON(e.responseText);
         if(response.errors) {
+          errors.text(response.errors.join(', ')).show();
         } else {
           var src = logo ? response.photo.logo.url : response.photo.url;
           if(imgEl.length) {

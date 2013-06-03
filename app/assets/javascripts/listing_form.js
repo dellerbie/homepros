@@ -1,5 +1,5 @@
 $(function() {
-  $(".new-listing .chzn-select, .edit-listing .chzn-select").chosen();
+  $(".new-listing .chzn-select, .edit-listing .chzn-select").chosen({max_selected_options: 2});
 
   $('#user_listing_attributes_company_name, #listing_company_name').on('blur keyup', function() {
     var text = $(this).val() || 'Your company name',

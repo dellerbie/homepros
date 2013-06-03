@@ -4,13 +4,17 @@
   .copy.clearfix
     %header
       Upgrade to a Premium Listing
+    %h4
+      Benefits of Premium:
     %ul.benefits
       %li
-        Display 2x larger than a free listing and makes your business appear more professional than a free listing.
+        Premium listings always appear before any free listings in search results
       %li
-        Upload up to 6 photos of your past projects with descriptions. These photos show up as a browsable image gallery on the homepage. Free listings allow only 1 photo and don’t have an image gallery.
+        2x larger and stands out more than a free listing
       %li
-        Always appear first in search results, before any free listings
+        Displays up to 6 photos of your past projects with descriptions. These photos show up as a browsable image gallery on the homepage. Free listings allow only 1 photo and don’t have an image gallery.
+      %li
+        Displays your company logo
       %li
         10x more likely to get qualified leads from prospective clients
 
@@ -21,7 +25,7 @@
 
       - if current_user.customer_id.blank?
         = form_tag upgrades_path, id: 'payment-form' do 
-          %script.stripe-button{src: 'https://checkout.stripe.com/v2/checkout.js', 'data-key' => ENV["STRIPE_PUBLIC_KEY"], 'data-description' => 'Upgrade to Premium', 'data-amount' => '9900'}
+          %script.stripe-button{src: 'https://checkout.stripe.com/v2/checkout.js', 'data-key' => ENV["STRIPE_PUBLIC_KEY"], 'data-description' => 'Upgrade to Premium', 'data-label' => 'Upgrade to Premium', 'data-amount' => '9900'}
       - else
         = button_to "Upgrade to Premium", upgrades_path, :method => :post, class: 'btn btn-primary btn-large btn-block' 
 

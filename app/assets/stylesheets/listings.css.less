@@ -18,6 +18,18 @@
   .company-name {
     font-weight: bold;
     border-bottom: 2px solid #dfdfdf;
+    
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  
+  a.company-name {
+    color: #222;
+    
+    &:hover {
+      color: #222;
+    }
   }
 
   .text {
@@ -300,15 +312,6 @@
     form {
       &.premium.photos {
         margin: 0;
-        
-        .errors {
-          display: none;
-          color: #f00;
-          font-weight: bold;
-          text-align: center;
-          background: #F7EED0;
-          padding-bottom: 5px;
-        }
 
         fieldset {
           margin-bottom: 0;

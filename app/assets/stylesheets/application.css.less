@@ -8,7 +8,6 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require chosen
  *= require_self
  *= require_tree .
 */
@@ -42,6 +41,7 @@
 
 .edit-account {
   width: 600px;
+  margin-bottom: 50px;
   
   table caption {
     color: #555;
@@ -114,5 +114,14 @@ footer {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+}
+
+.errors {
+  display: none;
+  color: #f00;
+  font-weight: bold;
+  text-align: center;
+  background: #F7EED0;
+  padding-bottom: 5px;
 }
 
