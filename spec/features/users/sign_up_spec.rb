@@ -38,11 +38,25 @@ feature 'Business signs up', js: true do
     should_see_signed_in_navbar_for_mvp_user
     
     current_path.should eql(new_upgrade_path)
-    
   end
   
-  # scenario 'invalid information' do 
-  #   click_on 'Create Account'
-  #   expect(page).to have_content
-  # end 
+  scenario 'invalid information' do 
+    click_on 'Create Account'
+    
+    page.should have_content('Please review the problems below:')
+    
+    %w(portfolio_photos_portfolio_photo company_name specialties city contact_email phone).each do |element|
+      page.should have_css(".user_listing_#{element}.error")
+    end
+    
+    %w(email password).each do |element|
+      page.should have_css(".user_#{element}.error")
+    end
+    
+    current_path.should eql('/users')
+    page.should have_content('Login')
+    
+    click_on 'Cancel'
+    current_path.should eql(root_path)
+  end 
 end
