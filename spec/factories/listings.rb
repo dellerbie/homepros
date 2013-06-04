@@ -8,8 +8,17 @@ FactoryGirl.define do
     website 'http://dellerbie.com'
     phone "7146124582"
     
+    factory :free_listing do
+      association :user, factory: :user
+    end
+    
     factory :premium_listing do
       association :user, factory: :premium_user
+    end
+    
+    factory :claimable_listing do 
+      association :user, nil
+      claimable true
     end
     
     after(:build) do |listing|
