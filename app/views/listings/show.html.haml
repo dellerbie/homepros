@@ -1,9 +1,10 @@
 - content_for :title, "#{@listing.company_name} - #{@listing.city.name}, CA"
 
 - unless current_user && current_user.listing == @listing
-  %p
-    %i.icon-arrow-left
-    = link_to 'Back to Listings', :back
+  - if session[:last_page].present?
+    %p
+      %i.icon-arrow-left
+      = link_to 'Back', session[:last_page]
 
 .listing-container-xlarge{itemscope: '', itemtype: 'http://data-vocabulary.org/Organization'}
   .actions.clearfix

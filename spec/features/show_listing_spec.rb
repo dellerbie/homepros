@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Listing show view' do 
+feature 'Listing show view', js: true do 
   
   def should_be_a_contactable_listing(listing)
     page.should have_content('Ask this business a question')
@@ -22,7 +22,6 @@ feature 'Listing show view' do
     page.should have_content('Claim this listing')
     page.should have_content("Specialties: #{listing.specialties.map(&:name).join(', ')}")
     page.should have_content("Headquarted in: #{listing.city.name}, CA")
-    page.should have_content('Back to Listings')
     page.should have_content('Website')
     page.should have_content(listing.website)
     
@@ -52,5 +51,12 @@ feature 'Listing show view' do
     page.should have_content(listing.company_name)
     page.should_not have_content('Claim this listing')
     should_not_be_a_contactable_listing(listing)
+  end
+  
+  scenario 'back to listings' do
+    listing = FactoryGirl.create(:free_listing)
+    visit listing_path(listing)
+    click_on 'Back'
+    current_path.should eql(root_path)
   end
 end

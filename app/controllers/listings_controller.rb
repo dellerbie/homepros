@@ -36,6 +36,8 @@ class ListingsController < ApplicationController
     @question.listing = @listing
     @base_css = 'show-listing'
     
+    session[:last_page] = request.env['HTTP_REFERER'] || root_url
+    
     respond_to do |format|
       format.html
       format.json { render json: @listing }
