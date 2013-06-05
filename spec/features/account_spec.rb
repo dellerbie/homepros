@@ -52,8 +52,4 @@ feature 'My Account', js: true do
     should_see_signed_out_navbar
   end
   
-  
-  scenario 'update payment info'
-  scenario 'downgrade to a free listing'
-  
 end
