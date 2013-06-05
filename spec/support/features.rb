@@ -6,4 +6,5 @@ RSpec.configure do |config|
   config.include Features::UserHelpers, type: :feature
   config.include Features::ChosenHelpers, type: :feature
   config.include Features::CommonHelpers, type: :feature
+  config.include Features::ListingHelpers, type: :feature
 end

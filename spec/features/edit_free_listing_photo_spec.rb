@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-feature 'Edit free listing photo', js: true do
+feature 'Edit free listing photos', js: true do
   
-  scenario 'update photo'
-  scenario "can't delete photo"
   scenario 'update description'
+  scenario 'update photo'
+  scenario 'upload failure'
   
 end
