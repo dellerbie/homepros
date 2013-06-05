@@ -32,29 +32,28 @@ describe RegistrationsController do
     user
   end
   
-  # it 'should successfully register a user and redirect to users listing' do
-  #   user = valid_user
-  #   
-  #   p user
-  #   expect {
-  #     post :create, user: user
-  #   }.to change{ User.count }
-  #   
-  #   saved_user = User.find_by_email(user[:email])
-  #   expect(saved_user).to_not be_nil
-  #   expect(saved_user.listing).to_not be_nil
-  #   expect(response).to redirect_to new_upgrade_path
-  # end
-  # 
-  # it 'should not register a user with an invalid listing' do 
-  #   expect {
-  #     post :create, user: valid_user_invalid_listing
-  #   }.to_not change{ User.count }
-  # end
-  # 
-  # it 'should not register an invalid user with a valid listing' do
-  #   expect {
-  #     post :create, user: invalid_user_valid_listing
-  #   }.to_not change{ User.count }
-  # end
+  it 'should successfully register a user and redirect to users listing' do
+    user = valid_user
+    
+    expect {
+      post :create, user: user
+    }.to change{ User.count }
+    
+    saved_user = User.find_by_email(user[:email])
+    expect(saved_user).to_not be_nil
+    expect(saved_user.listing).to_not be_nil
+    expect(response).to redirect_to new_upgrade_path
+  end
+  
+  it 'should not register a user with an invalid listing' do 
+    expect {
+      post :create, user: valid_user_invalid_listing
+    }.to_not change{ User.count }
+  end
+  
+  it 'should not register an invalid user with a valid listing' do
+    expect {
+      post :create, user: invalid_user_valid_listing
+    }.to_not change{ User.count }
+  end
 end

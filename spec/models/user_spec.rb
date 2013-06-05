@@ -26,7 +26,6 @@ describe User do
     listing_attributes[:specialty_ids] = [FactoryGirl.create(:specialty).id, FactoryGirl.create(:specialty).id]
     listing_attributes[:city_id] = FactoryGirl.create(:city).id
     listing_attributes[:company_logo_photo] = Rack::Test::UploadedFile.new(Rails.root.to_s + '/spec/fixtures/files/guitar.jpg', 'image/jpeg')
-    # listing_attributes[:portfolio_photo] = Rack::Test::UploadedFile.new(Rails.root.to_s + '/spec/fixtures/files/guitar.jpg', 'image/jpeg')
     listing_attributes[:portfolio_photos_attributes] = [FactoryGirl.attributes_for(:portfolio_photo)]
     
     user = FactoryGirl.attributes_for(:user)
