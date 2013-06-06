@@ -34,6 +34,14 @@ module Features
       page.should have_content 'Login'
       page.should have_content 'Get Listed Today'
     end
+    
+    def should_see_premium_navbar
+      should_see_signed_in_navbar
+      
+      within('.navbar .actions') do 
+        find('li.premium-user').should have_content('Premium')
+      end
+    end
 
     def should_see_successful_sign_in_message
       page.should have_content "Signed in successfully."
