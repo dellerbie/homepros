@@ -99,7 +99,7 @@ describe Listing do
     expect(listing.portfolio_photos.length).to eql(Listing::MAX_FREE_PHOTOS)
   end
   
-  it "should allow a max of #{Listing::MAX_PREMIUM_PHOTOS} photos for a free listing" do
+  it "should allow a max of #{Listing::MAX_PREMIUM_PHOTOS} photos for a premium listing" do
     listing = FactoryGirl.build(:listing, user: FactoryGirl.create(:premium_user))
     listing.portfolio_photos << FactoryGirl.build_list(:portfolio_photo, Listing::MAX_PREMIUM_PHOTOS + 1)
     listing.save
