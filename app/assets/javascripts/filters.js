@@ -38,6 +38,6 @@ $(function() {
       url = city + selection;
     }
     
-    window.location = url == '' ? '/' : url;
+    window.location.href = url == '' ? '/' : url;
   });
 });
