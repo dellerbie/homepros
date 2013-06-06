@@ -37,10 +37,7 @@ module Features
     
     def should_see_premium_navbar
       should_see_signed_in_navbar
-      
-      within('.navbar .actions') do 
-        find('li.premium-user').should have_content('Premium')
-      end
+      find('.navbar .actions .premium-user').should have_content('Premium')
     end
 
     def should_see_successful_sign_in_message

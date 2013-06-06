@@ -29,24 +29,20 @@ feature 'Upgrade to Premium', js: true do
     end
   end
   
-  scenario 'upgrades' do
-    User.any_instance.stub(:upgrade).and_return(true)
-    
+  scenario 'stripe modal' do 
+    page.should have_css('iframe.stripe-app', visible: false)
     find('.stripe-button-el').click
-    fill_in 'paymentNumber', with: '4242424242424242'
-    fill_in 'paymentExpiry', with: '0515'
-    fill_in 'paymentName', with: 'derrick ellerbie'
-    fill_in 'paymentCVC', with: '123'
-    click_on 'Pay $99.00'
-    
-    p page.html
-    
-    current_path.should eql(upgrade_path(@listing))
-    page.should have_content('You have successfully been upgraded to a Premium listing!')
-    page.should have_css('.listing-container.premium')
-    should_see_premium_navbar
+    page.should have_css('iframe.stripe-app', visible: true)
+    page.should have_css('#paymentNumber')
+    page.should have_css('#paymentExpiry')
+    page.should have_css('#paymentName')
+    page.should have_css('#paymentCVC')
+    page.should have_css('#paymentNumber')
+    page.should have_css('button', text: 'Pay $99.00')
   end
   
-  scenario 'bad credit card'
-  
+  scenario 'not now' do
+    click_on 'Not Now'
+    current_path.should eql(listing_path(@listing))
+  end
 end
