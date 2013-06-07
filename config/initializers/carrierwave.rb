@@ -10,7 +10,7 @@ else
       :aws_access_key_id      => ENV["S3_ACCESS_KEY"],
       :aws_secret_access_key  => ENV["S3_SECRET_ACCESS_KEY"]
     }
-    # config.asset_host = "http://#{ENV['ASSET_HOST']}"
+    config.fog_host = "//#{ENV["S3_BUCKET"]}.s3.amazonaws.com"
     config.fog_directory  = ENV["S3_BUCKET"]
     config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}
   end
