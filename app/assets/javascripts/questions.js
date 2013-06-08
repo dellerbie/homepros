@@ -14,6 +14,7 @@ $(function() {
   };
   
   $('.show-listing #contact-modal').on('show', function() {
+    ga('send', 'event', 'Question Modal', 'Show');
     resetModal();
   });
   
