@@ -4,7 +4,7 @@ STRIPE_PUBLIC_KEY = ENV["STRIPE_PUBLIC_KEY"]
 StripeEvent.setup do
   subscribe 'customer.subscription.deleted' do |event|
     puts "Received Stripe Event 'customer.subscription.deleted'"
-    StripeWebhooks.subscription_canceled(event.data.object.customer)
+    StripeWebhooks.subscription_deleted(event.data.object.customer)
   end
   
   subscribe 'customer.subscription.created' do |event|
