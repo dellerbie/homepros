@@ -34,6 +34,8 @@ $(function() {
         finishedMsg: 'No more listings to load.',
         img: '/assets/loader.gif'
       }
+    },function(instance, data, url) {
+      ga('send', 'event', 'Listings', 'Page', url);
     });
   }
   
