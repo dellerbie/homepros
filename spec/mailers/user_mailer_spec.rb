@@ -30,7 +30,7 @@ describe UserMailer do
   
   describe '#downgrade_email' do
     let(:mail) { UserMailer.downgrade_email(user) }
-    let(:subject) { '[OC HomeMasters] Your Listing Will Be Downgraded' }
+    let(:subject) { '[OC HomeMasters] Your Listing Has Been Downgraded' }
     it_behaves_like 'oc homepros user mailer'
   end
   

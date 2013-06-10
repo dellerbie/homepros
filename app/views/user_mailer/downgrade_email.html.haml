@@ -6,10 +6,10 @@
     %p 
       = "#{@user.listing.company_name},"
     %p
-      This email is to notify you that your Premium listing on OC HomeMasters will be downgraded to a free listing at the end of the pay period
-      = "on #{1.day.from_now(@user.current_period_end).strftime('%m/%d/%Y')}"
+      This email is to notify you that your premium listing on OC HomeMasters has been downgraded to a free listing.
     %p
-      Your listing will still show up as a Premium listing through the pay period.
+      You can always upgrade to premium by visiting this url:
+    = link_to new_upgrade_url, new_upgrade_url
     %p
       You can manage your listing by logging in to your account here:
       = link_to new_user_session_url, new_user_session_url
