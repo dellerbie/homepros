@@ -22,11 +22,11 @@
       Payment Info
     
     %table.table.table-bordered
-      - if current_user.pending_downgrade?
+      - if current_user.premium? && current_user.pending_downgrade?
         %caption
           %span
             = "** Your account will be downgraded to a free listing at the end of the pay period (#{next_billing_date}). You can always upgrade back to Premium after that."
-      - elsif current_user.current_period_end.present? && current_user.current_period_end > Time.now
+      - elsif current_user.premium? && current_user.current_period_end.present? && current_user.current_period_end > Time.now
         %caption
           %span 
             = "You will be billed again on #{next_billing_date}"
