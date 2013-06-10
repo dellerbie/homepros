@@ -3,7 +3,7 @@ class UserMailer < ActionMailer::Base
   
   def welcome_email(user)
     @user = user
-    mail(to: user.email, subject: 'Welcome to OC HomeMasters!')
+    mail(to: user.email, subject: '[OC HomeMasters] Welcome!')
   end
   
   def downgrade_email(user)
@@ -13,7 +13,7 @@ class UserMailer < ActionMailer::Base
   
   def welcome_to_premium_email(user)
     @user = user
-    mail(to: user.email, subject: 'Welcome to OC HomeMasters Premium Listings!')
+    mail(to: user.email, subject: '[OC HomeMasters] Welcome to Premium Listings!')
   end
   
   def payment_receipt_email(user)
