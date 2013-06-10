@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
     unless customer_id.blank?
       customer = Stripe::Customer.retrieve(customer_id)
       unless customer.blank? || customer.respond_to?('deleted')
-        if customer.subscription.status == 'active'
+        if customer.try(:subscription).try(:status) == 'active'
           customer.cancel_subscription(at_period_end: true)
           self.pending_downgrade = true
         end
