@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130517215636) do
+ActiveRecord::Schema.define(:version => 20130611015917) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -65,6 +65,16 @@ ActiveRecord::Schema.define(:version => 20130517215636) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], :name => "index_friendly_id_slugs_on_slug_and_sluggable_type", :unique => true
   add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
   add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
+
+  create_table "homeowners", :force => true do |t|
+    t.integer  "city_id"
+    t.string   "email"
+    t.boolean  "received_flier", :default => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  add_index "homeowners", ["email"], :name => "index_homeowners_on_email", :unique => true
 
   create_table "listings", :force => true do |t|
     t.integer  "user_id"
