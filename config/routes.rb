@@ -24,6 +24,7 @@ Homepros::Application.routes.draw do
   
   resources :preview_photos, only: :create
   resources :questions, only: :create
+  resources :homeowners, only: :create
   resources :upgrades, only: [:new, :create, :show, :update, :destroy]
   mount StripeEvent::Engine => '/stripe' 
   

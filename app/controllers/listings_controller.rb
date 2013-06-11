@@ -4,6 +4,7 @@ class ListingsController < ApplicationController
   before_filter :authenticate_user!, only: [:edit, :update, :destroy]
   before_filter :find_current_user_listing, only: [:edit, :update, :destroy]
   before_filter :find_listing, only: [:claim, :show]
+  before_filter :homeowner, only: [:index, :show]
   
   PER_PAGE = 32
 
@@ -150,5 +151,9 @@ class ListingsController < ApplicationController
     scope = scope.where("specialties.slug" => specialty_slug) if specialty_slug.present?
     scope = scope.joins("LEFT JOIN users ON listings.user_id = users.id")
     scope
+  end
+  
+  def homeowner
+    @homeowner = Homeowner.new
   end
 end

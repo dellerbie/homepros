@@ -1,27 +1,27 @@
 $(function() {
   
   function resetModal() {
-    var modal = $('.show-listing #contact-modal'),
+    var modal = $('#homeowners-subscribe-modal'),
         form = $('form', modal);
     
     form.show();
     form.find('input[type=email], textarea').val('');
     form.find('.errors').html('');
-    form.find('.control-group.email, .control-group.text').removeClass('error');
+    form.find('.control-group.homeowner_email, .control-group.homeowner_city').removeClass('error');
     modal.find('.success').html('');
     modal.find('.btn-primary').removeAttr('disabled');
     modal.find('.modal-footer').show();
   };
   
-  $('.show-listing #contact-modal').on('show', function() {
-    ga('send', 'event', 'Question Modal', 'Show');
+  $('#homeowners-subscribe-modal').on('show', function() {
+    ga('send', 'event', 'Homeowners Modal', 'Show');
     resetModal();
   });
   
   
-  $('.show-listing #contact-modal .modal-footer .btn-primary').click(function(e) {
+  $('#homeowners-subscribe-modal .modal-footer .btn-primary').click(function(e) {
     var btn = $(this),
-        modal = btn.parents('#contact-modal');
+        modal = btn.parents('#homeowners-subscribe-modal');
         
     btn.attr('disabled', 'disabled');
     
@@ -35,25 +35,29 @@ $(function() {
         
         form.find('.errors').html('');
         form.hide();
-        $('.modal-body .success', modal).html("<p>Your message was sent.</p>");
+        $('.modal-body .success', modal).html("<p>Thank You!</p><p>You are now subscribed to the OCHomeMaster's newsletter.</p>");
         $('.modal-footer', modal).hide();
       },
       error: function(data) {
+        console.log('error');
+        console.log(data);
         var json = JSON.parse(data.responseText);
         btn.removeAttr('disabled');
         
-        $('.control-group.email, .control-group.text', form).removeClass('error');
+        $('.control-group.homeowner_email, .control-group.homeowner_city', form).removeClass('error');
         
         if(json.errors) {
           var message = json.errors.join('. ');
-          $('.errors', form).html("<p>" + message + "</p>");
+          console.log(message);
+          console.log(form);
+          $('.errors', form).html("<p>" + message + "</p>").show();
           
           if(message.match(/email/i)) {
-            $('.control-group.email', form).addClass('error');
+            $('.control-group.homeowner_email', form).addClass('error');
           }
           
-          if(message.match(/text/i)) {
-            $('.control-group.text', form).addClass('error');
+          if(message.match(/city/i)) {
+            $('.control-group.homeowner_city', form).addClass('error');
           }
         }
       },

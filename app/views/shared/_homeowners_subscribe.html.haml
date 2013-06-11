@@ -1,0 +1,17 @@
+#homeowners-subscribe-modal.modal.hide.fade
+  .modal-header
+    %button.close{type: 'button', 'data-dismiss' => 'modal'}="x"
+    %h4
+      Join The OCHomeMaster's Newsletter
+  .modal-body
+    .success
+    = simple_form_for(@homeowner, :url => homeowners_path(@homeowner)) do |f|
+      %p.copy
+        Receive exclusive discounts &amp; offers from our network of home improvement specialists in Orange County.
+      .errors
+      = f.input :email, label: 'Your Email:', input_html: { maxlength: 255, class: 'input-xlarge' }, placeholder: 'Enter your email address'
+      = f.association :city, label: 'Which city do you live in?', hint: 'If your city is not listed, choose the closest city', collection: City.all(order: 'name'), prompt: 'Please select a city', input_html: { class: 'chzn-select', 'data-placeholder' => 'Choose a City' }
+      = f.input :received_flier, label: 'Did you receive our flier at your home?', as: :radio_buttons
+  .modal-footer
+    %button.btn{type: 'button', 'data-dismiss' => 'modal'}="No, thanks"
+    %button.btn.btn-primary{type: 'button'}="Subscribe"

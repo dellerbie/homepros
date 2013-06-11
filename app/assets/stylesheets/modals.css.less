@@ -1,0 +1,57 @@
+@import "mixins";
+
+#contact-modal, #homeowners-subscribe-modal {
+  &.modal {
+    width: 500px;
+    
+    form {
+      margin-bottom: 0;
+    }
+    
+    .modal-body p {
+      color: #595959;
+    }
+    
+    .errors {
+      background: #fff;
+      padding-bottom: 0px;
+    }
+    
+    .errors p, .success p {
+      color: #f00;
+      font-weight: bold;
+    }
+    
+    .success p {
+      color: #0a0;
+      text-align: center;
+    }
+    
+    input, textarea {
+      width: 96%;
+      
+      &.radio_buttons {
+        width: 25px;
+      }
+    }
+    
+    label {
+      font-weight: bold;
+    }
+    
+    textarea {
+      height: 150px;
+    }
+    
+    .modal-header {
+      h4 {
+        color: #000;
+        text-align: center;
+      }
+      
+      .email-label {
+        color: #000;
+      }
+    }
+  }
+}
