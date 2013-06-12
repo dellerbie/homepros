@@ -18,12 +18,15 @@
 //= require jquery.infinitescroll.min
 //= require chosen.jquery.min
 //= require jquery.easing.1.3
+//= require moment.min
+//= require jquery.cookie
 //= require jquery.bxslider.min
 //= require twitter/bootstrap
 //= require_tree .
 
-$(function() {
-  
+var OCHM = {};
+
+$(function() {  
   function setupInfiniteScroll() {
     $('.listings').infinitescroll({
       navSelector  : "div.pagination",
@@ -36,6 +39,9 @@ $(function() {
       }
     },function(instance, data, url) {
       ga('send', 'event', 'Listings', 'Page', url);
+      if($('#homeowners-subscribe-modal').length) {
+        OCHM.showHomeownerDialog();
+      }
     });
   }
   

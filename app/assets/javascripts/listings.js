@@ -8,4 +8,8 @@ $(function() {
   if($('.edit-listing').length) {
     $('body').data('bxslider', bxslider);
   }
+  
+  if($('.show-listing').length && $('#homeowners-subscribe-modal').length) {
+    OCHM.showHomeownerDialog();
+  }
 });

@@ -17,7 +17,7 @@
       ga('create', 'UA-40999422-1', 'ochomemasters.com');
       ga('send', 'pageview');
 
-  %body{class: @base_css || ''}
+  %body{class: @base_css || '', "data-signed-in" => user_signed_in?.to_s }
     .navbar
       .navbar-inner
         = link_to root_path, class: "brand" do 
