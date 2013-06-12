@@ -3,7 +3,7 @@ require 'spec_helper'
 feature 'Claim listing', js: true do
   scenario 'claim' do 
     listing = FactoryGirl.create(:claimable_listing)
-    visit listing_path(listing)
+    visit claim_listing_path(listing)
     click_on 'Claim this listing'
     current_path.should eql(claim_listing_path(listing))
     
