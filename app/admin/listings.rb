@@ -54,6 +54,9 @@ ActiveAdmin.register Listing do
         row 'City' do 
           listing.city.name
         end
+        table_for listing.portfolio_photos do 
+          column :portfolio_photo
+        end
         row :company_description
         row :company_logo_photo
         row :created_at
@@ -98,8 +101,6 @@ ActiveAdmin.register Listing do
       f.input :website
       f.input :phone
       f.input :company_description
-      f.input :portfolio_photo, as: :file
-      f.input :portfolio_photo_description
       f.input :company_logo_photo, as: :file
     end
     f.actions

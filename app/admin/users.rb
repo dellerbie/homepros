@@ -72,8 +72,10 @@ ActiveAdmin.register User do
         row 'City' do |listing|
           listing.city.name
         end
-        row :portfolio_photo
         row :company_logo_photo
+        table_for user.listing.portfolio_photos do 
+          column :portfolio_photo
+        end
       end
     end
   end

@@ -4,26 +4,29 @@ ActiveAdmin.register_page "Dashboard" do
 
   content :title => proc{ I18n.t("active_admin.dashboard") } do
 
-
     panel 'Stats' do 
-      div do 
-        "#{User.count(conditions: {premium: true})} Premium Users"
+      div style: 'font-size: 16px; margin-bottom: 20px;' do 
+        "Premium Users: #{User.count(conditions: {premium: true})}"
       end
     
-      div do 
-        "#{User.count} Total Users"
+      div style: 'font-size: 16px; margin-bottom: 20px;' do 
+        "Total Users: #{User.count}"
       end
     
-      div do 
-        "#{Listing.count} Total Listings"
+      div style: 'font-size: 16px; margin-bottom: 20px;' do 
+        "Total Listings: #{Listing.count}"
       end
       
-      div do 
-        "#{Listing.count(conditions: {claimable: true})} Claimable Listings"
+      div style: 'font-size: 16px; margin-bottom: 20px;' do 
+        "Claimable Listings: #{Listing.count(conditions: {claimable: true})}"
       end
     
-      div do 
-        "#{Question.count} Total Questions"
+      div style: 'font-size: 16px; margin-bottom: 20px;' do 
+        "Total Questions: #{Question.count}"
+      end
+      
+      div style: 'font-size: 16px; margin-bottom: 20px;' do 
+        "Total Homeowners Signed Up: #{Homeowner.count}"
       end
     end
 
