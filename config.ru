@@ -6,6 +6,6 @@ run Homepros::Application
 use Rack::Cors do
   allow do
     origins '*'
-    resource '/assets/fonts/*', :headers => :any, :methods => :get
+    resource '/assets/font*', :headers => :any, :methods => :get
   end
 end
