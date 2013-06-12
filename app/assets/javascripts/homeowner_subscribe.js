@@ -36,6 +36,7 @@ $(function() {
   
   $('#homeowners-subscribe-modal').on('hidden', function () {
     if($.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE)) return true;
+    $.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE, false, { expires: 30, path: '/' });
     ga('send', 'event', 'Homeowners Newsletter', 'No Thanks');
   });
     

@@ -1,4 +1,4 @@
-- content_for :title, "#{@listing.company_name} - #{@listing.city.name}, CA"
+- content_for :title, "#{@listing.company_name} - #{@listing.city.name}, CA".html_safe
 
 - unless current_user && current_user.listing == @listing
   - if session[:last_page].present?
