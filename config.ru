@@ -2,10 +2,3 @@
 
 require ::File.expand_path('../config/environment',  __FILE__)
 run Homepros::Application
-
-use Rack::Cors do
-  allow do
-    origins '*'
-    resource '/assets/font*', :headers => :any, :methods => :get
-  end
-end
