@@ -9,10 +9,10 @@ $(function() {
 
     if(!signed_in && !saw_dialog && !signed_up) {
       $('#homeowners-subscribe-modal').modal('toggle');
-      $.cookie(OCHM.SAW_HOMEOWNER_DIALOG_COOKIE, true, { expires: moment().add('minutes', 15).toDate(), path: '/' });
+      $.cookie(OCHM.SAW_HOMEOWNER_DIALOG_COOKIE, 1, { expires: moment().add('minutes', 15).toDate(), path: '/' });
     } else if(signed_in) {
-      $.cookie(OCHM.SAW_HOMEOWNER_DIALOG_COOKIE, false, { expires: moment().add('minutes', 15).toDate(), path: '/' });
-      $.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE, false, { expires: 30, path: '/' });
+      $.cookie(OCHM.SAW_HOMEOWNER_DIALOG_COOKIE, 0, { expires: moment().add('minutes', 15).toDate(), path: '/' });
+      $.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE, 0, { expires: 30, path: '/' });
     }
   }
     
@@ -36,7 +36,7 @@ $(function() {
   
   $('#homeowners-subscribe-modal').on('hidden', function () {
     if($.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE)) return true;
-    $.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE, false, { expires: 30, path: '/' });
+    $.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE, 0, { expires: 30, path: '/' });
     ga('send', 'event', 'Homeowners Newsletter', 'No Thanks');
   });
     
@@ -58,7 +58,7 @@ $(function() {
         form.hide();
         $('.modal-body .success', modal).html("<p>Thank You!</p><p>You are now subscribed to the OCHomeMaster's newsletter.</p>");
         $('.modal-footer', modal).hide();
-        $.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE, true, { expires: 30, path: '/' });
+        $.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE, 1, { expires: 30, path: '/' });
         ga('send', 'event', 'Homeowner Newsletter', 'Signed Up');
       },
       error: function(data) {
