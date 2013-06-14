@@ -24,7 +24,7 @@ Homepros::Application.configure do
   
   config.action_controller.asset_host = Proc.new { |source, request| 
    if source.match(/\.(eot|woff|ttf|svg)/) 
-     "#{request.protocol}://#{ENV['APP_HOST']}"
+     "#{request.protocol}#{request.host_with_port}"
    else
      "https://#{ENV['ASSET_HOST']}"
    end 
