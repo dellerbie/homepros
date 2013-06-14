@@ -22,9 +22,9 @@ Homepros::Application.configure do
   
   config.assets.enabled = true
   
-  config.action_controller.asset_host = Proc.new { |source| 
-   if source.match(/fontawesome/) 
-     ''
+  config.action_controller.asset_host = Proc.new { |source, request| 
+   if source.match(/\.(eot|woff|ttf|svg)/) 
+     "#{request.protocol}://#{ENV['APP_HOST']}"
    else
      "https://#{ENV['ASSET_HOST']}"
    end 
