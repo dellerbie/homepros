@@ -22,7 +22,13 @@ Homepros::Application.configure do
   
   config.assets.enabled = true
   
-  config.action_controller.asset_host =  "//#{ENV['ASSET_HOST']}"
+  config.action_controller.asset_host =  Proc.new { |source, request|
+     if source.match(/fontawesome/)
+       "#{request.protocol}#{request.host_with_port}"
+     else
+       "//#{ENV['ASSET_HOST']}"
+     end
+   }
   config.assets.prefix = "/assets"
   
   config.action_mailer.default_url_options = { :host => ENV['APP_HOST'] }

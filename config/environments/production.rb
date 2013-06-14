@@ -22,7 +22,7 @@ Homepros::Application.configure do
   
   config.assets.enabled = true
   
-  config.action_controller.asset_host = "https://#{ENV['ASSET_HOST']}"
+  config.action_controller.asset_host = "//#{ENV['ASSET_HOST']}"
   config.assets.prefix = "/assets"
   
   config.action_mailer.default_url_options = { :host => ENV['APP_HOST'] }
