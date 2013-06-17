@@ -4,8 +4,8 @@ $(function() {
 
   OCHM.showHomeownerDialog = function() {
     var signed_in = $('body').data('signed-in'),
-        saw_dialog = $.cookie(OCHM.SAW_HOMEOWNER_DIALOG_COOKIE),
-        signed_up = $.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE);
+        saw_dialog = parseInt($.cookie(OCHM.SAW_HOMEOWNER_DIALOG_COOKIE)),
+        signed_up = parseInt($.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE));
 
     if(!signed_in && !saw_dialog && !signed_up) {
       $('#homeowners-subscribe-modal').modal('toggle');
@@ -35,7 +35,7 @@ $(function() {
   });
   
   $('#homeowners-subscribe-modal').on('hidden', function () {
-    if($.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE)) return true;
+    if(parseInt($.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE))) return true;
     $.cookie(OCHM.HOMEOWNER_SIGNED_UP_COOKIE, 0, { expires: 30, path: '/' });
     ga('send', 'event', 'Homeowners Newsletter', 'No Thanks');
   });
