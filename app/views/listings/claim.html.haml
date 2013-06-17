@@ -38,6 +38,4 @@
   .form-actions
     %button.btn.btn-primary
       Create Account
-    = link_to listing_path(@listing) do
-      %button{type: 'button', class: 'btn'}
-        Cancel
+    = link_to 'Cancel', listing_path(@listing), class: 'btn'

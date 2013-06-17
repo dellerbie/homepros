@@ -27,7 +27,9 @@ $(function() {
       $('form.photos a.delete').hide();
     } else {
       forEachPhotoForm(function(el) {
-        $(el).find('a.delete').show();
+        if($(el).data('portfolio-photo-id')) {
+          $(el).find('a.delete').show();
+        }
       });
     }
   }
@@ -182,26 +184,32 @@ $(function() {
       // for some reason the error handler runs
       error: function (e) {
         textarea.removeAttr('disabled');
-        var response = $.parseJSON(e.responseText);
         
-        if(response.errors) {
-          errorEl.text(response.errors).show();
-        } else {
-          var now = +new Date;
-          var src = response.portfolio_photo.small.url + '?' + now;
-          if(imgEl.length) {
-            $(imgEl).attr("src", src).data('large-src', response.portfolio_photo.premium.url + '?' + now);
-          }
-          if(isCreate) {
-            form.data('portfolio-photo-id', response.id);
-            var deleteLink = $('a.delete', form);
-            deleteLink.attr('href', deleteLink.attr('href') + '/' + response.id);
-            activateDeleteLinks();
-            addPhotoToSlider(form);
+        try {
+          var response = $.parseJSON(e.responseText);
+
+          if(response.errors) {
+            errorEl.text(response.errors).show();
           } else {
-            updatePhotoInSlider(form);
+            var now = +new Date;
+            var src = response.portfolio_photo.small.url + '?' + now;
+            if(imgEl.length) {
+              $(imgEl).attr("src", src).data('large-src', response.portfolio_photo.premium.url + '?' + now);
+            }
+            if(isCreate) {
+              form.data('portfolio-photo-id', response.id);
+              var deleteLink = $('a.delete', form);
+              deleteLink.attr('href', deleteLink.attr('href') + '/' + response.id);
+              activateDeleteLinks();
+              addPhotoToSlider(form);
+            } else {
+              updatePhotoInSlider(form);
+            }
           }
+        } catch(e) {
+          errorEl.text('There was an error uploading your photo. Please try again later').show();
         }
+
         file.parents('.portfolio_photo_wrapper').spin(false);
       }
     });

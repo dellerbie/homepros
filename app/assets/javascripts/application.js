@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require html5
 //= require jquery.remotipart
 //= require jquery.iframe-post-form
 //= require jquery.imagefit-0.2

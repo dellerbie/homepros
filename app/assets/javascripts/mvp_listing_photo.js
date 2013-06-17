@@ -7,8 +7,11 @@ $(function() {
         errors = logo ? $('.company-info .logo-errors', form) : $('.sample .errors', form);
         
     errors.hide();
-    var spinOpts = $.extend($.fn.spin.presets.small, {top: '75px'});
-    $('.user_listing_portfolio_photos_portfolio_photo').spin(spinOpts);
+    
+    var spinOpts = $.extend($.fn.spin.presets.small, {top: '75px'}),
+        spinnerEl = logo ? $('.listing_company_logo_photo') : $('.user_listing_portfolio_photos_portfolio_photo');
+        
+    spinnerEl.spin(spinOpts);
 
     $.ajax('/preview_photos', {
       type: 'POST',
@@ -16,16 +19,21 @@ $(function() {
       iframe: true,
       dataType: "json",
       error: function (e) {
-        var response = $.parseJSON(e.responseText);
-        if(response.errors) {
-          errors.text(response.errors.join(', ')).show();
-        } else {
-          var src = logo ? response.photo.logo.url : response.photo.url;
-          if(imgEl.length) {
-            $(imgEl).attr("src", src);
+        try {
+          var response = $.parseJSON(e.responseText);
+          if(response.errors) {
+            errors.text(response.errors.join(', ')).show();
+          } else {
+            var src = logo ? response.photo.logo.url : response.photo.url;
+            if(imgEl.length) {
+              $(imgEl).attr("src", src);
+            }
           }
+        } catch(e) {
+          errors.text('There was an error uploading your photo. Please try again later').show();
         }
-        $('.user_listing_portfolio_photos_portfolio_photo').spin(false);
+
+        spinnerEl.spin(false);
       }
     });
   });
