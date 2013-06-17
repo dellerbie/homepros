@@ -21,6 +21,7 @@
 //= require moment.min
 //= require jquery.cookie
 //= require jquery.bxslider.min
+//= require jquery.placeholder.min
 //= require twitter/bootstrap
 //= require_tree .
 
@@ -52,6 +53,8 @@ $(function() {
   });
   
   setupInfiniteScroll();
+  
+  $('input, textarea').placeholder();
 });
 
 function truncate(text, limit) {
