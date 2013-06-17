@@ -7,6 +7,8 @@ $(function() {
         errors = logo ? $('.company-info .logo-errors', form) : $('.sample .errors', form);
         
     errors.hide();
+    var spinOpts = $.extend($.fn.spin.presets.small, {top: '75px'});
+    $('.user_listing_portfolio_photos_portfolio_photo').spin(spinOpts);
 
     $.ajax('/preview_photos', {
       type: 'POST',
@@ -23,6 +25,7 @@ $(function() {
             $(imgEl).attr("src", src);
           }
         }
+        $('.user_listing_portfolio_photos_portfolio_photo').spin(false);
       }
     });
   });

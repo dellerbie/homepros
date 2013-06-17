@@ -1,6 +1,8 @@
 $(function() {
   if(!$('.new-listing form:first, .edit-listing form:first').is('.premium')) return;
 
+  var spinOpts = $.extend($.fn.spin.presets.small, {top: '45px'});
+  
   function nPhotos() {
     var count = 0;
     $('form.photos').each(function(i, el) {
@@ -96,6 +98,8 @@ $(function() {
         listingId = form.data('listing-id'),
         photoId = form.data('portfolio-photo-id'),
         photoCount = nPhotos();
+        
+    form.find('.portfolio_photo_wrapper').spin(spinOpts);
     
     if(photoId && photoCount > 1) {
       $.ajax({
@@ -117,6 +121,7 @@ $(function() {
           $('#img_prev').attr('src', $('form.photos:first .portfolio_photo_prev').data('large-src') || '/assets/premium-listing.png');
           
           activateDeleteLinks();
+          form.find('.portfolio_photo_wrapper').spin(false);
         }
       });
     }
@@ -128,6 +133,8 @@ $(function() {
         errorEl = $('.errors', form).text('').hide();
     
     textarea.attr('disabled', 'disabled');
+    
+    form.find('.portfolio_photo_wrapper').spin(spinOpts);
     
     $.ajax({
       type: 'POST',
@@ -145,6 +152,7 @@ $(function() {
         } else {
           updatePhotoDescriptionInSlider(form);
         }
+        form.find('.portfolio_photo_wrapper').spin(false);
       }
     });
   });
@@ -164,6 +172,7 @@ $(function() {
     }
     
     textarea.attr('disabled', 'disabled');
+    file.parents('.portfolio_photo_wrapper').spin(spinOpts);
 
     $.ajax(url, {
       type: 'POST',
@@ -193,6 +202,7 @@ $(function() {
             updatePhotoInSlider(form);
           }
         }
+        file.parents('.portfolio_photo_wrapper').spin(false);
       }
     });
   });

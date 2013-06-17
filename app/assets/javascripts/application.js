@@ -22,6 +22,8 @@
 //= require jquery.cookie
 //= require jquery.bxslider.min
 //= require jquery.placeholder.min
+//= require spin.min
+//= require jquery.spin
 //= require twitter/bootstrap
 //= require_tree .
 
