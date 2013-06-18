@@ -74,8 +74,8 @@ class Listing < ActiveRecord::Base
     phone.present? && phone != NO_PHONE
   end
   
-  def premium=(premium)
-    @premium = premium
+  def premium=(_premium)
+    @premium = _premium
   end
   
   def premium?
