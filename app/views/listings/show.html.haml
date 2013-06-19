@@ -80,21 +80,21 @@
 
   .contact-container
     %p
-      Like what you see? Get in touch with
+      Reach out to 
       = @listing.company_name
-    
+  
     %ul.links
       - if can_email?(@listing)
         %li
           %button.btn.btn-large.btn-info{type: 'button', "data-toggle" => 'modal', "data-target" => '#contact-modal'}
             Email #{@listing.company_name}
-      
+    
       - if @listing.website?
         %li
           = link_to @listing.website, @listing.website, target: '_blank'
-  
+
     %p.plug
-      Be sure to let 'em know OC HomeMasters sent you.
+      Let them know that OCHomeMasters sent you!
   
   - if can_email?(@listing)
     #contact-modal.modal.hide.fade

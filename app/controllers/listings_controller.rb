@@ -16,7 +16,7 @@ class ListingsController < ApplicationController
     
     parse_slugs
     
-    @listings = Listing.search2(@current_city_slug, @current_specialty_slug, paging_options)
+    @listings = Listing.search(@current_city_slug, @current_specialty_slug, paging_options)
     
     # for now, show the first few listings as premium no matter what
     # this is to entice business owners to upgrade to premium
