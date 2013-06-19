@@ -1,4 +1,4 @@
-= link_to truncate(listing.company_name, length: 24), listing_path(listing), class: 'company-name'
+= link_to truncate(listing.company_name, length: 24), listing_path(listing), class: 'company-name', title: listing.company_name
 %p
   %span.specialties.text
     = truncate(specialties(listing), length: 30)

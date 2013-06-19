@@ -14,9 +14,9 @@ class ListingsController < ApplicationController
   def index
     @page = (params[:page] || 1).to_i
     
-    slugs
+    parse_slugs
     
-    @listings = parse_filter.order("users.premium, RANDOM()").paginate(paging_options)
+    @listings = Listing.search(@current_city_slug, @current_specialty_slug, paging_options)
     
     # for now, show the first few listings as premium no matter what
     # this is to entice business owners to upgrade to premium
@@ -121,7 +121,7 @@ class ListingsController < ApplicationController
     }
   end
   
-  def slugs
+  def parse_slugs
     city_slug, specialty_slug = params[:city_slug], params[:specialty_slug]
     
     @current_city_slug = Listing::ALL_CITIES_FILTER_KEY
@@ -137,20 +137,6 @@ class ListingsController < ApplicationController
       @current_city_slug = city_slug
       @current_specialty_slug = specialty_slug
     end
-  end
-  
-  def parse_filter
-    return Listing unless @current_city_slug.present? || @current_specialty_slug.present?
-    
-    scope = Listing
-    
-    city_slug = @current_city_slug == Listing::ALL_CITIES_FILTER_KEY ? '' : @current_city_slug
-    specialty_slug = @current_specialty_slug == Listing::ALL_SPECIALTIES_FILTER_KEY ? '' : @current_specialty_slug
-    
-    scope = scope.where("cities.slug" => city_slug) if city_slug.present?
-    scope = scope.where("specialties.slug" => specialty_slug) if specialty_slug.present?
-    scope = scope.joins("LEFT JOIN users ON listings.user_id = users.id")
-    scope
   end
   
   def homeowner

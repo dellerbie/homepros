@@ -57,6 +57,33 @@ class Listing < ActiveRecord::Base
   before_validation :add_default_website_protocol
   
   before_save :ensure_max_portfolio_photos
+   
+  def self.search(city_slug=ALL_CITIES_FILTER_KEY, specialty_slug=ALL_SPECIALTIES_FILTER_KEY, paging_options)
+    if city_slug.present? || specialty_slug.present?
+      city_slug = (city_slug == Listing::ALL_CITIES_FILTER_KEY) ? '' : city_slug
+      specialty_slug = (specialty_slug == Listing::ALL_SPECIALTIES_FILTER_KEY) ? '' : specialty_slug
+
+      sql_select = 'SELECT coalesce("users".premium, FALSE) as premium, "listings".*'
+      sql_joins = 'FROM "listings" LEFT JOIN users ON listings.user_id = users.id'
+      sql_city_where = city_slug.present? ? "cities.slug = #{city_slug}" : ""
+      
+      sql_specialities_where = specialty_slug.present? ? "specialties.slug = #{specialty_slug}" : ""
+      if sql_specialities_where.present? && sql_city_where.present?
+        sql_specialities_where = "AND #{sql_specialities_where}"
+      end
+      
+      sql_order = 'ORDER BY premium DESC, RANDOM()'
+      sql = [sql_select, sql_city_where, sql_specialities_where, sql_joins, sql_order].join(' ')
+
+      puts sql
+
+      listings = Listing.paginate_by_sql(sql, paging_options)
+    else 
+      listings = Listing.paginate(paging_options)
+    end
+    
+    listings
+  end
   
   def company_name_and_location
     "#{company_name} #{city.try(:name)}"
