@@ -14,9 +14,16 @@ feature 'Listing show view', js: true do
     page.should_not have_content("Email #{listing.company_name}")
   end
   
+  def dismiss_subscribe_modal
+    within('#homeowners-subscribe-modal') do
+      click_on 'No, thanks'
+    end
+  end
+  
   scenario 'claimable listing' do 
     listing = FactoryGirl.create(:claimable_listing)
     visit listing_path(listing)
+    dismiss_subscribe_modal
     
     page.should have_content(listing.company_name)
     page.should have_content('Claim this listing')
@@ -31,7 +38,10 @@ feature 'Listing show view', js: true do
   scenario 'with no contact information' do
     listing = FactoryGirl.create(:claimable_listing, contact_email: Listing::NO_CONTACT_EMAIL, 
                 website: Listing::NO_WEBSITE, phone: Listing::NO_PHONE)
+                
     visit listing_path(listing)
+    dismiss_subscribe_modal
+    
     should_not_be_a_contactable_listing(listing)
     page.should_not have_content('Website')
     page.should_not have_content(listing.website)
@@ -40,6 +50,8 @@ feature 'Listing show view', js: true do
   scenario 'claimed listing' do 
     listing = FactoryGirl.create(:free_listing)
     visit listing_path(listing)
+    dismiss_subscribe_modal
+    
     page.should_not have_content('Claim this listing')
   end
   
@@ -56,6 +68,8 @@ feature 'Listing show view', js: true do
   scenario 'back to listings' do
     listing = FactoryGirl.create(:free_listing)
     visit listing_path(listing)
+    dismiss_subscribe_modal
+    
     click_on 'Back'
     current_path.should eql(root_path)
   end
