@@ -1,0 +1,19 @@
+- content_for :title, 'Easily find home improvement professionals in Orange County, CA'
+
+%p
+  %i.icon-arrow-left
+  = link_to 'Back to Homepage', root_path
+    
+%p.results-msg
+  = "Found #{pluralize(@listings.length, 'company')} whose name matched"
+  %strong
+    = params[:q]
+
+%ul.thumbnails.listings
+  - @listings.each do |listing|
+    - if listing.premium?
+      %li.listing-container.thumbnail.premium
+        = render partial: 'listings/premium_listing', locals: { listing: listing }
+    - else
+      %li.listing-container.thumbnail
+        = render partial: 'listings/listing', locals: { listing: listing }

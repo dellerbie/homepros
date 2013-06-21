@@ -107,4 +107,13 @@ describe Listing do
     listing.reload
     expect(listing.portfolio_photos.length).to eql(Listing::MAX_PREMIUM_PHOTOS)
   end
+  
+  it 'searches' do 
+    joes_listing = FactoryGirl.create(:free_listing, company_name: "Joe's Home Improvement")
+    sams_listing = FactoryGirl.create(:premium_listing, company_name: "Sam's Landscaping Pros")
+    
+    listings = Listing.search_by_company_name('joe')
+    listings.should include(joes_listing)
+    listings.should_not include(sams_listing)
+  end
 end

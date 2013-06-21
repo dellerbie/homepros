@@ -1,5 +1,6 @@
 class Listing < ActiveRecord::Base
   include EmailAddress
+  include PgSearch
   extend FriendlyId
   
   MAX_SPECIALTIES = 2
@@ -53,12 +54,12 @@ class Listing < ActiveRecord::Base
   validate :ensure_max_specialties
   
   before_create :default_state
-  
   before_validation :add_default_website_protocol
-  
   before_save :ensure_max_portfolio_photos
   
-  def self.search(city_slug, specialty_slug, paging_options)
+  pg_search_scope :search_by_company_name, against: :company_name, using: { tsearch: { prefix: true } }
+  
+  def self.filter(city_slug, specialty_slug, paging_options)
     if city_slug.present? || specialty_slug.present?
       city_slug = (city_slug == Listing::ALL_CITIES_FILTER_KEY) ? '' : city_slug
       specialty_slug = (specialty_slug == Listing::ALL_SPECIALTIES_FILTER_KEY) ? '' : specialty_slug
@@ -91,11 +92,11 @@ class Listing < ActiveRecord::Base
   end
   
   def premium=(_premium)
-    @premium = _premium
+    @premium = !!(_premium)
   end
   
   def premium?
-    @premium || user.try(:premium?)
+    !!(@premium || user.try(:premium?))
   end
   
   def can_add_photos?

@@ -7,6 +7,8 @@ Homepros::Application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'registrations'
   }
+  
+  get '/search' => 'search#index'
 
   resources :listings, only: [:index, :show, :edit, :update] do
     member do 

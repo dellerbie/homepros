@@ -25,6 +25,12 @@
             OC
           %span.homepros
             HomeMasters
+        
+        %form.search.navbar-form.pull-left{action: '/search', method: 'get'}
+          %input.input-xlarge{name: 'q', type: 'text', placeholder: 'Search by Company Name...'}
+          %button.btn{type: 'submit'}
+            %i.icon-search
+          
         %ul.nav.pull-right.actions
           - if user_signed_in?
             - if current_user.premium?
@@ -55,7 +61,7 @@
                   %span='Login'
             - unless @hide_get_listed_btn
               %li.sign-up
-                = link_to 'Get Listed Today', new_user_registration_path, class: "btn btn-success"
+                = link_to 'Get Listed Today for FREE', new_user_registration_path, class: "btn btn-success"
     .hp-container.clearfix{class: @container_css || ''}
       = render 'shared/flash_messages', flash: flash
       = yield
