@@ -58,7 +58,7 @@ class Listing < ActiveRecord::Base
   
   before_save :ensure_max_portfolio_photos
   
-  def self.search(city_slug=ALL_CITIES_FILTER_KEY, specialty_slug=ALL_SPECIALTIES_FILTER_KEY, paging_options)
+  def self.search(city_slug, specialty_slug, paging_options)
     if city_slug.present? || specialty_slug.present?
       city_slug = (city_slug == Listing::ALL_CITIES_FILTER_KEY) ? '' : city_slug
       specialty_slug = (specialty_slug == Listing::ALL_SPECIALTIES_FILTER_KEY) ? '' : specialty_slug
