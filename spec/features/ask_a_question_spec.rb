@@ -19,6 +19,11 @@ feature 'Ask a question', js: true do
   before(:each) do
     @listing = FactoryGirl.create(:free_listing)
     visit listing_path(@listing)
+
+    within('#homeowners-subscribe-modal') do
+      click_on 'No, thanks'
+    end
+
     find('.action.ask-question').click
     find('#contact-modal')["aria-hidden"].should eql('false')
   end
