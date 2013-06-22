@@ -26,10 +26,11 @@
           %span.homepros
             HomeMasters
         
-        %form.search.navbar-form.pull-left{action: '/search', method: 'get'}
-          %input.input-xlarge{name: 'q', type: 'text', placeholder: 'Search by Company Name...'}
-          %button.btn{type: 'submit'}
-            %i.icon-search
+        - unless @hide_search
+          %form.search.navbar-form.pull-left{action: '/search', method: 'get'}
+            %input.input-xlarge{name: 'q', type: 'text', placeholder: 'Search by Company Name...'}
+            %button.btn{type: 'submit'}
+              %i.icon-search
           
         %ul.nav.pull-right.actions
           - if user_signed_in?

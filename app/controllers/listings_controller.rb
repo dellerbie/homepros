@@ -5,6 +5,7 @@ class ListingsController < ApplicationController
   before_filter :find_current_user_listing, only: [:edit, :update, :destroy]
   before_filter :find_listing, only: [:claim, :show]
   before_filter :homeowner, only: [:index, :show]
+  skip_filter :hide_search, only: [:index]
   
   PER_PAGE = 32
 
