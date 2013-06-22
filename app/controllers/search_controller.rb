@@ -1,4 +1,6 @@
 class SearchController < ApplicationController 
+  skip_filter :hide_search
+  
   def index
     @listings = []
     @listings = Listing.search_by_company_name(params[:q]).paginate(page: 1, per_page: 30) if params[:q].present?
