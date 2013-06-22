@@ -5,9 +5,15 @@
   = link_to 'Back to Homepage', root_path
     
 %p.results-msg
-  = "Found #{pluralize(@listings.length, 'company')} whose name matched"
-  %strong
-    = params[:q]
+  - if @total > 30
+    = "Found #{pluralize(@total, 'company')} whose name matched "
+    %strong.query
+      = params[:q]
+    = " but only showing the first #{@listings.length}"
+  - else 
+    = "Found #{pluralize(@total, 'company')} whose name matched "
+    %strong.query
+      = params[:q]
 
 %ul.thumbnails.listings
   - @listings.each do |listing|

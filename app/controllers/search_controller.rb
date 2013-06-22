@@ -1,10 +1,9 @@
 class SearchController < ApplicationController 
   def index
     @listings = []
-    @listings = Listing.search_by_company_name(params[:q]) if params[:q].present?
-    @listings = @listings.sort_by { |l| l.premium? ? 1 : 0 } 
+    @listings = Listing.search_by_company_name(params[:q]).paginate(page: 1, per_page: 30) if params[:q].present?
+    @total = @listings.total_entries
+    @listings = @listings.sort_by { |l| l.premium? ? 0 : 1 } 
     @listings.take((1..10).to_a.sample).each { |listing| listing.premium = true }
-    
-    # order by premium
   end
 end
