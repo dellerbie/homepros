@@ -58,6 +58,12 @@ $(function() {
   setupInfiniteScroll();
   
   $('input, textarea').placeholder();
+  
+  $('form.search').submit(function(e) {
+    var query = $(this).find(":text").val();
+    if($.trim(query) == '') return false;
+  });
+  
 });
 
 function truncate(text, limit) {
