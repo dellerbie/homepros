@@ -33,7 +33,12 @@ class PortfolioPhotoUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    "#{secure_token}.#{file.extension}" if original_filename.present?
+    @name ||= "#{secure_token}_#{timestamp}.#{file.extension}" if original_filename.present? and super.present?
+  end
+  
+  def timestamp
+    var = :"@#{mounted_as}_timestamp"
+    model.instance_variable_get(var) or model.instance_variable_set(var, Time.now.to_i)
   end
   
   protected

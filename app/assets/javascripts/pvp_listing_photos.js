@@ -191,10 +191,9 @@ $(function() {
           if(response.errors) {
             errorEl.text(response.errors).show();
           } else {
-            var now = +new Date;
-            var src = response.portfolio_photo.small.url + '?' + now;
+            var src = response.portfolio_photo.small.url;
             if(imgEl.length) {
-              $(imgEl).attr("src", src).data('large-src', response.portfolio_photo.premium.url + '?' + now);
+              $(imgEl).attr("src", src).data('large-src', response.portfolio_photo.premium.url);
             }
             if(isCreate) {
               form.data('portfolio-photo-id', response.id);
