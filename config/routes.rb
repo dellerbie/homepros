@@ -1,7 +1,12 @@
+require 'resque/server'
+
 Homepros::Application.routes.draw do
   root :to => 'listings#index'
   
   devise_for :admin_users, ActiveAdmin::Devise.config
+  authenticate :admin_user do
+    mount Resque::Server.new, :at => "/jobs"
+  end
   ActiveAdmin.routes(self)
   
   devise_for :users, controllers: {

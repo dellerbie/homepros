@@ -6,6 +6,11 @@ class UserMailer < ActionMailer::Base
     mail(to: user.email, subject: '[OC HomeMasters] Welcome!')
   end
   
+  def admin_new_user_email(user)
+    @user = user
+    mail(to: Figaro.env.admin_email, subject: 'New User Signed Up')
+  end
+  
   def downgrade_email(user)
     @user = user
     mail(to: user.email, subject: '[OC HomeMasters] Your Listing Has Been Downgraded')

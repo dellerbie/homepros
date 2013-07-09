@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   
   def welcome_email
     UserMailer.welcome_email(self).deliver
+    Resque.enqueue(AdminNewUserNotifier, self.id)
   end
   
   def upgrade

@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %title="New Homeowner Signed Up"
+  %body
+    %p 
+      = "#{@homeowner.email} just signed up."
+    %p
+      = "City: #{@homeowner.city.name}"
+    %p
+      = "Received Flier: #{@homeowner.received_flier}"
+    %p
+      = "Total Homeowners: #{Homeowner.count}"

@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    %title="New User Signed Up"
+  %body
+    %p 
+      = "#{@user.listing.company_name} just signed up."
+    %p
+      = "Email: #{@user.email}"
+    %p
+      = "Total Users: #{User.count}"

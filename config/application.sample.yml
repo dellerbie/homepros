@@ -13,3 +13,5 @@ DB_USERNAME: derrick
 DB_PASSWORD: 
 RACK_ENV: development
 MAILER_EMAIL: '"The OC HomeMasters Team" <support@ochomemasters.com>'
+REDISTOGO_URL: redis://localhost:6379/
+ADMIN_EMAIL: derrick@ochomemasters.com
